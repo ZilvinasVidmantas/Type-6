@@ -1,23 +1,27 @@
-const formSelector = 'login-form';
-const form = document.querySelector<HTMLFormElement>('#login-form');
+const formSelector = '#login-form';
+const form = document.querySelector<HTMLFormElement>(formSelector);
+if (form === null) throw new Error(`Nerasta forma, pagal selektorių: ${formSelector}`);
 
-if (form === null) {
-  throw new Error(`Nerasta forma, pagal selektorių: ${formSelector}`);
-} else {
-  form.addEventListener('submit', () => {
-    console.log('Pasubmitinta forma');
-  });
+const submitButton = form.querySelector<HTMLButtonElement | HTMLInputElement>('[type=submit]');
+if (submitButton === null) throw new Error(`Formoje nėra 'submit' mygtuko`);
+submitButton.disabled = true;
 
-  const inputs = (Array.from(form) as (HTMLInputElement | HTMLButtonElement)[])
-    .filter(x => x.name) as HTMLInputElement[];
-
-  inputs.forEach(x => {
-    x.addEventListener('keyup', (e) => {
-      const input = e.target as HTMLInputElement;
-      console.log(input.value);
-    })
-  });
+const validateForm = (inputs: HTMLInputElement[]) => {
+  submitButton.disabled = inputs.some(input => !input.value);
 }
+
+const formInputs = Array.from(form.querySelectorAll<HTMLInputElement>('input[name]'));
+if (formInputs.length === 0) throw new Error(`Formoje nėra įvesties laukų su 'name' atributais`);
+
+formInputs.forEach(input => {
+  input.addEventListener('keyup', () => validateForm(formInputs));
+});
+
+form.addEventListener('submit', () => {
+  console.log('Pasubmitinta forma');
+});
+
+
 
 // Tiems, kam saule nešvieiča, galite:
 /*
