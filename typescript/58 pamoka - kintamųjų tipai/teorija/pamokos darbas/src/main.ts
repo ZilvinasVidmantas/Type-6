@@ -1,9 +1,29 @@
+/*
+  Hoisting:
+    type indetifier -> Student
+    type indetifier -> Semester
+    type indetifier -> Module
+    JS indetifier -> students
+*/
+
 type Student = {
   name: string,
   surname: string,
   course: number,
   hasTakenGapYear: boolean,
 };
+
+type Module = {
+  id: string,
+  title: string,
+  marks: number[],
+}
+
+type Semester = {
+  id: string,
+  title: string,
+  modules: Module[],
+}
 
 const students: Student[] = [
   {
@@ -25,18 +45,3 @@ const students: Student[] = [
     hasTakenGapYear: false
   }
 ];
-
-
-/*
-  Sukurkite Tipus:
-    * Module
-      * id: string
-      * title: string
-      * marks: number[]
-
-    * Semester
-      * id: string
-      * title: string
-      * modules: Module[]
-*/
-
