@@ -1,11 +1,3 @@
-/*
-  Hoisting:
-    type indetifier -> Student
-    type indetifier -> Semester
-    type indetifier -> Module
-    JS indetifier -> students
-*/
-
 type Student = {
   name: string,
   surname: string,
@@ -17,13 +9,13 @@ type Module = {
   id: string,
   title: string,
   marks: number[],
-}
+};
 
 type Semester = {
   id: string,
   title: string,
   modules: Module[],
-}
+};
 
 const students: Student[] = [
   {
