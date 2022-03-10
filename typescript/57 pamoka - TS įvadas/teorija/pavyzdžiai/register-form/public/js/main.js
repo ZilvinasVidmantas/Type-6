@@ -98,7 +98,33 @@ inputs.forEach(input => {
         setButtonActivation();
     });
 });
-form.addEventListener('submit', () => {
+const userDatabase = [
+    {
+        id: '1',
+        email: 'admin@gmail.com',
+        password: 'Vilnius123',
+        name: 'Veilokas'
+    },
+    {
+        id: '2',
+        email: 'user1@gmail.com',
+        password: 'Vilnius123',
+        name: 'Serbentautas'
+    }
+];
+const login = ({ email, password }) => {
+    return userDatabase.find(x => x.email === email && x.password === password);
+};
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const user = login(values);
+    if (user) {
+        console.log('Pavyko prisijungti');
+        console.log(user);
+    }
+    else {
+        console.log('Nepavyko prisijungti');
+    }
     console.log('Pasubmitinta forma');
 });
 //# sourceMappingURL=main.js.map
