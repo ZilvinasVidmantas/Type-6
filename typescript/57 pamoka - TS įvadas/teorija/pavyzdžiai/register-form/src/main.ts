@@ -13,6 +13,10 @@ type Errors<Values extends FormValues> = {
   [key in keyof ValidationSchema<Values>]?: string
 }
 
+type Touched<Values extends FormValues> = {
+  [key in keyof ValidationSchema<Values>]?: true
+}
+
 type ValidationResult<Values extends FormValues> = {
   [key in keyof Values]?: string
 }
@@ -21,7 +25,7 @@ type CreateUpdateField<Values extends FormValues> = (
   values: Values,
   errors: Errors<Values>,
   validationSchema: ValidationSchema<Values>
-) => (e: KeyboardEvent) => void;
+) => (e: Event) => void;
 
 // Konkrečių tipų aprašymas
 type LoginFormValues = {
@@ -63,6 +67,7 @@ const values: LoginFormValues = {
   password: '',
 };
 const errors: Errors<LoginFormValues> = {};
+const touched: Touched<LoginFormValues> = {};
 
 const validationSchema: ValidationSchema<LoginFormValues> = {
   email: (value: string) => exists(value) || isEmail(value),
@@ -70,7 +75,7 @@ const validationSchema: ValidationSchema<LoginFormValues> = {
 };
 
 const createUpdateField: CreateUpdateField<FormValues> = (values, errors, validationSchema) => {
-  return (e: KeyboardEvent) => {
+  return (e: Event) => {
     const input = e.target as HTMLInputElement;
     const inputName = input.name as keyof LoginFormValues;
     values[inputName] = input.value;
@@ -85,7 +90,7 @@ const createUpdateField: CreateUpdateField<FormValues> = (values, errors, valida
 
 const updateField = createUpdateField(values, errors, validationSchema);
 
-// Konkretaus sprendimas
+// Konkretus sprendimas
 const formSelector = '#login-form';
 const form = document.querySelector<HTMLFormElement>(formSelector);
 if (form === null) throw new Error(`Nerasta forma, pagal selektorių: ${formSelector}`);
@@ -93,6 +98,21 @@ if (form === null) throw new Error(`Nerasta forma, pagal selektorių: ${formSele
 const submitButton = form.querySelector<HTMLButtonElement | HTMLInputElement>('[type=submit]');
 if (submitButton === null) throw new Error(`Formoje nėra 'submit' mygtuko`);
 submitButton.disabled = true;
+const setButtonActivation = (): void => {
+  const hasErrors = Object.keys(errors).length > 0;
+  if (hasErrors) {
+    submitButton.disabled = true;
+    return;
+  }
+  for (const key in values) {
+    const fieldName = key as keyof LoginFormValues;
+    if (!touched[fieldName]) {
+      submitButton.disabled = true;
+      return;
+    }
+  }
+  submitButton.disabled = false;
+}
 
 const inputs = (Object.keys(values) as (keyof LoginFormValues)[])
   .map<HTMLInputElement>(fieldName => {
@@ -106,6 +126,11 @@ inputs.forEach(input => {
   input.value = values[inputName];
   const errorTextElement = document.createElement('small');
   input.parentElement?.insertBefore(errorTextElement, input.nextElementSibling);
+  input.addEventListener('blur', (e) => {
+    updateField(e);
+    touched[inputName] = true;
+    setButtonActivation();
+  })
   input.addEventListener('keyup', (e) => {
     updateField(e);
     const inputError = errors[inputName];
@@ -116,8 +141,7 @@ inputs.forEach(input => {
     } else {
       input.classList.remove('is-invalid');
     }
-    const hasError = Object.keys(errors).length > 0;
-    submitButton.disabled = hasError;
+    setButtonActivation();
   });
 });
 

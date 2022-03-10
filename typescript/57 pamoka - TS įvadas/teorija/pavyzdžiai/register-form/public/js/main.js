@@ -23,6 +23,7 @@ const values = {
     password: '',
 };
 const errors = {};
+const touched = {};
 const validationSchema = {
     email: (value) => exists(value) || isEmail(value),
     password: exists
@@ -50,6 +51,21 @@ const submitButton = form.querySelector('[type=submit]');
 if (submitButton === null)
     throw new Error(`Formoje nėra 'submit' mygtuko`);
 submitButton.disabled = true;
+const setButtonActivation = () => {
+    const hasErrors = Object.keys(errors).length > 0;
+    if (hasErrors) {
+        submitButton.disabled = true;
+        return;
+    }
+    for (const key in values) {
+        const fieldName = key;
+        if (!touched[fieldName]) {
+            submitButton.disabled = true;
+            return;
+        }
+    }
+    submitButton.disabled = false;
+};
 const inputs = Object.keys(values)
     .map(fieldName => {
     const potentialField = form.querySelector(`input[name=${fieldName}]`);
@@ -63,6 +79,11 @@ inputs.forEach(input => {
     input.value = values[inputName];
     const errorTextElement = document.createElement('small');
     (_a = input.parentElement) === null || _a === void 0 ? void 0 : _a.insertBefore(errorTextElement, input.nextElementSibling);
+    input.addEventListener('blur', (e) => {
+        updateField(e);
+        touched[inputName] = true;
+        setButtonActivation();
+    });
     input.addEventListener('keyup', (e) => {
         updateField(e);
         const inputError = errors[inputName];
@@ -74,8 +95,7 @@ inputs.forEach(input => {
         else {
             input.classList.remove('is-invalid');
         }
-        const hasError = Object.keys(errors).length > 0;
-        submitButton.disabled = hasError;
+        setButtonActivation();
     });
 });
 form.addEventListener('submit', () => {
