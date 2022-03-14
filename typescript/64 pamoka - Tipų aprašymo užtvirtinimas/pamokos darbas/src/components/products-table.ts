@@ -28,6 +28,10 @@ class ProductsTable {
     this.title = title;
   }
 
+  setData = (newData: Product[]): void => {
+    this.data = newData;
+  };
+
   renderHead = (): string => `
   <thead>
     <tr>
