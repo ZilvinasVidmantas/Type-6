@@ -1,21 +1,16 @@
 import Product from '../types/product.js';
 
 class ProductsTable {
-  static header = `
-  <thead>
-    <tr>
-      <th colspan="5" class="text-center">Lentelės pavadinimas</th>
-    </tr>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Price</th>
-      <th scope="col">Type</th>
-    </tr>
-  </thead>`;
+  static tableColumns: string = ` 
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Title</th>
+    <th scope="col">Description</th>
+    <th scope="col">Price</th>
+    <th scope="col">Type</th>
+  </tr>`;
 
-  static createRowString = (product: Product) => `
+  static createRowString = (product: Product): string => `
   <tr>
     <td>${product.id}</td>
     <td>${product.title}</td>
@@ -26,11 +21,22 @@ class ProductsTable {
 
   private data: Product[];
 
-  constructor(data: Product[]) {
+  private title: string;
+
+  constructor(data: Product[], title: string) {
     this.data = data;
+    this.title = title;
   }
 
-  renderBody = () => {
+  renderHead = (): string => `
+  <thead>
+    <tr>
+      <th colspan="5" class="text-center">${this.title}</th>
+    </tr>
+    ${ProductsTable.tableColumns}
+  </thead>`;
+
+  renderBody = (): string => {
     const rows: string = this.data.map(ProductsTable.createRowString).join('');
     return `<tbody>${rows}</tbody>`;
   };
@@ -40,7 +46,7 @@ class ProductsTable {
     htmlTable.className = 'table';
 
     htmlTable.innerHTML = `
-      ${ProductsTable.header}
+      ${this.renderHead()}
       ${this.renderBody()}
     `;
     return htmlTable;
