@@ -79,7 +79,7 @@ console.groupEnd();
 
 console.group('3. Sukurkite funkciją, kuri grąžina žmogaus incialus');
 {
-  const createInitials = (p: Person) => p.name[0] + p.surname[0];
+  const createInitials = (p: Person): string => p.name[0] + p.surname[0];
 
   console.log({
     [createFullname(person1)]: createInitials(person1),
