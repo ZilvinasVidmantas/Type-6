@@ -4,11 +4,11 @@ import Category from '../types/category.js';
 export type CategoryChangeCallback = (categoryName: string) => void;
 
 class CategorySelect {
-  static categories: Category[] = categories;
+  private static categories: Category[] = categories;
 
   private static handleChange: CategoryChangeCallback | null = null;
 
-  static renderOptions = (): string => {
+  private static renderOptions = (): string => {
     const blankOption = '<option value="all">Select Category</option>';
     const categoryOptions = CategorySelect.categories
       .map((x) => `
@@ -17,19 +17,17 @@ class CategorySelect {
     return blankOption + categoryOptions;
   };
 
-  static handleOptionChange(this: HTMLSelectElement) {
-    if (!CategorySelect.handleChange) {
-      console.error('No category change implementation');
-    } else {
+  private static handleOptionChange(this: HTMLSelectElement) {
+    if (CategorySelect.handleChange) {
       CategorySelect.handleChange(this.value);
     }
   }
 
-  static onCategoryChange = (callback: CategoryChangeCallback) => {
+  public static onCategoryChange = (callback: CategoryChangeCallback) => {
     CategorySelect.handleChange = callback;
   };
 
-  static render = (): HTMLSelectElement => {
+  public static render = (): HTMLSelectElement => {
     const categorySelect = document.createElement('select');
     categorySelect.addEventListener('change', CategorySelect.handleOptionChange);
     categorySelect.innerHTML = CategorySelect.renderOptions();
