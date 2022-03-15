@@ -1,7 +1,7 @@
 import Product from '../types/product.js';
 
 class ProductsTable {
-  static tableColumns: string = ` 
+  private static tableColumns: string = ` 
   <tr>
     <th scope="col">#</th>
     <th scope="col">Title</th>
@@ -10,7 +10,7 @@ class ProductsTable {
     <th scope="col">Type</th>
   </tr>`;
 
-  static createRowString = (product: Product): string => `
+  private static createRowString = (product: Product): string => `
   <tr>
     <td>${product.id}</td>
     <td>${product.title}</td>
@@ -19,41 +19,54 @@ class ProductsTable {
     <td>${product.type.name}</td>
   </tr>`;
 
+  private tbodyHtmlElement: HTMLTableSectionElement;
+
+  private theadHtmlElement: HTMLTableSectionElement;
+
   private data: Product[];
 
   private title: string;
 
-  constructor(data: Product[], title: string) {
+  public htmlElement: HTMLTableElement;
+
+  public constructor(data: Product[], title: string) {
     this.data = data;
     this.title = title;
+    this.htmlElement = document.createElement('table');
+    this.theadHtmlElement = document.createElement('thead');
+    this.tbodyHtmlElement = document.createElement('tbody');
+
+    this.format();
+    this.update();
   }
 
-  setData = (newData: Product[]): void => {
-    this.data = newData;
+  private format = (): void => {
+    this.htmlElement.className = 'table';
+    this.htmlElement.appendChild(this.theadHtmlElement);
+    this.htmlElement.appendChild(this.tbodyHtmlElement);
   };
 
-  renderHead = (): string => `
-  <thead>
+  private updateHead = (): void => {
+    this.theadHtmlElement.innerHTML = `
     <tr>
       <th colspan="5" class="text-center">${this.title}</th>
     </tr>
-    ${ProductsTable.tableColumns}
-  </thead>`;
-
-  renderBody = (): string => {
-    const rows: string = this.data.map(ProductsTable.createRowString).join('');
-    return `<tbody>${rows}</tbody>`;
+    ${ProductsTable.tableColumns}`;
   };
 
-  render = (): HTMLTableElement => {
-    const htmlTable = document.createElement('table');
-    htmlTable.className = 'table';
+  private updateBody = (): void => {
+    const rowsString: string = this.data.map(ProductsTable.createRowString).join('');
 
-    htmlTable.innerHTML = `
-      ${this.renderHead()}
-      ${this.renderBody()}
-    `;
-    return htmlTable;
+    this.tbodyHtmlElement.innerHTML = rowsString;
+  };
+
+  public update = (): void => {
+    this.updateHead();
+    this.updateBody();
+  };
+
+  public setData = (newData: Product[]): void => {
+    this.data = newData;
   };
 }
 

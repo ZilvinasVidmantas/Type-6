@@ -16,17 +16,21 @@ CategorySelect.onCategoryChange((newCategory) => {
   const categoryProducts = productCollection.getByCategoryName(newCategory);
 
   productsTable.setData(categoryProducts);
-  productsTable.render();
-  rootElement.appendChild(productsTable.render());
+  productsTable.update();
 });
 
 rootElement.appendChild(CategorySelect.render());
-rootElement.appendChild(productsTable.render());
+rootElement.appendChild(productsTable.htmlElement);
 
 /*
- Atliktas darbinis variantas, kuomet pasikeitus kategorijos select'o reikšmėj kuriamos naujos
- lentelės. Jeigu turite laiko ir noro, pabandykite:
-  * įgalinti, jog būtų atnaujinami lentelės duomenys, nekuriant naujos lentelės:
-    * komponente ProductsTable įgalinkite pradinį lentelės sukūrimą, jog metodas render
-      tik atnaujintų duomenis, nekurdamas naujos lentelės
- */
+  Klasės savybių išrašymo tvarka:
+    * private static properties
+    * public static properties
+    * private static methods
+    * public static methods
+    * private properties
+    * public properties
+    * constructor
+    * private methods
+    * public methods
+*/
