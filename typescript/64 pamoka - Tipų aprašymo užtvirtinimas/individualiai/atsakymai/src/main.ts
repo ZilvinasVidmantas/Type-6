@@ -162,12 +162,12 @@ console.groupEnd();
 console.group('12. Sukurkite funkciją, kuri priima skaičių masyvą ir grąžina naują masyvą sudarytą iš pradinio masyvo teigiamų elementų');
 {
   function solution(arr: number[]): number[] {
-    return arr.filter((x) => x > 1);
+    return arr.filter((x) => x > 0);
   }
 
   const result = solution(numbers);
   console.log(numbers);
-  console.log(result);  
+  console.log(result);
 }
 console.groupEnd();
 
@@ -198,7 +198,7 @@ console.groupEnd();
 console.group('15. Sukurkite funkciją, kuri priima skaičių masyvą ir grąžina naują masyvą sudarytą iš pradinio masyvo nelyginių elementų');
 {
   function solution(arr: number[]): number[] {
-    return arr.filter((x) => x % 2 === 1);
+    return arr.filter((x) => [1, -1].includes(x % 2));
   }
 
   const result = solution(numbers);
