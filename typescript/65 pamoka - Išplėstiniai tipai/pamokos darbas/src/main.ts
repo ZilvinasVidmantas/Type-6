@@ -9,7 +9,11 @@ if (!rootElement) {
   throw new Error(`Nėra elemento su id: '${rootElementSelector}'`);
 }
 
-const categoryNameProductTableTitleDictionary = {
+type CategoryNameToTitleDictionary = {
+  [key: string]: string,
+};
+
+const categoryNameToTitleDictionary: CategoryNameToTitleDictionary = {
   all: 'Visi produktai',
   MotherBoard: 'Motininės plokštės',
   RAM: 'Operatyvi atmintis',
@@ -18,15 +22,13 @@ const categoryNameProductTableTitleDictionary = {
 const productCollection = new ProductCollection(allProducts);
 const productsTable = new ProductsTable(productCollection.getAll(), 'Visi produktai');
 
-CategorySelect.onCategoryChange((newCategory) => {
-  const categoryProducts = productCollection.getByCategoryName(newCategory);
+CategorySelect.onCategoryChange((categoryName) => {
+  const categoryProducts = productCollection.getByCategoryName(categoryName);
 
-  /*
-    Sukurti funkcionalumą, jog pasikeitus kategorijai atsinaujintų produktų lentelės pavadinimas
-    * sukurti metodą products-table.ts, kuris pakeistų pavadinimą
-    * panaudoti kintamajį 'categoryNameProductTableTitleDictionary', kad nustati lentelės pavadinimą
-    * iki 10:35
-  */
+  if (categoryName in categoryNameToTitleDictionary) {
+    const tableTitle = categoryNameToTitleDictionary[categoryName];
+    productsTable.setTitle(tableTitle);
+  }
 
   productsTable.setData(categoryProducts);
   productsTable.update();

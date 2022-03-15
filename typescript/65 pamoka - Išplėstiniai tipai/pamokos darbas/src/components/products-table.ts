@@ -68,6 +68,10 @@ class ProductsTable {
   public setData = (newData: Product[]): void => {
     this.data = newData;
   };
+
+  public setTitle = (newTitle: string): void => {
+    this.title = newTitle;
+  };
 }
 
 export default ProductsTable;
