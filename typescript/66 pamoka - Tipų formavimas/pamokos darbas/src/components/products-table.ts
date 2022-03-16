@@ -41,7 +41,7 @@ class ProductsTable {
   }
 
   private format = (): void => {
-    this.htmlElement.className = 'table';
+    this.htmlElement.className = 'table border mb-0';
     this.htmlElement.appendChild(this.theadHtmlElement);
     this.htmlElement.appendChild(this.tbodyHtmlElement);
   };
