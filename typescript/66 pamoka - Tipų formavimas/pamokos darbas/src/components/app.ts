@@ -2,8 +2,8 @@ import Form from './form.js';
 import ProductsTable from './products-table.js';
 import ProductCollection from '../helpers/product-collection.js';
 import allProducts from '../data/products.js';
-import CategorySelect from './category-select.js';
 import categoryNameToTitleDictionary from '../data/category-name-to-title-dictionary.js';
+import CategorySelect from './category-select.js';
 
 class App {
   public htmlElement: Element;
@@ -11,6 +11,8 @@ class App {
   private productForm: Form;
 
   private containerHtmlElement: HTMLDivElement;
+
+  private categorySelect: CategorySelect;
 
   private productsTable: ProductsTable;
 
@@ -23,6 +25,7 @@ class App {
     }
     this.htmlElement = foundElement;
 
+    this.categorySelect = new CategorySelect();
     this.containerHtmlElement = document.createElement('div');
     this.productCollection = new ProductCollection(allProducts);
     this.productForm = new Form();
@@ -47,7 +50,7 @@ class App {
   };
 
   private formatCategorySelect = (): void => {
-    CategorySelect.onCategoryChange(this.updateTableOnCategoryChange);
+    this.categorySelect.onChange = this.updateTableOnCategoryChange;
   };
 
   private formatContainerHtmlElement = () => {
@@ -63,7 +66,7 @@ class App {
     this.formatContainerHtmlElement();
 
     this.htmlElement.append(
-      CategorySelect.render(),
+      this.categorySelect.htmlElement,
       this.containerHtmlElement,
     );
   };
