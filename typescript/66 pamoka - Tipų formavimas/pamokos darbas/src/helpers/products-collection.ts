@@ -1,6 +1,6 @@
 import Product from '../types/product.js';
 
-class ProductCollection {
+class ProductsCollection {
   private static validCategories: string[] = ['MotherBoard', 'RAM'];
 
   private products: Product[];
@@ -10,7 +10,7 @@ class ProductCollection {
   }
 
   public getByCategoryName(categoryName: string): Product[] {
-    if (ProductCollection.validCategories.includes(categoryName)) {
+    if (ProductsCollection.validCategories.includes(categoryName)) {
       return this.products.filter((x) => x.type.name === categoryName);
     }
     return this.getAll();
@@ -21,4 +21,4 @@ class ProductCollection {
   }
 }
 
-export default ProductCollection;
+export default ProductsCollection;

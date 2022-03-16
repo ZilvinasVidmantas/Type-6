@@ -1,12 +1,12 @@
 import categories from '../data/categories.js';
 import Category from '../types/category.js';
 
-export type OnCategoryChange = (categoryName: string) => void;
+export type OnChange = (categoryName: string) => void;
 
-class CategorySelect {
+class CategoriesSelect {
   private static categories: Category[] = categories;
 
-  public onChange: OnCategoryChange | null;
+  public onChange: OnChange | null;
 
   public htmlElement: HTMLSelectElement;
 
@@ -26,10 +26,8 @@ class CategorySelect {
 
   private formatOptions = (): void => {
     const blankOption = '<option value="all">Select Category</option>';
-    const categoryOptions = CategorySelect.categories
-      .map((x) => `
-      '<option value="${x.name}">${x.name}</option>'
-      `);
+    const categoryOptions = CategoriesSelect.categories
+      .map((x) => `<option value="${x.name}">${x.name}</option>`);
     const allOptions = blankOption + categoryOptions;
 
     this.htmlElement.innerHTML = allOptions;
@@ -41,4 +39,4 @@ class CategorySelect {
   };
 }
 
-export default CategorySelect;
+export default CategoriesSelect;

@@ -1,9 +1,9 @@
 import Form from './form.js';
 import ProductsTable from './products-table.js';
-import ProductCollection from '../helpers/product-collection.js';
+import ProductsCollection from '../helpers/products-collection.js';
 import allProducts from '../data/products.js';
 import categoryNameToTitleDictionary from '../data/category-name-to-title-dictionary.js';
-import CategorySelect from './category-select.js';
+import CategoriesSelect from './categories-select.js';
 
 class App {
   public htmlElement: Element;
@@ -12,11 +12,11 @@ class App {
 
   private containerHtmlElement: HTMLDivElement;
 
-  private categorySelect: CategorySelect;
+  private categoriesSelect: CategoriesSelect;
 
   private productsTable: ProductsTable;
 
-  private productCollection: ProductCollection;
+  private productsCollection: ProductsCollection;
 
   constructor(selector: string) {
     const foundElement = document.querySelector(selector);
@@ -25,12 +25,12 @@ class App {
     }
     this.htmlElement = foundElement;
 
-    this.categorySelect = new CategorySelect();
+    this.categoriesSelect = new CategoriesSelect();
     this.containerHtmlElement = document.createElement('div');
-    this.productCollection = new ProductCollection(allProducts);
+    this.productsCollection = new ProductsCollection(allProducts);
     this.productForm = new Form();
     this.productsTable = new ProductsTable(
-      this.productCollection.getAll(),
+      this.productsCollection.getAll(),
       'Visi produktai',
     );
 
@@ -38,7 +38,7 @@ class App {
   }
 
   private updateTableOnCategoryChange = (categoryName: string): void => {
-    const categoryProducts = this.productCollection.getByCategoryName(categoryName);
+    const categoryProducts = this.productsCollection.getByCategoryName(categoryName);
 
     if (categoryName in categoryNameToTitleDictionary) {
       const tableTitle = categoryNameToTitleDictionary[categoryName];
@@ -50,7 +50,7 @@ class App {
   };
 
   private formatCategorySelect = (): void => {
-    this.categorySelect.onChange = this.updateTableOnCategoryChange;
+    this.categoriesSelect.onChange = this.updateTableOnCategoryChange;
   };
 
   private formatContainerHtmlElement = () => {
@@ -66,7 +66,7 @@ class App {
     this.formatContainerHtmlElement();
 
     this.htmlElement.append(
-      this.categorySelect.htmlElement,
+      this.categoriesSelect.htmlElement,
       this.containerHtmlElement,
     );
   };
