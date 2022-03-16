@@ -3,16 +3,7 @@ import ProductsTable from './products-table.js';
 import ProductCollection from '../helpers/product-collection.js';
 import allProducts from '../data/products.js';
 import CategorySelect from './category-select.js';
-
-type CategoryNameToTitleDictionary = {
-  [key: string]: string,
-};
-
-const categoryNameToTitleDictionary: CategoryNameToTitleDictionary = {
-  all: 'Visi produktai',
-  MotherBoard: 'Motininės plokštės',
-  RAM: 'Operatyvi atmintis',
-};
+import categoryNameToTitleDictionary from '../data/category-name-to-title-dictionary.js';
 
 class App {
   public htmlElement: Element;
@@ -43,18 +34,20 @@ class App {
     this.format();
   }
 
+  private updateTableOnCategoryChange = (categoryName: string): void => {
+    const categoryProducts = this.productCollection.getByCategoryName(categoryName);
+
+    if (categoryName in categoryNameToTitleDictionary) {
+      const tableTitle = categoryNameToTitleDictionary[categoryName];
+      this.productsTable.setTitle(tableTitle);
+    }
+    this.productsTable.setData(categoryProducts);
+
+    this.productsTable.update();
+  };
+
   private formatCategorySelect = (): void => {
-    CategorySelect.onCategoryChange((categoryName) => {
-      const categoryProducts = this.productCollection.getByCategoryName(categoryName);
-
-      if (categoryName in categoryNameToTitleDictionary) {
-        const tableTitle = categoryNameToTitleDictionary[categoryName];
-        this.productsTable.setTitle(tableTitle);
-      }
-
-      this.productsTable.setData(categoryProducts);
-      this.productsTable.update();
-    });
+    CategorySelect.onCategoryChange(this.updateTableOnCategoryChange);
   };
 
   private formatContainerHtmlElement = () => {
