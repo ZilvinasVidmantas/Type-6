@@ -1,0 +1,19 @@
+Perskaityt failus:
+  * variables-and-logging.js
+  * data-types.js
+  * operators.js
+  * objects.js
+  * arrays.js
+  * conditions.js
+  * array-methods.js
+  * functions.js
+  * cycles.js
+  * sorting.js
+  * array-iterative-methods.js
+  * destructurization.js
+  * lamdba.js
+
+Atlikt užduotis su TypeScript:
+  * function-tasks-1.js
+  * function-tasks-2.js
+  * object-tasks.js

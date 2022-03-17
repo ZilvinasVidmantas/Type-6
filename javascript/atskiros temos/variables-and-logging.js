@@ -58,11 +58,11 @@ console.groupEnd();
 
 console.groupCollapsed('console.table');
 {
-// console.table - atspausdina masyvo elementus eilutėmis
-console.log(7);
-console.table(7);
-console.log(students);
-console.table(students);
+  // console.table - atspausdina masyvo elementus eilutėmis
+  console.log(7);
+  console.table(7);
+  console.log(students);
+  console.table(students);
 }
 console.groupEnd();
 
