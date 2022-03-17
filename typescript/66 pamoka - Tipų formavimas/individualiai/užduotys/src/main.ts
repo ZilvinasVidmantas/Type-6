@@ -8,6 +8,11 @@ type Person = {
   hasCar?: boolean,
 }
 
+
+type MutableRequiredPerson = {
+  -readonly [Key in keyof Omit<Person, 'name' | 'surname'>]-?: Person[Key];
+}
+
 const people: Person[] = [
   {
     name: 'Jonas',
