@@ -1,0 +1,31 @@
+
+
+Perskaityt failus:
+  [1]* array-iterative-methods-2.js
+  [1]* array-methods-methods-2.js
+  [1]* annonymousFunctions.js
+  [1]* higherOrderFunctions.js
+  [1]* this.js
+  [1]* classes.js
+  [1]* static.js
+  [1]* oop-encapsulation.js
+  [1]* oop-composition.js
+
+Ecma 6 vidosai:
+[3] https://www.youtube.com/watch?v=q8SHaDQdul0&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&ab_channel=TheCodingTrain
+
+Atlikt užduotis su TypeScript:
+  kiek užteks laiko darant kokybiškai ir krupščiai
+    [2]* function-tasks-1.js
+    [2]* function-tasks-2.js
+    [2]* object-tasks.js
+    [2]* uzdaviniai\function-tasks-array-iterative-1.js
+    [2]* uzdaviniai\classes-tasks-1.js
+    [4]* uzdaviniai\classes-tasks-2.js
+    [4]* function-tasks-3.js
+    [4]* uzdaviniai\function-tasks-array-iterative-2.js
+    [4]* uzdaviniai\classes-tasks-3.js
+    [4]* uzdaviniai\recursion-tasks.js
+    [4]* uzdaviniai\curry pratybos
+
+*[x] - svarba (1 > 2 ir t.t.) 
