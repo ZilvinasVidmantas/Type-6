@@ -15,6 +15,7 @@ array-iterative-methods-2.js
 array-methods-methods-2.js
 annonymousFunctions.js
 higherOrderFunctions.js
+this.js
 classes.js
 static.js
 oop-encapsulation.js
