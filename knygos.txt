@@ -1,0 +1,11 @@
+[audio]
+Algorythms to live by - https://www.scribd.com/book/362369544/Algorithms-to-Live-By-The-Computer-Science-of-Human-Decisions?utm_medium=cpc&utm_source=google_search&utm_campaign=3Q_Google_DSA_NB_RoW&utm_device=c&gclid=Cj0KCQjw29CRBhCUARIsAOboZbJ1pyPRG5K13tG0pMjusioP4jwgbCv8Id8H6Gw05i9Unv4bj9hRSegaApSVEALw_wcB
+
+Knyga apie objektinį programavimą: https://www.amazon.com/Object-Oriented-JavaScript-high-quality-applications-libraries/dp/1847194141
+	šios knygos ↓↓↓↓↓↓↓ turi būti skaitomos po šios ↑↑↑↑↑↑↑↑↑
+	Head first deign patterns - https://www.amazon.com/Head-First-Design-Patterns-Brain-Friendly/dp/0596007124
+
+	Pragmatic programmer david thomas - https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X
+
+	[audio+-]
+	Clean Code - https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship-ebook/dp/B001GSTOAM/ref=sr_1_1?crid=ZEHX5KJSNI1K&keywords=clean+code&qid=1647594063&s=books&sprefix=clean+cod%2Cstripbooks-intl-ship%2C174&sr=1-1
