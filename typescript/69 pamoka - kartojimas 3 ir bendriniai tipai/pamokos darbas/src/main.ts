@@ -46,3 +46,24 @@ console.groupCollapsed('1. Kas yra ir kaip veikia Partial<Type>?');
   console.log(updatedPerson);
 }
 console.groupEnd();
+
+console.groupCollapsed('2. Anoniminės funkcijos');
+{
+  // Anonimė funkcija, tai naujo funkcijos deklaravimas kviečiant kitą funkciją;
+
+  // Iš anksto aprašyta funkcija
+  const sumNumbersReducer = (currentTotal: number, number: number): number => currentTotal + number;
+
+  const numbers: number[] = [1, 2, 3];
+
+  const numberSum = numbers.reduce(sumNumbersReducer);
+  //                                   ↙↙↙↙↙↙↙↙ Anoniminė funkcija ↘↘↘↘↘↘↘↘↘↘↘
+  const numberSum2 = numbers.reduce((currentTotal, number) => currentTotal + number);
+
+  console.log({
+    numbers,
+    numberSum,
+    numberSum2,
+  });
+}
+console.groupEnd();
