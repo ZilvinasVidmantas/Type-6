@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-console */
 /* eslint-disable no-lone-blocks */
@@ -217,18 +218,133 @@ console.groupCollapsed('4. OOP kompozicija. Kas tai yra?');
 }
 console.groupEnd();
 
-console.groupCollapsed('x. ');
+console.groupCollapsed('5. Kas yra Promise?');
 {
   /*
+    Promise tai asinchroniniam darbui aprašyti skirtas prototipas.
+      * sinchroninis darbas - tai pilnas kompiuterio resursų naudojimas atlikti užduotims
+      * asinchronimas darbas - tai darbas, kuriam atlikti reikia sulaukti 'atsakymų
+        iš kitų programos sitemos dalių'
 
+    Aprašant Promise'ą reikia perduoti funkcija, kuri atlieka asinchroninio darbo logiką
+      * 1 parametras(resolve) - funkcija, kurią reikia iškviesti sėkmės atveju
+      * 2 parametras(reject) - funkcija, kurią reikia iškviesti NEsekmės atveju
+
+    Sukūrus naują Promise'ą JavaScript kodas, vykdo po apačia aprašytas komandas nelaukdamas
+    Promise'o atsakymų. Todėl aprašant Promise'us turi apdoroti jo grąžinimo rezultatą su
+    tokiais specialiais blokais:
+      * then - aprodojamas sėkmingo Promiso'o atvejis
+      * catch - aprodojamas NEsėkmingo Promiso'o atvejis
+
+    Promise'as turi 3 būsenas:
+      * pending - Promise'as laukia atsakymo
+      * resolved - Promise'as įsivykdė sėkmingai
+      * rejected - Promise'as įsivykdė NEsėkmingai
   */
-}
-console.groupEnd();
 
-console.groupCollapsed('x. ');
-{
+  type User = {
+    name: string,
+    money: number,
+  };
+
+  type Product = {
+    title: string,
+    price: number
+  };
+
+  const bagotas: User = {
+    name: 'Spnceris',
+    money: 1000000,
+  };
+
+  const allProducts: Product[] = [
+    { title: 'Peins', price: 0.89 },
+    { title: 'Mersas', price: 90000 },
+    { title: 'Paveikslamas', price: 499.99 },
+  ];
+
+  const intervalId = setInterval(() => {
+    console.log('Laukiamas apmokėjimas');
+  }, 100);
+
+  //  Asinchroninio darbo atlikimas standartiniu būdu
+  {
+    const makePayment = (
+      user: User,
+      products: Product[],
+    ): Promise<string> => new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (user.money > products.reduce((total, p) => total + p.price, 0)) {
+          resolve('Sėkmingai atliktas pirkimas');
+        } else {
+          reject('NEsėkmingai atliktas pirkimas');
+        }
+      }, 2000);
+    });
+
+    // Fukcija kuri grąžina promise:
+    makePayment(bagotas, allProducts)
+      .then((successData) => {
+        console.log('THEN BLOKAS');
+        console.log(successData);
+      })
+      .catch((failureData) => {
+        console.log('CATCH BLOKAS');
+        console.error(failureData);
+      })
+      .finally(() => {
+        console.log('FINALLY BLOKAS');
+        clearInterval(intervalId);
+      });
+  }
+
+  // Asinchronio darbo atlikimas su nauja asinchroninių fukcijų sitankse
+  {
+    const wait = (ms: number) => new Promise((res) => {
+      setTimeout(() => res(true), ms);
+    });
+    // Asinchroninė funkcija yra sintetinis promiso kūrimas
+    //                  ↘↘↘
+    const makePayment = async (
+      user: User,
+      products: Product[],
+    ): Promise<string> => {
+      await wait(2000);
+      if (user.money > products.reduce((total, p) => total + p.price, 0)) {
+        return 'Sėkmingai atliktas pirkimas';
+      }
+      throw new Error('NEsėkmingai atliktas pirkimas');
+    };
+    // Asinchroninė funkcija tai - Fukcija kuri grąžina promise
+    // !!!!!!! TIK ASICHRONINĖSE FUNKCIJOSE GALITE RAŠYTI DIREKTYVĄ <await> !!!!!!!!!!!
+
+    // IFFE - Imediatly invoked function expresssion
+    /*
+      Kodas naršyklės JavaScript faile vykdomas sinchroniškai, tačiau kartais mum reikia jį
+      vykdyti asinchroniškai, tam galime sukurti anoniminę asinchroninę fukciją
+      kurti iškarto yra iškviečiama. Tokios funkcijos bloke, galime rašyti Promise'ų
+      sulaukimo logiką naudojant naują sintaksę
+    */
+    (async () => {
+      try {
+        const successData = await makePayment(bagotas, allProducts);
+        console.log('THEN BLOKAS');
+        console.log(successData);
+      } catch (failureData) {
+        console.log('CATCH BLOKAS');
+        console.error(failureData);
+      } finally {
+        console.log('FINALLY BLOKAS');
+        clearInterval(intervalId);
+      }
+    })();
+  }
+
   /*
-
+    Asinchroninė funkcija yra užrašyta deklaratyviu kodo rašymo stiliumi,
+    kas didina kodo skaitomumą ir padeda lengviau suprasti asinchroninių operacijų logiką
+      * https://miro.medium.com/max/1276/0*GLhhuxHI3I0tnvdN
+      * https://miro.medium.com/max/721/1*zxx4iQAG4HilOIQqDKpxJw.jpeg
   */
 }
 console.groupEnd();
