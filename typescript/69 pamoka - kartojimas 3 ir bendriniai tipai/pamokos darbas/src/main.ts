@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+/* eslint-disable no-console */
 /* eslint-disable no-lone-blocks */
 
 console.groupCollapsed('1. Kas yra ir kaip veikia Partial<Type>?');
@@ -125,5 +127,108 @@ console.groupCollapsed('3. OOP inkapsuliacija. Kaip ir kada naudoti?');
   // person2.setAge(1);
 
   console.table(people);
+}
+console.groupEnd();
+
+console.groupCollapsed('4. OOP kompozicija. Kas tai yra?');
+{
+  /*
+    Kompozicija tai viena iš objektiškai orientuoto programavimo (OOP) paradigmų.
+
+    Kompozicija - tai ryžys tarp klasių, kuomet vienas iš klasės objektų priklauso kitam KITOS
+    klasės objektui, pvz.:
+      * Moduliai sudaro Programas
+  */
+
+  class Program {
+    private static count = 0;
+
+    private id: string;
+
+    private title: string;
+
+    private modules: Module[];
+
+    public constructor(title: string) {
+      Program.count += 1;
+
+      this.id = `program-${Program.count}`;
+      this.title = title;
+      this.modules = [];
+    }
+
+    public addModule = (module: Module): void => {
+      this.modules.push(module);
+    };
+  }
+
+  class Module {
+    private static count = 0;
+
+    private id: string;
+
+    private title: string;
+
+    public constructor(title: string) {
+      Module.count += 1;
+
+      this.id = `module-${Module.count}`;
+      this.title = title;
+    }
+  }
+
+  // Programos, kurioms glai būti priskirti moduliai
+  const tsFullstack = new Program('TypeScript fullstack');
+  const feAdvanced = new Program('Front-end advanced');
+
+  const moduleHTML = new Module('HTML');
+  const moduleCSS = new Module('CSS');
+  const moduleJS = new Module('JS');
+  const moduleJSDom = new Module('JSDom');
+  const moduleTSBasics = new Module('TSBasics');
+  const moduleReact = new Module('React.js');
+  const moduleVue = new Module('Vue.js');
+  const moduleAngular = new Module('Angular.js');
+  const moduleTSReact = new Module('TSReact');
+  const moduleExpress = new Module('Express');
+  const moduleTSExpress = new Module('TSExpress');
+
+  // Programoms priskiriami moduliai
+  tsFullstack.addModule(moduleHTML);
+  tsFullstack.addModule(moduleCSS);
+  tsFullstack.addModule(moduleJS);
+  tsFullstack.addModule(moduleJSDom);
+  tsFullstack.addModule(moduleTSBasics);
+  tsFullstack.addModule(moduleReact);
+  tsFullstack.addModule(moduleTSReact);
+  tsFullstack.addModule(moduleExpress);
+  tsFullstack.addModule(moduleTSExpress);
+
+  feAdvanced.addModule(moduleHTML);
+  feAdvanced.addModule(moduleCSS);
+  feAdvanced.addModule(moduleJS);
+  feAdvanced.addModule(moduleJSDom);
+  feAdvanced.addModule(moduleReact);
+  feAdvanced.addModule(moduleVue);
+  feAdvanced.addModule(moduleAngular);
+
+  console.log(tsFullstack);
+  console.log(feAdvanced);
+}
+console.groupEnd();
+
+console.groupCollapsed('x. ');
+{
+  /*
+
+  */
+}
+console.groupEnd();
+
+console.groupCollapsed('x. ');
+{
+  /*
+
+  */
 }
 console.groupEnd();
