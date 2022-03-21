@@ -3,348 +3,107 @@
 /* eslint-disable no-console */
 /* eslint-disable no-lone-blocks */
 
-console.groupCollapsed('1. Kas yra ir kaip veikia Partial<Type>?');
-{
-  type Person = {
-    id: string,
-    name: string,
-    surname: string,
-    biography?: string
-  };
+type Row = {
+  [key: string]: string;
+};
 
-  type PersonPatch = Partial<Omit<Person, 'id'>>;
+type Student = {
+  name: string,
+  surname: string,
+  age: string,
+  course: string,
+};
 
-  const people: Person[] = [
-    { id: '1', name: 'Kopčius', surname: 'Prakopimas' },
-    {
-      id: '2', name: 'Vanda', surname: 'Nežinaitė', biography: 'Esu viską nežinanti',
-    },
-    {
-      id: '3', name: 'Romanas', surname: 'Knygauskas', biography: 'Mėgstu skaityti knygas',
-    },
-  ];
+type Car = {
+  brand: string,
+  model: string,
+  year: string
+};
 
-  const updatePerson = (id: string, data: PersonPatch): Person => {
-    const foundPerson = people.find((p) => p.id === id);
-    if (foundPerson === undefined) throw new Error(`Neras vartotojas su id: '${id}'`);
+// Type extends Row -> Bendrinis tipas Type [turi būti] Row
+class Table<Type extends Row> {
+  public htmlElement: HTMLTableElement;
 
-    const patchedPerson: Person = {
-      ...foundPerson,
-      ...data,
-    };
+  private data: Type[];
 
-    return patchedPerson;
-  };
+  public constructor(data: Type[]) {
+    this.htmlElement = document.createElement('table');
+    this.data = data;
 
-  const personId: string = '1';
-  const personPatchData: PersonPatch = { biography: 'Kalnų naikintuvas' };
-
-  console.table(people);
-  console.log('updatePerson', {
-    id: personId,
-    data: personPatchData,
-  });
-
-  const updatedPerson = updatePerson(personId, personPatchData);
-  console.log(updatedPerson);
-}
-console.groupEnd();
-
-console.groupCollapsed('2. Kas yra  ir kaip naudojamos noniminės funkcijos?');
-{
-  // Anonimė funkcija, tai naujo funkcijos deklaravimas kviečiant kitą funkciją;
-
-  // Iš anksto aprašyta funkcija
-  const sumNumbersReducer = (currentTotal: number, number: number): number => currentTotal + number;
-
-  const numbers: number[] = [1, 2, 3];
-
-  const numberSum = numbers.reduce(sumNumbersReducer);
-  //                                   ↙↙↙↙↙↙↙↙ Anoniminė funkcija ↘↘↘↘↘↘↘↘↘↘↘
-  const numberSum2 = numbers.reduce((currentTotal, number) => currentTotal + number);
-
-  console.log({
-    numbers,
-    numberSum,
-    numberSum2,
-  });
-}
-console.groupEnd();
-
-console.groupCollapsed('3. OOP inkapsuliacija. Kaip ir kada naudoti?');
-{
-  /*
-    Inkapsuliacija tai reikšmės/funkcijos pasiekiamumo ribojimas.
-
-    Leidami programuotojams pasiekti reikšmę tiesiogiai (be ribojimų) rizikuojame,
-    jog tai bus padaroma nekorektiškai.
-
-    Inkapsuliacija padeda mums užtrikti ir suvaldyti reikšmių naudojimą/priskyrimą
-  */
-
-  class Person {
-    public name: string;
-
-    public surname: string;
-
-    private age: number;
-
-    public constructor(name: string, surname: string, age: number) {
-      this.name = name;
-      this.surname = surname;
-      this.age = age;
-    }
-
-    // Funkcija, kuri inkapsuliuoja reikšmės gavimą
-    public getAge = (): number => this.age;
-
-    // Funkcija, kuri inkapsuliuoja reikšmės priskyrimą
-    public setAge = (newAge: number): void => {
-      if (newAge > 1500) {
-        console.error('Eik peklon vampyre!');
-        return;
-      }
-      if (newAge < 1) {
-        console.error('Tu dar negimei');
-        return;
-      }
-
-      this.age = newAge;
-    };
+    this.initialize();
   }
 
-  const person1 = new Person('Kibiras', 'Dundauskas', 12);
-  const person2 = new Person('Lempa', 'Daužaitė', 15);
-  const people: Person[] = [
-    person1,
-    person2,
-  ];
+  private createHeaders = () => {
+    const keys = Object.keys(this.data[0]);
+    const headerElementsString = keys
+      .map((key) => `<th scope="col">${key[0].toUpperCase() + key.slice(1)}</th>`)
+      .join('');
 
-  // Nustatoma amžiaus savybė naudojant set'erius
-
-  person1.setAge(16000);
-  person1.setAge(16);
-  person2.setAge(-55);
-  // person2.setAge(1);
-
-  console.table(people);
-}
-console.groupEnd();
-
-console.groupCollapsed('4. OOP kompozicija. Kas tai yra?');
-{
-  /*
-    Kompozicija tai viena iš objektiškai orientuoto programavimo (OOP) paradigmų.
-
-    Kompozicija - tai ryžys tarp klasių, kuomet vienas iš klasės objektų priklauso kitam KITOS
-    klasės objektui, pvz.:
-      * Moduliai sudaro Programas
-  */
-
-  class Program {
-    private static count = 0;
-
-    private id: string;
-
-    private title: string;
-
-    private modules: Module[];
-
-    public constructor(title: string) {
-      Program.count += 1;
-
-      this.id = `program-${Program.count}`;
-      this.title = title;
-      this.modules = [];
-    }
-
-    public addModule = (module: Module): void => {
-      this.modules.push(module);
-    };
-  }
-
-  class Module {
-    private static count = 0;
-
-    private id: string;
-
-    private title: string;
-
-    public constructor(title: string) {
-      Module.count += 1;
-
-      this.id = `module-${Module.count}`;
-      this.title = title;
-    }
-  }
-
-  // Programos, kurioms glai būti priskirti moduliai
-  const tsFullstack = new Program('TypeScript fullstack');
-  const feAdvanced = new Program('Front-end advanced');
-
-  const moduleHTML = new Module('HTML');
-  const moduleCSS = new Module('CSS');
-  const moduleJS = new Module('JS');
-  const moduleJSDom = new Module('JSDom');
-  const moduleTSBasics = new Module('TSBasics');
-  const moduleReact = new Module('React.js');
-  const moduleVue = new Module('Vue.js');
-  const moduleAngular = new Module('Angular.js');
-  const moduleTSReact = new Module('TSReact');
-  const moduleExpress = new Module('Express');
-  const moduleTSExpress = new Module('TSExpress');
-
-  // Programoms priskiriami moduliai
-  tsFullstack.addModule(moduleHTML);
-  tsFullstack.addModule(moduleCSS);
-  tsFullstack.addModule(moduleJS);
-  tsFullstack.addModule(moduleJSDom);
-  tsFullstack.addModule(moduleTSBasics);
-  tsFullstack.addModule(moduleReact);
-  tsFullstack.addModule(moduleTSReact);
-  tsFullstack.addModule(moduleExpress);
-  tsFullstack.addModule(moduleTSExpress);
-
-  feAdvanced.addModule(moduleHTML);
-  feAdvanced.addModule(moduleCSS);
-  feAdvanced.addModule(moduleJS);
-  feAdvanced.addModule(moduleJSDom);
-  feAdvanced.addModule(moduleReact);
-  feAdvanced.addModule(moduleVue);
-  feAdvanced.addModule(moduleAngular);
-
-  console.log(tsFullstack);
-  console.log(feAdvanced);
-}
-console.groupEnd();
-
-console.groupCollapsed('5. Kas yra Promise?');
-{
-  /*
-    Promise tai asinchroniniam darbui aprašyti skirtas prototipas.
-      * sinchroninis darbas - tai pilnas kompiuterio resursų naudojimas atlikti užduotims
-      * asinchronimas darbas - tai darbas, kuriam atlikti reikia sulaukti 'atsakymų
-        iš kitų programos sitemos dalių'
-
-    Aprašant Promise'ą reikia perduoti funkcija, kuri atlieka asinchroninio darbo logiką
-      * 1 parametras(resolve) - funkcija, kurią reikia iškviesti sėkmės atveju
-      * 2 parametras(reject) - funkcija, kurią reikia iškviesti NEsekmės atveju
-
-    Sukūrus naują Promise'ą JavaScript kodas, vykdo po apačia aprašytas komandas nelaukdamas
-    Promise'o atsakymų. Todėl aprašant Promise'us turi apdoroti jo grąžinimo rezultatą su
-    tokiais specialiais blokais:
-      * then - aprodojamas sėkmingo Promiso'o atvejis
-      * catch - aprodojamas NEsėkmingo Promiso'o atvejis
-
-    Promise'as turi 3 būsenas:
-      * pending - Promise'as laukia atsakymo
-      * resolved - Promise'as įsivykdė sėkmingai
-      * rejected - Promise'as įsivykdė NEsėkmingai
-  */
-
-  type User = {
-    name: string,
-    money: number,
+    return headerElementsString;
   };
 
-  type Product = {
-    title: string,
-    price: number
-  };
+  private createBodyRows = () => {
+    const keys = Object.keys(this.data[0]) as (keyof Type)[];
 
-  const bagotas: User = {
-    name: 'Spnceris',
-    money: 1000000,
-  };
+    const rowsString = this.data
+      .map((rowData) => {
+        const rowString = keys
+          .map((key) => {
+            const cell = `<td>${rowData[key]}</td>`;
 
-  const allProducts: Product[] = [
-    { title: 'Peins', price: 0.89 },
-    { title: 'Mersas', price: 90000 },
-    { title: 'Paveikslamas', price: 499.99 },
-  ];
+            return cell;
+          })
+          .join('');
 
-  const intervalId = setInterval(() => {
-    console.log('Laukiamas apmokėjimas');
-  }, 100);
-
-  //  Asinchroninio darbo atlikimas standartiniu būdu
-  {
-    const makePayment = (
-      user: User,
-      products: Product[],
-    ): Promise<string> => new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (user.money > products.reduce((total, p) => total + p.price, 0)) {
-          resolve('Sėkmingai atliktas pirkimas');
-        } else {
-          reject('NEsėkmingai atliktas pirkimas');
-        }
-      }, 2000);
-    });
-
-    // Fukcija kuri grąžina promise:
-    makePayment(bagotas, allProducts)
-      .then((successData) => {
-        console.log('THEN BLOKAS');
-        console.log(successData);
+        return `<tr>${rowString}</tr>`;
       })
-      .catch((failureData) => {
-        console.log('CATCH BLOKAS');
-        console.error(failureData);
-      })
-      .finally(() => {
-        console.log('FINALLY BLOKAS');
-        clearInterval(intervalId);
-      });
-  }
+      .join();
+    return rowsString;
+  };
 
-  // Asinchronio darbo atlikimas su nauja asinchroninių fukcijų sitankse
-  {
-    const wait = (ms: number) => new Promise((res) => {
-      setTimeout(() => res(true), ms);
-    });
-    // Asinchroninė funkcija yra sintetinis promiso kūrimas
-    //                  ↘↘↘
-    const makePayment = async (
-      user: User,
-      products: Product[],
-    ): Promise<string> => {
-      await wait(2000);
-      if (user.money > products.reduce((total, p) => total + p.price, 0)) {
-        return 'Sėkmingai atliktas pirkimas';
-      }
-      throw new Error('NEsėkmingai atliktas pirkimas');
-    };
-    // Asinchroninė funkcija tai - Fukcija kuri grąžina promise
-    // !!!!!!! TIK ASICHRONINĖSE FUNKCIJOSE GALITE RAŠYTI DIREKTYVĄ <await> !!!!!!!!!!!
-
-    // IFFE - Imediatly invoked function expresssion
-    /*
-      Kodas naršyklės JavaScript faile vykdomas sinchroniškai, tačiau kartais mum reikia jį
-      vykdyti asinchroniškai, tam galime sukurti anoniminę asinchroninę fukciją
-      kurti iškarto yra iškviečiama. Tokios funkcijos bloke, galime rašyti Promise'ų
-      sulaukimo logiką naudojant naują sintaksę
-    */
-    (async () => {
-      try {
-        const successData = await makePayment(bagotas, allProducts);
-        console.log('THEN BLOKAS');
-        console.log(successData);
-      } catch (failureData) {
-        console.log('CATCH BLOKAS');
-        console.error(failureData);
-      } finally {
-        console.log('FINALLY BLOKAS');
-        clearInterval(intervalId);
-      }
-    })();
-  }
-
-  /*
-    Asinchroninė funkcija yra užrašyta deklaratyviu kodo rašymo stiliumi,
-    kas didina kodo skaitomumą ir padeda lengviau suprasti asinchroninių operacijų logiką
-      * https://miro.medium.com/max/1276/0*GLhhuxHI3I0tnvdN
-      * https://miro.medium.com/max/721/1*zxx4iQAG4HilOIQqDKpxJw.jpeg
-  */
+  initialize = () => {
+    this.htmlElement.className = 'table table-striped border';
+    this.htmlElement.innerHTML = `
+    <thead>
+      <tr>
+        ${this.createHeaders()}
+      </tr>
+    </thead>
+    <tbody>
+      ${this.createBodyRows()}
+    </tbody>
+    `;
+  };
 }
-console.groupEnd();
+
+const students: Student[] = [
+  {
+    name: 'stud1', surname: 'surname1', age: '19', course: '1',
+  },
+  {
+    name: 'stud2', surname: 'surname2', age: '20', course: '2',
+  },
+  {
+    name: 'stud3', surname: 'surname3', age: '21', course: '3',
+  },
+  {
+    name: 'stud4', surname: 'surname4', age: '28', course: '1',
+  },
+];
+
+const cars: Car[] = [
+  { brand: 'brand1', model: 'model1', year: '2010' },
+  { brand: 'brand2', model: 'model2', year: '2010' },
+  { brand: 'brand3', model: 'model3', year: '2010' },
+  { brand: 'brand4', model: 'model4', year: '2010' },
+];
+
+const studentsTable = new Table(students);
+const carTable = new Table(cars);
+
+const rootElement = document.querySelector('#root') as HTMLDivElement;
+
+rootElement.append(
+  studentsTable.htmlElement,
+  carTable.htmlElement,
+);
