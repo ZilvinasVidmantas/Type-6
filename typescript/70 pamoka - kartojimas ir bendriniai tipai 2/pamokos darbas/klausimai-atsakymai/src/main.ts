@@ -27,49 +27,63 @@ console.groupCollapsed('1. Kaip sukonkretinti tipą kuomet naudojama tipų sajun
 }
 console.groupEnd();
 
-console.groupCollapsed('2. Kaip kuriami struktūros naudojančios bendrinius tipus?');
+console.groupCollapsed('2. Kaip kuriamos struktūros naudojančios bendrinius tipus?');
 {
-  type NumberNode = {
-    next?: NumberNode,
-    data: number,
+  type Person = {
+    name: string,
+    surname: string,
   }
 
-  const node1: NumberNode = { data: 1 };
-  const node2: NumberNode = { data: 2 };
-  const node3: NumberNode = { data: 3 };
-  const node4: NumberNode = { data: 4 };
-  const node5: NumberNode = { data: 5 };
-  const node6: NumberNode = { data: 6 };
-
-  node1.next = node2;
-  node2.next = node3;
-  node3.next = node4;
-  node4.next = node5;
-  node5.next = node6;
-
-  // Paversti sąraša masyvu
-  // 1. Atspausdinti kiekvieną sąrašo elementą
-  /*
-    * pradinis/darbinis kitamasis - iteratorius
-    * tęstinumo/baigtinė salyga
-    * itaratoriaus keitimas tokius būdu, jog salyga artėtų link baigtinės - žingnis
-  */
-  const arr: number[] = [];
-
-  for (
-    let currentNode: NumberNode | undefined = node1; // pradinis/darbinis kitamasis - iteratorius
-    currentNode !== undefined; //tęstinumo/baigtinė salyga
-    currentNode = currentNode.next // itaratoriaus keitimas tokius būdu, jog salyga artėtų ling baigtinės - žingnis
-  ) {
-    arr.push(currentNode.data);
+  //          ↙↙↙↙↙ - Node tipui perduodamas parametras, kurį pavadiname DataType
+  type Node<DataType> = {
+    //            ↙↙↙↙↙ - Gauto tipo DataType panaudojimas 
+    next?: Node<DataType>,
+    //      ↙↙↙↙↙ - Gauto tipo DataType panaudojimas 
+    data: DataType,
   }
-  console.log(arr);
 
-  /*
-    Parašykite logiką iteruoti per masyvą naudojant ciklus:
-      * while [10]
-      * do while [10]
-  */
+  class List<DataType> {
+    private head?: Node<DataType>;
 
+    public push = (data: DataType) => {
+      const newNode: Node<DataType> = { data };
+
+      // Sąraše nėra elementų
+      if (this.head === undefined) {
+        this.head = newNode;
+        return;
+      }
+
+      // Sąraše jau yra elementų
+      let lastNode = this.head;
+      while (lastNode.next !== undefined) lastNode = lastNode.next;
+      lastNode.next = newNode;
+    }
+  }
+
+  const numbersList: List<number> = new List();
+  numbersList.push(1);
+  numbersList.push(2);
+  numbersList.push(3);
+  numbersList.push(4);
+  numbersList.push(5);
+
+  const stringsList: List<string> = new List();
+  stringsList.push('Labas');
+  stringsList.push('vakaras');
+  stringsList.push('ponai');
+  stringsList.push('ir');
+  stringsList.push('ponios');
+
+  const peopleList: List<Person> = new List();
+  peopleList.push({ name: 'vardenis1', surname: 'pavardenis1' });
+  peopleList.push({ name: 'vardenis2', surname: 'pavardenis2' });
+  peopleList.push({ name: 'vardenis3', surname: 'pavardenis3' });
+  peopleList.push({ name: 'vardenis4', surname: 'pavardenis4' });
+  peopleList.push({ name: 'vardenis5', surname: 'pavardenis5' });
+
+  console.log(numbersList);
+  console.log(stringsList);
+  console.log(peopleList);
 }
 console.groupEnd(); 
