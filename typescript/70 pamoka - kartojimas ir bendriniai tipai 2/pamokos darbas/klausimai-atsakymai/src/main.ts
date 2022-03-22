@@ -165,9 +165,7 @@ console.groupCollapsed('4. Kas yra ir kaip veikia <fetch>');
   const printTable = (data: any[]) => console.table(data);
   const handleError = (err: string | Error) => console.error(err);
 
-  fetch('https://jsonplaceholder.typicode.com/todos', {
-    
-  })
+  fetch('https://jsonplaceholder.typicode.com/todos')
     .then(res => res.json())
     .then(printTable)
     .catch(handleError);
