@@ -86,4 +86,101 @@ console.groupCollapsed('2. Kaip kuriamos struktūros naudojančios bendrinius ti
   console.log(stringsList);
   console.log(peopleList);
 }
-console.groupEnd(); 
+console.groupEnd();
+
+
+console.groupCollapsed('3. Ką reiškia implements, extends?');
+{
+  /*
+    implements - ką gali daryti? / funkcionalumo įgalinimas
+      Naudojama kuriant bendrą funkcionalumą skirtingiems objektams, naudojant interface'us
+
+    extends - kas tai yra? / apibūdinimas
+      Naudojama klasių hierarchijoje - paveldimume
+  */
+  interface IMovable {
+    coordinates: [number, number],
+    setCoordinates: (newCoordinates: [number, number]) => void;
+  }
+
+  class Person implements IMovable {
+    private name: string;
+    private surname: string;
+
+    public coordinates: [number, number];
+
+    public constructor(name: string, surname: string) {
+      this.name = name;
+      this.surname = surname;
+      this.coordinates = [0, 0];
+    }
+
+    public printFullname = (): void => {
+      const { name, surname } = this;
+      console.log(name, surname);
+    }
+
+    public setCoordinates = (newCoordinates: [number, number]) => {
+      this.coordinates = newCoordinates;
+    }
+  }
+
+  class Worker extends Person {
+    private hourPay: number;
+
+    constructor(name: string, surname: string, hourPay: number) {
+      super(name, surname);
+
+      this.hourPay = hourPay;
+    }
+  }
+
+  class Student extends Person {
+    private university: string;
+
+    constructor(name: string, surname: string, university: string) {
+      super(name, surname);
+
+      this.university = university;
+    }
+  }
+
+  const worker = new Worker('Darbuolis', 'Greituolis', 20);
+  const student = new Student('Kalikas', 'Skalikas', 'VU');
+  const person = new Person('Turėjas', 'SocialiniGyvenima');
+
+  worker.printFullname();
+  student.printFullname();
+  person.printFullname();
+}
+console.groupEnd();
+
+console.groupCollapsed('4. Kas yra ir kaip veikia <fetch>');
+{
+  /*
+    fetch - tai funkcija kuri grąžina Promise
+      Ši funkcija skirta tam, kad siųsti užklausas į kitus kompiuterius HTTP(s) protokolu 
+  */
+
+  const printTable = (data: any[]) => console.table(data);
+  const handleError = (err: string | Error) => console.error(err);
+
+  fetch('https://jsonplaceholder.typicode.com/todos', {
+    
+  })
+    .then(res => res.json())
+    .then(printTable)
+    .catch(handleError);
+
+  (async () => {
+    try {
+      const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+      const data = await res.json();
+      printTable(data);
+    } catch (error) {
+      handleError(error as Error);
+    }
+  })();
+
+}
+console.groupEnd();
