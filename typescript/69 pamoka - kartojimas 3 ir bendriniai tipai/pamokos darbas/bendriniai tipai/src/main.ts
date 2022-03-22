@@ -57,7 +57,7 @@ class Table<Type extends Row> {
 
         return `<tr>${rowString}</tr>`;
       })
-      .join();
+      .join('');
     return rowsString;
   };
 
