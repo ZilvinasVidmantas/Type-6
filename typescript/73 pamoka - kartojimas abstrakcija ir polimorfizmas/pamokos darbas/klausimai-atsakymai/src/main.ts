@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-lone-blocks */
 
-console.group('1. Destrukturizacija');
+console.groupCollapsed('1. Destrukturizacija');
 {
   /*
     Destrūkturizacija - tai struktūros skaidymas. JavsScript kalboje, destrūkturizuojami yra
@@ -309,5 +309,46 @@ console.group('1. Destrukturizacija');
     console.groupEnd();
   }
   console.groupEnd();
+}
+console.groupEnd();
+
+console.group('2. Kas yra override');
+{
+  class Person {
+    constructor(
+      protected name: string,
+      protected surname: string,
+    ) { }
+
+    public getString(): string {
+      const { name, surname } = this;
+
+      return `${name} ${surname}`;
+    }
+  }
+
+  class Student extends Person {
+    constructor(
+      private course: string,
+      name: string,
+      surname: string,
+    ) {
+      super(name, surname);
+    }
+
+    public override getString(): string {
+      const { name, surname, course } = this;
+
+      return `${name} ${surname}, course: ${course}`;
+    }
+  }
+
+  const p1 = new Person('Kruplius', 'Egzostas');
+  const p2 = new Person('Vanagis', 'Mauras');
+  const stud1 = new Student('1', 'Studentas', 'Zubrius');
+
+  const people = [p1, p2, stud1];
+
+  people.forEach((person) => console.log(`${person.getString()}`));
 }
 console.groupEnd();
