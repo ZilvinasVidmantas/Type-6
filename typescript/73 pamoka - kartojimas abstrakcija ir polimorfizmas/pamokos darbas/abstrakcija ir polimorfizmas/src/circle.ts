@@ -23,6 +23,13 @@ class Circle extends Shape2D {
 
     return Math.PI * radius ** 2;
   };
+
+  public draw = (context2D: CanvasRenderingContext2D): void => {
+    const { center: { x, y }, radius } = this;
+    context2D.beginPath();
+    context2D.arc(x, y, radius, 0, 2 * Math.PI);
+    context2D.stroke();
+  };
 }
 
 export default Circle;
