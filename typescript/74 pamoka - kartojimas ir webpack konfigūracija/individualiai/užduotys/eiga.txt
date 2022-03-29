@@ -82,7 +82,7 @@
     ],
   }
 
-5. Sukurkite webpack vystymo aplikos konfigūracijos failą:
+5. Sukurkite webpack vystymo aplikos konfigūracijos failą 'webpack.config.dev.js':
   const path = require('path');
   const { merge } = require('webpack-merge');
   const webpackCommon = require('./webpack.config.common');
@@ -100,7 +100,7 @@
     },
   });
 
-6. Sukurkite webpack produkcinės aplikos konfigūracijos failą:
+6. Sukurkite webpack produkcinės aplikos konfigūracijos failą 'webpack.config.prod.js':
   const { merge } = require('webpack-merge');
   const webpackCommon = require('./webpack.config.common');
 
