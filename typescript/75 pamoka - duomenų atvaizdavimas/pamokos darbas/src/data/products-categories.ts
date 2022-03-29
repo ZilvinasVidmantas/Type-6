@@ -1,6 +1,6 @@
 import ProductCategory from '../types/product-category';
 
-const productCategories: ProductCategory[] = [
+const productsCategories: ProductCategory[] = [
   {
     id: '1',
     productId: '1',
@@ -112,4 +112,4 @@ const productCategories: ProductCategory[] = [
   },
 ];
 
-export default productCategories;
+export default productsCategories;

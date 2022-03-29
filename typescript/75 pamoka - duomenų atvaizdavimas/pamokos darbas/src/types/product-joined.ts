@@ -1,8 +1,7 @@
 import Product from './product';
-import Category from './category';
 
 type ProductJoined = Product & {
-  categories: Category[],
+  categories: string,
 };
 
 export default ProductJoined;
