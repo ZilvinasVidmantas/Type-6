@@ -1,0 +1,23 @@
+Jūsų pamokos tikslas atvaizduoti duomenis lentele
+
+Failų struktūra:
+  components/
+    aplankas skirtas komponentams - klasėms, kurios naudojamos atvaizduoti elementams DOM'e
+
+  data/
+    duomenų failai
+
+  helpers/
+    Pagalibinės funkcijos ir klasės, skirtos kodo švarinimui ir perpanaudojimui
+
+  types/
+    Tarp skirtingų klasių/komponentų naudojami tipai
+
+
+Aplanke matote failą 'car-entity-schema.jpg'. Tai esybių ryšių diagrama (entity relation diagram).
+Pagal šia schemą duoti esybių duomenys aplanke './data'. 
+
+1. aplanke './types' duoti tipų 'griaučiai' kuriuos turite implementuoti pagal schemą ir duomenis.
+2. './helpers/cars-collection.ts' faile panaudokite klasę saugoti mašinoms ir aprašykite metodą gauti apjungtoms mašinoms,
+  tokiu formatu, koks jūsų nuomone tiks lentelei
+3. Sukurkite lentelės komponentą, ir panaudokite duomenis atvaizduoti duomenis lentele ir prijunkite jį į App komponentą.
