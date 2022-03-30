@@ -3,26 +3,36 @@ type SelectOption = {
   value: string,
 };
 
+type SelectFieldProps = {
+  options: SelectOption[],
+  onChange: (value: string) => void
+};
+
 class SelectField {
   public htmlElement: HTMLDivElement;
 
-  private options: SelectOption[];
+  private htmlSelect: HTMLSelectElement;
 
-  public constructor(options: SelectOption[]) {
-    this.options = options;
+  public constructor(private props: SelectFieldProps) {
     this.htmlElement = document.createElement('div');
+    this.htmlSelect = document.createElement('select');
 
     this.initialize();
   }
 
   private initialize = () => {
-    this.htmlElement.innerHTML = `
-    <label for="select" class="form-label">Produktų kategorija</label>
-    <select id="select" class="form-select">
-      ${this.options
-        .map(({ title, value }) => `<option value="${value}">${title}</option>`)
-        .join('')}
-    </select>`;
+    const { options, onChange } = this.props;
+
+    this.htmlSelect.id = 'select';
+    this.htmlSelect.className = 'form-select';
+    this.htmlSelect.innerHTML = options
+      .map(({ title, value }) => `<option value="${value}">${title}</option>`)
+      .join('');
+    this.htmlSelect.addEventListener('change', () => onChange(this.htmlSelect.value));
+
+    this.htmlElement.innerHTML = '<label for="select" class="form-label">Produktų kategorija</label>';
+
+    this.htmlElement.append(this.htmlSelect);
   };
 }
 

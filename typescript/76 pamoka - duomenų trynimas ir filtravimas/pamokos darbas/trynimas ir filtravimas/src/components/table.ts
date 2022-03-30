@@ -14,15 +14,11 @@ export type TableProps<Type> = {
 class Table<Type extends RowData> {
   public htmlElement: HTMLTableElement;
 
-  private props: TableProps<Type>;
-
   private tbody: HTMLTableSectionElement;
 
   private thead: HTMLTableSectionElement;
 
-  public constructor(props: TableProps<Type>) {
-    this.props = props;
-
+  public constructor(private props: TableProps<Type>) {
     this.checkColumnsCompatability();
 
     this.htmlElement = document.createElement('table');

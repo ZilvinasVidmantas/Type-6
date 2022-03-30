@@ -20,12 +20,20 @@ class App {
     this.htmlElement = foundElement;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private handleCategoryChange = (categoryId: string) => {
+    console.log('Pasikeitė kategorija:', categoryId);
+  };
+
   public initialize = (): void => {
     const categoryOptions = [
       { value: '-1', title: 'Visos kategorijos' },
       ...categories.map(({ id, title }) => ({ title, value: id })),
     ];
-    const categorySelect = new SelectField(categoryOptions);
+    const categorySelect = new SelectField({
+      options: categoryOptions,
+      onChange: this.handleCategoryChange,
+    });
 
     const productTable = new Table({
       title: 'Visos prekės',
@@ -51,3 +59,13 @@ class App {
 }
 
 export default App;
+
+/*
+  // 1. Gauti pakeistos kategorijos id App komponente
+  2. Table - įgalinti lentelės duomenų atnaujinimą
+  3. ProductsCollection įgalinti produktų gavimą pagal kategorijos id
+  4. Apjungti funkcionalumą:
+    pasikeitus kategorijai[1.] nuadosime ProductsCollection, kad gauti produktus pagal
+    pasikeitusią kategoriją[3.] ir tuomet perduosi duomenis lentelei,
+    kuri atnaujins lentelės duomenis [2.]
+*/
