@@ -3,26 +3,43 @@ import products from '../data/products';
 import categories from '../data/categories';
 import productsCategories from '../data/products-categories';
 import ProductsCollection from '../helpers/products-collection';
-import stringifyProperties from '../helpers/stringify-properties';
+import stringifyProps, { StringifiedProps } from '../helpers/stringify-props';
 import SelectField from './select-field';
+import ProductJoined from '../types/product-joined';
 
 class App {
   private htmlElement: HTMLElement;
 
   private productsCollection: ProductsCollection;
 
+  private productsTable: Table<StringifiedProps<ProductJoined>>;
+
   public constructor(selector: string) {
     const foundElement = document.querySelector<HTMLElement>(selector);
-    this.productsCollection = new ProductsCollection(products, categories, productsCategories);
-
     if (foundElement === null) throw new Error(`Nerastas elementas su selektoriumi '${selector}'`);
+
+    this.productsCollection = new ProductsCollection(products, categories, productsCategories);
+    this.productsTable = new Table({
+      title: 'Visos prekės',
+      columns: {
+        id: 'Id',
+        title: 'Pavadinimas',
+        price: 'Kaina',
+        categories: 'Kategorijos',
+        description: 'Aprašymas',
+      },
+      rowsData: this.productsCollection.all.map(stringifyProps),
+    });
 
     this.htmlElement = foundElement;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private handleCategoryChange = (categoryId: string) => {
     console.log('Pasikeitė kategorija:', categoryId);
+    this.productsTable.updateProps({
+      rowsData: this.productsCollection.all.map(stringifyProps).slice(0, 3),
+      title: 'TESTUKAZZZZZ',
+    });
   };
 
   public initialize = (): void => {
@@ -35,23 +52,11 @@ class App {
       onChange: this.handleCategoryChange,
     });
 
-    const productTable = new Table({
-      title: 'Visos prekės',
-      columns: {
-        id: 'Id',
-        title: 'Pavadinimas',
-        price: 'Kaina',
-        categories: 'Kategorijos',
-        description: 'Aprašymas',
-      },
-      rowsData: this.productsCollection.all.map(stringifyProperties),
-    });
-
     const container = document.createElement('div');
     container.className = 'container my-5 d-flex flex-column gap-3';
     container.append(
       categorySelect.htmlElement,
-      productTable.htmlElement,
+      this.productsTable.htmlElement,
     );
 
     this.htmlElement.append(container);
@@ -62,7 +67,7 @@ export default App;
 
 /*
   // 1. Gauti pakeistos kategorijos id App komponente
-  2. Table - įgalinti lentelės duomenų atnaujinimą
+  // 2. Table - įgalinti lentelės duomenų atnaujinimą
   3. ProductsCollection įgalinti produktų gavimą pagal kategorijos id
   4. Apjungti funkcionalumą:
     pasikeitus kategorijai[1.] nuadosime ProductsCollection, kad gauti produktus pagal

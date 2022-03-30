@@ -93,6 +93,15 @@ class Table<Type extends RowData> {
     this.renderHeadView();
     this.renderBodyView();
   };
+
+  public updateProps = (newProps: Partial<TableProps<Type>>): void => {
+    this.props = {
+      ...this.props,
+      ...newProps,
+    };
+
+    this.renderView();
+  };
 }
 
 export default Table;
