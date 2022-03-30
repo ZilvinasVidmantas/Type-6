@@ -9,6 +9,7 @@ export type TableProps<Type> = {
   title: string,
   columns: Type,
   rowsData: Type[],
+  onDelete: (id: string) => void,
 };
 
 class Table<Type extends RowData> {
@@ -69,6 +70,19 @@ class Table<Type extends RowData> {
     `;
   };
 
+  private appendActionsCell = (tr: HTMLTableRowElement, id: string) => {
+    const { onDelete } = this.props;
+    const td = document.createElement('td');
+    const btnDelete = document.createElement('button');
+    btnDelete.className = 'btn btn-danger';
+    btnDelete.type = 'button';
+    btnDelete.innerHTML = '⨉';
+    btnDelete.addEventListener('click', () => onDelete(id));
+
+    td.append(btnDelete);
+    tr.append(td);
+  };
+
   private renderBodyView = (): void => {
     const { rowsData, columns } = this.props;
 
@@ -82,6 +96,8 @@ class Table<Type extends RowData> {
           .join(' ');
 
         rowHtmlElement.innerHTML = cellsHtmlString;
+
+        this.appendActionsCell(rowHtmlElement, rowData.id);
 
         return rowHtmlElement;
       });

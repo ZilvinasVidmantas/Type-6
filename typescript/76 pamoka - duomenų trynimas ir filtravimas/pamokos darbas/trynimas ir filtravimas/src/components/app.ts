@@ -29,12 +29,18 @@ class App {
         description: 'Aprašymas',
       },
       rowsData: this.productsCollection.all.map(stringifyProps),
+      onDelete: this.handleProductDelete,
     });
 
     this.htmlElement = foundElement;
   }
 
-  private handleCategoryChange = (categoryId: string) => {
+  // eslint-disable-next-line class-methods-use-this
+  private handleProductDelete = (productId: string): void => {
+    console.log('Trinamas produktas:', productId);
+  };
+
+  private handleCategoryChange = (categoryId: string): void => {
     const category = categories.find((c) => c.id === categoryId);
 
     if (category) {
@@ -84,5 +90,20 @@ export default App;
 */
 
 /*
+  // 1. Kiekvienoj eilutėje turite sukurti ištrynimo mygtuką
+  // 2. Paspaudus ištrynimo mygtuką, turi vykdytis funkcija App komponente
+  3. ProductsCollection klasėje sukurti metodą ištrinti elementui
 
+  PROBLEMA - po ištrynimo reikia per naujo partraukti ProductsCollection duomenis, tačiau
+  nėra žinoma, ar reikia partraukti visus? O galbūt pagal kažkokią kategoriją? Vienas iš daugelio
+  sprendimo variantų, būtų išsaugoti paskutinį pasirinktą kategorijos id raktą ir pagal tai, po
+  ištrynimo atnaujinti App (ir tuo pačiu Table) duomenis.
+  Tokiam funkcionalumui pasiekti, reikia retrūkturizuoti App komponentą, jog jo atnaujinimas būtų
+  atliekamas atskirame metode nuo pradinių veiksmų.
+
+  4. Sukurti pasirinktos kategorijos kintamjį
+  5. Išskaidyti App komponento pradinius veiksmus ir veiksmų atnaujinimą
+  6. Perrašyti Vaikinių komponentų atnaujinimo logiką anudojant App savybes
+  7. Įgalinti trynimą, ištrinant produktą iš ProductsCollection ir kviečiant App duomenų atnaujinimo
+  metodą
 */
