@@ -44,6 +44,10 @@ class ProductsCollection {
 
     return selectedProducts.map(this.joinProduct);
   };
+
+  public deleteProduct = (productId: string): void => {
+    this.products = this.products.filter((p) => p.id !== productId);
+  };
 }
 
 export default ProductsCollection;

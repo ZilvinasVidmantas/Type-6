@@ -14,10 +14,13 @@ class App {
 
   private productsTable: Table<StringifiedProps<ProductJoined>>;
 
+  private selectedCategoryId: string | null;
+
   public constructor(selector: string) {
     const foundElement = document.querySelector<HTMLElement>(selector);
     if (foundElement === null) throw new Error(`Nerastas elementas su selektoriumi '${selector}'`);
 
+    this.selectedCategoryId = null;
     this.productsCollection = new ProductsCollection(products, categories, productsCategories);
     this.productsTable = new Table({
       title: 'Visos prekės',
@@ -35,25 +38,18 @@ class App {
     this.htmlElement = foundElement;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private handleProductDelete = (productId: string): void => {
-    console.log('Trinamas produktas:', productId);
+    this.productsCollection.deleteProduct(productId);
+
+    this.updateData();
   };
 
   private handleCategoryChange = (categoryId: string): void => {
     const category = categories.find((c) => c.id === categoryId);
 
-    if (category) {
-      this.productsTable.updateProps({
-        title: category.title,
-        rowsData: this.productsCollection.getByCategoryId(categoryId).map(stringifyProps),
-      });
-    } else {
-      this.productsTable.updateProps({
-        title: 'Visos kategorijos',
-        rowsData: this.productsCollection.all.map(stringifyProps),
-      });
-    }
+    this.selectedCategoryId = category ? categoryId : null;
+
+    this.updateData();
   };
 
   public initialize = (): void => {
@@ -75,6 +71,23 @@ class App {
 
     this.htmlElement.append(container);
   };
+
+  private updateData = (): void => {
+    const { selectedCategoryId } = this;
+    const category = categories.find((c) => c.id === selectedCategoryId);
+
+    if (selectedCategoryId && category) {
+      this.productsTable.updateProps({
+        title: category.title,
+        rowsData: this.productsCollection.getByCategoryId(selectedCategoryId).map(stringifyProps),
+      });
+    } else {
+      this.productsTable.updateProps({
+        title: 'Visos prekės',
+        rowsData: this.productsCollection.all.map(stringifyProps),
+      });
+    }
+  };
 }
 
 export default App;
@@ -92,7 +105,7 @@ export default App;
 /*
   // 1. Kiekvienoj eilutėje turite sukurti ištrynimo mygtuką
   // 2. Paspaudus ištrynimo mygtuką, turi vykdytis funkcija App komponente
-  3. ProductsCollection klasėje sukurti metodą ištrinti elementui
+  // 3. ProductsCollection klasėje sukurti metodą ištrinti elementui
 
   PROBLEMA - po ištrynimo reikia per naujo partraukti ProductsCollection duomenis, tačiau
   nėra žinoma, ar reikia partraukti visus? O galbūt pagal kažkokią kategoriją? Vienas iš daugelio
@@ -100,10 +113,13 @@ export default App;
   ištrynimo atnaujinti App (ir tuo pačiu Table) duomenis.
   Tokiam funkcionalumui pasiekti, reikia retrūkturizuoti App komponentą, jog jo atnaujinimas būtų
   atliekamas atskirame metode nuo pradinių veiksmų.
+  Ir tuomet atlikus bet kokius duomenų arba App komponento kintamųjų pakitimus mes galėsi atnaujinti
+  vaikinių elementų atvaizdavima PAGAL pakitusius duomenis. Principas toks:
+    keičiame bet kokius duomenis -> kviečiame atbaujinimo metodą,
+    kuris atnaujina atvaizdavimą (perduodant vaikiniams elementams naujas/pakitusias savybes)
 
-  4. Sukurti pasirinktos kategorijos kintamjį
-  5. Išskaidyti App komponento pradinius veiksmus ir veiksmų atnaujinimą
-  6. Perrašyti Vaikinių komponentų atnaujinimo logiką anudojant App savybes
-  7. Įgalinti trynimą, ištrinant produktą iš ProductsCollection ir kviečiant App duomenų atnaujinimo
-  metodą
+  // 4. Sukurti pasirinktos kategorijos kintamajį
+  // 5. Išskaidyti App komponento pradinius veiksmus ir veiksmų atnaujinimą
+  // 6. Įgalinti trynimą, ištrinant produktą iš ProductsCollection ir kviečiant App duomenų
+  // atnaujinimo metodą
 */
