@@ -4,6 +4,7 @@ import categories from '../data/categories';
 import productsCategories from '../data/products-categories';
 import ProductsCollection from '../helpers/products-collection';
 import stringifyProperties from '../helpers/stringify-properties';
+import SelectField from './select-field';
 
 class App {
   private htmlElement: HTMLElement;
@@ -20,6 +21,12 @@ class App {
   }
 
   public initialize = (): void => {
+    const categoryOptions = [
+      { value: '-1', title: 'Visos kategorijos' },
+      ...categories.map(({ id, title }) => ({ title, value: id })),
+    ];
+    const categorySelect = new SelectField(categoryOptions);
+
     const productTable = new Table({
       title: 'Visos prekės',
       columns: {
@@ -33,8 +40,11 @@ class App {
     });
 
     const container = document.createElement('div');
-    container.className = 'container my-5';
-    container.appendChild(productTable.htmlElement);
+    container.className = 'container my-5 d-flex flex-column gap-3';
+    container.append(
+      categorySelect.htmlElement,
+      productTable.htmlElement,
+    );
 
     this.htmlElement.append(container);
   };
