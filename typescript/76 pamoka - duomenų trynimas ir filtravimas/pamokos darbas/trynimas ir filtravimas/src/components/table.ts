@@ -1,59 +1,101 @@
-type Row = {
-  [key: string]: string;
+import countObjectProperties from '../helpers/count-object-properties';
+
+type RowData = {
+  id: string,
+  [key: string]: string,
 };
 
-// Type extends Row -> Bendrinis tipas Type [turi būti] Row
-class Table<Type extends Row> {
+export type TableProps<Type> = {
+  title: string,
+  columns: Type,
+  rowsData: Type[],
+};
+
+class Table<Type extends RowData> {
   public htmlElement: HTMLTableElement;
 
-  private data: Type[];
+  private props: TableProps<Type>;
 
-  public constructor(data: Type[]) {
+  private tbody: HTMLTableSectionElement;
+
+  private thead: HTMLTableSectionElement;
+
+  public constructor(props: TableProps<Type>) {
+    this.props = props;
+
+    this.checkColumnsCompatability();
+
     this.htmlElement = document.createElement('table');
-    this.data = data;
+    this.thead = document.createElement('thead');
+    this.tbody = document.createElement('tbody');
 
     this.initialize();
   }
 
-  private createHeaders = () => {
-    const keys = Object.keys(this.data[0]);
-    const headerElementsString = keys
-      .map((key) => `<th scope="col">${key[0].toUpperCase() + key.slice(1)}</th>`)
-      .join('');
+  private checkColumnsCompatability = (): void => {
+    const { rowsData, columns } = this.props;
 
-    return headerElementsString;
+    if (this.props.rowsData.length === 0) return;
+    const columnCount = countObjectProperties(columns);
+
+    const columnsCompatableWithRowsData = rowsData.every((row) => {
+      const rowCellsCount = countObjectProperties(row);
+
+      return rowCellsCount <= columnCount;
+    });
+
+    if (!columnsCompatableWithRowsData) {
+      throw new Error('Nesutampa lentelės stulpelių skaičius su eilučių stulpelių skaičiumi');
+    }
   };
 
-  private createBodyRows = () => {
-    const keys = Object.keys(this.data[0]) as (keyof Type)[];
+  private initialize = (): void => {
+    this.htmlElement.className = 'table table-striped order border p-3';
+    this.htmlElement.append(
+      this.thead,
+      this.tbody,
+    );
 
-    const rowsString = this.data
-      .map((rowData) => {
-        const rowString = keys
-          .map((key) => {
-            const cell = `<td>${rowData[key] ?? '---'}</td>`;
-
-            return cell;
-          })
-          .join('');
-
-        return `<tr>${rowString}</tr>`;
-      })
-      .join('');
-    return rowsString;
+    this.renderView();
   };
 
-  initialize = () => {
-    this.htmlElement.className = 'table table-striped border';
-    this.htmlElement.innerHTML = `
-    <thead>
+  private renderHeadView = (): void => {
+    const { title, columns } = this.props;
+
+    const headersArray = Object.values(columns);
+    const headersRowHtmlString = headersArray.map((header) => `<th>${header}</th>`).join('');
+
+    this.thead.innerHTML = `
       <tr>
-        ${this.createHeaders()}
+        <th colspan="${headersArray.length}" class="text-center h3">${title}</th>
       </tr>
-    </thead>
-    <tbody>
-      ${this.createBodyRows()}
-    </tbody> `;
+      <tr>${headersRowHtmlString}</tr>
+    `;
+  };
+
+  private renderBodyView = (): void => {
+    const { rowsData, columns } = this.props;
+
+    this.tbody.innerHTML = '';
+    const rowsHtmlElements = rowsData
+      .map((rowData) => {
+        const rowHtmlElement = document.createElement('tr');
+
+        const cellsHtmlString = Object.keys(columns)
+          .map((key) => `<td>${rowData[key] ?? '---'}</td>`)
+          .join(' ');
+
+        rowHtmlElement.innerHTML = cellsHtmlString;
+
+        return rowHtmlElement;
+      });
+
+    this.tbody.append(...rowsHtmlElements);
+  };
+
+  private renderView = (): void => {
+    this.renderHeadView();
+    this.renderBodyView();
   };
 }
 

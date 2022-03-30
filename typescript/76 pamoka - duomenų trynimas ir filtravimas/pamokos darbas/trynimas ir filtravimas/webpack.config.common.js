@@ -2,22 +2,22 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/main.ts",
+  entry: './src/main.ts',
   resolve: {
-    extensions: ['.ts', '.js', '.json']
+    extensions: ['.ts', '.js', '.json'],
   },
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, 'public'),
   },
   module: {
     rules: [
       {
         test: /\.ts?$/,
         exclude: [
-          path.resolve(__dirname, "node_modules")
+          path.resolve(__dirname, 'node_modules'),
         ],
         // Actions:
-        loader: "ts-loader",
+        loader: 'ts-loader',
       },
     ],
   },
@@ -25,7 +25,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Development',
-      template: 'src/index.html'
+      template: 'src/index.html',
     }),
   ],
-}
+};
