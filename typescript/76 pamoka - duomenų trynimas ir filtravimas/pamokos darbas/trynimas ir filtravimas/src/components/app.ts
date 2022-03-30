@@ -35,11 +35,19 @@ class App {
   }
 
   private handleCategoryChange = (categoryId: string) => {
-    console.log('Pasikeitė kategorija:', categoryId);
-    this.productsTable.updateProps({
-      rowsData: this.productsCollection.all.map(stringifyProps).slice(0, 3),
-      title: 'TESTUKAZZZZZ',
-    });
+    const category = categories.find((c) => c.id === categoryId);
+
+    if (category) {
+      this.productsTable.updateProps({
+        title: category.title,
+        rowsData: this.productsCollection.getByCategoryId(categoryId).map(stringifyProps),
+      });
+    } else {
+      this.productsTable.updateProps({
+        title: 'Visos kategorijos',
+        rowsData: this.productsCollection.all.map(stringifyProps),
+      });
+    }
   };
 
   public initialize = (): void => {
@@ -68,9 +76,13 @@ export default App;
 /*
   // 1. Gauti pakeistos kategorijos id App komponente
   // 2. Table - įgalinti lentelės duomenų atnaujinimą
-  3. ProductsCollection įgalinti produktų gavimą pagal kategorijos id
-  4. Apjungti funkcionalumą:
-    pasikeitus kategorijai[1.] nuadosime ProductsCollection, kad gauti produktus pagal
-    pasikeitusią kategoriją[3.] ir tuomet perduosi duomenis lentelei,
-    kuri atnaujins lentelės duomenis [2.]
+  // 3. ProductsCollection įgalinti produktų gavimą pagal kategorijos id
+  // 4. Apjungti funkcionalumą:
+  //   pasikeitus kategorijai[1.] nuadosime ProductsCollection, kad gauti produktus pagal
+  //   pasikeitusią kategoriją[3.] ir tuomet perduosi duomenis lentelei,
+  //   kuri atnaujins lentelės duomenis [2.]
+*/
+
+/*
+
 */
