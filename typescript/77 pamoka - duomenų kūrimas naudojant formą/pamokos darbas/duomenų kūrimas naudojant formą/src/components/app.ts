@@ -6,6 +6,7 @@ import ProductsCollection from '../helpers/products-collection';
 import stringifyProps, { StringifiedProps } from '../helpers/stringify-props';
 import SelectField from './select-field';
 import ProductJoined from '../types/product-joined';
+import ProductForm from './product-form';
 
 class App {
   private htmlElement: HTMLElement;
@@ -16,11 +17,16 @@ class App {
 
   private selectedCategoryId: string | null;
 
+  private categorySelect: SelectField;
+
+  private productForm: ProductForm;
+
   public constructor(selector: string) {
     const foundElement = document.querySelector<HTMLElement>(selector);
     if (foundElement === null) throw new Error(`Nerastas elementas su selektoriumi '${selector}'`);
 
     this.selectedCategoryId = null;
+    this.htmlElement = foundElement;
     this.productsCollection = new ProductsCollection(products, categories, productsCategories);
     this.productsTable = new Table({
       title: 'Visos prekės',
@@ -34,8 +40,15 @@ class App {
       rowsData: this.productsCollection.all.map(stringifyProps),
       onDelete: this.handleProductDelete,
     });
-
-    this.htmlElement = foundElement;
+    const categoryOptions = [
+      { value: '-1', title: 'Visos kategorijos' },
+      ...categories.map(({ id, title }) => ({ title, value: id })),
+    ];
+    this.categorySelect = new SelectField({
+      options: categoryOptions,
+      onChange: this.handleCategoryChange,
+    });
+    this.productForm = new ProductForm();
   }
 
   private handleProductDelete = (productId: string): void => {
@@ -53,20 +66,18 @@ class App {
   };
 
   public initialize = (): void => {
-    const categoryOptions = [
-      { value: '-1', title: 'Visos kategorijos' },
-      ...categories.map(({ id, title }) => ({ title, value: id })),
-    ];
-    const categorySelect = new SelectField({
-      options: categoryOptions,
-      onChange: this.handleCategoryChange,
-    });
+    const uxContainer = document.createElement('div');
+    uxContainer.className = 'd-flex gap-3 align-items-start';
+    uxContainer.append(
+      this.productsTable.htmlElement,
+      this.productForm.htmlElement,
+    );
 
     const container = document.createElement('div');
     container.className = 'container my-5 d-flex flex-column gap-3';
     container.append(
-      categorySelect.htmlElement,
-      this.productsTable.htmlElement,
+      this.categorySelect.htmlElement,
+      uxContainer,
     );
 
     this.htmlElement.append(container);
