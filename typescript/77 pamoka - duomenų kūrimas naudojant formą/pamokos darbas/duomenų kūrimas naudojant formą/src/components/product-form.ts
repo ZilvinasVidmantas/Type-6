@@ -1,5 +1,6 @@
 import TextField from './text-field';
 import CheckboxGroupField from './checkbox-group-field';
+import categories from '../data/categories';
 
 type Fields = {
   title: TextField,
@@ -22,10 +23,23 @@ class ProductForm {
     this.htmlHeadingElement = document.createElement('h2');
     this.htmlSubmitBtnElement = document.createElement('button');
     this.fields = {
-      title: new TextField(),
-      price: new TextField(),
-      categories: new CheckboxGroupField(),
-      description: new TextField(),
+      title: new TextField({
+        labelText: 'Pavadinimas',
+        name: 'title',
+      }),
+      price: new TextField({
+        labelText: 'Kaina',
+        name: 'price',
+      }),
+      categories: new CheckboxGroupField({
+        labelText: 'Kategorijos',
+        name: 'categories',
+        options: categories.map(({ id, title }) => ({ label: title, value: id })),
+      }),
+      description: new TextField({
+        labelText: 'Aprašymas',
+        name: 'description',
+      }),
     };
 
     this.initialize();
