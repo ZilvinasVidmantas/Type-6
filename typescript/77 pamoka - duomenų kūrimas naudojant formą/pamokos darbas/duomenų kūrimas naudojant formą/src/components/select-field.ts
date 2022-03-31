@@ -18,21 +18,26 @@ class SelectField {
     this.htmlSelect = document.createElement('select');
 
     this.initialize();
+    this.renderView();
   }
 
-  private initialize = () => {
-    const { options, onChange } = this.props;
-
+  private initialize = (): void => {
     this.htmlSelect.id = 'select';
     this.htmlSelect.className = 'form-select';
-    this.htmlSelect.innerHTML = options
-      .map(({ title, value }) => `<option value="${value}">${title}</option>`)
-      .join('');
-    this.htmlSelect.addEventListener('change', () => onChange(this.htmlSelect.value));
 
     this.htmlElement.innerHTML = '<label for="select" class="form-label">Produktų kategorija</label>';
 
     this.htmlElement.append(this.htmlSelect);
+  };
+
+  private renderView = (): void => {
+    const { options, onChange } = this.props;
+
+    this.htmlSelect.innerHTML = options
+      .map(({ title, value }) => `<option value="${value}">${title}</option>`)
+      .join('');
+
+    this.htmlSelect.addEventListener('change', () => onChange(this.htmlSelect.value));
   };
 }
 
