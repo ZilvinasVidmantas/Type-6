@@ -6,7 +6,7 @@ import ProductsCollection from '../helpers/products-collection';
 import stringifyProps, { StringifiedProps } from '../helpers/stringify-props';
 import SelectField from './select-field';
 import ProductJoined from '../types/product-joined';
-import ProductForm from './product-form';
+import ProductForm, { FormValues } from './product-form';
 
 class App {
   private htmlElement: HTMLElement;
@@ -27,7 +27,7 @@ class App {
 
     this.selectedCategoryId = null;
     this.htmlElement = foundElement;
-    this.productsCollection = new ProductsCollection(products, categories, productsCategories);
+    this.productsCollection = new ProductsCollection({ products, categories, productsCategories });
     this.productsTable = new Table({
       title: 'Visos prekės',
       columns: {
@@ -48,13 +48,15 @@ class App {
       options: categoryOptions,
       onChange: this.handleCategoryChange,
     });
-    this.productForm = new ProductForm();
+    this.productForm = new ProductForm({
+      onSubmit: this.handleCreateProduct,
+    });
   }
 
   private handleProductDelete = (productId: string): void => {
     this.productsCollection.deleteProduct(productId);
 
-    this.updateData();
+    this.renderView();
   };
 
   private handleCategoryChange = (categoryId: string): void => {
@@ -62,7 +64,16 @@ class App {
 
     this.selectedCategoryId = category ? categoryId : null;
 
-    this.updateData();
+    this.renderView();
+  };
+
+  private handleCreateProduct = ({ price, ...values }: FormValues) => {
+    this.productsCollection.add({
+      price: Number(price),
+      ...values,
+    });
+
+    this.renderView();
   };
 
   public initialize = (): void => {
@@ -83,7 +94,7 @@ class App {
     this.htmlElement.append(container);
   };
 
-  private updateData = (): void => {
+  private renderView = (): void => {
     const { selectedCategoryId } = this;
     const category = categories.find((c) => c.id === selectedCategoryId);
 
@@ -102,36 +113,3 @@ class App {
 }
 
 export default App;
-
-/*
-  // 1. Gauti pakeistos kategorijos id App komponente
-  // 2. Table - įgalinti lentelės duomenų atnaujinimą
-  // 3. ProductsCollection įgalinti produktų gavimą pagal kategorijos id
-  // 4. Apjungti funkcionalumą:
-  //   pasikeitus kategorijai[1.] nuadosime ProductsCollection, kad gauti produktus pagal
-  //   pasikeitusią kategoriją[3.] ir tuomet perduosi duomenis lentelei,
-  //   kuri atnaujins lentelės duomenis [2.]
-*/
-
-/*
-  // 1. Kiekvienoj eilutėje turite sukurti ištrynimo mygtuką
-  // 2. Paspaudus ištrynimo mygtuką, turi vykdytis funkcija App komponente
-  // 3. ProductsCollection klasėje sukurti metodą ištrinti elementui
-
-  PROBLEMA - po ištrynimo reikia per naujo partraukti ProductsCollection duomenis, tačiau
-  nėra žinoma, ar reikia partraukti visus? O galbūt pagal kažkokią kategoriją? Vienas iš daugelio
-  sprendimo variantų, būtų išsaugoti paskutinį pasirinktą kategorijos id raktą ir pagal tai, po
-  ištrynimo atnaujinti App (ir tuo pačiu Table) duomenis.
-  Tokiam funkcionalumui pasiekti, reikia retrūkturizuoti App komponentą, jog jo atnaujinimas būtų
-  atliekamas atskirame metode nuo pradinių veiksmų.
-  Ir tuomet atlikus bet kokius duomenų arba App komponento kintamųjų pakitimus mes galėsim
-  atnaujinti vaikinių elementų atvaizdavima PAGAL pakitusius duomenis. Principas toks:
-    keičiame bet kokius duomenis -> kviečiame atnaujinimo metodą,
-      kuris atnaujina atvaizdavimą pagal komponente išsaugotus duomenis ir perduodant vaikiniams
-      elementams naujas/pakitusias savybes ar duomenis
-
-  // 4. Sukurti pasirinktos kategorijos kintamajį
-  // 5. Išskaidyti App komponento pradinius veiksmus ir veiksmų atnaujinimą
-  // 6. Įgalinti trynimą, ištrinant produktą iš ProductsCollection ir kviečiant App duomenų
-  // atnaujinimo metodą
-*/
