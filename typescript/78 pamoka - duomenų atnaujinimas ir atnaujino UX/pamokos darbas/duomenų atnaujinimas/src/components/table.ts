@@ -9,7 +9,9 @@ export type TableProps<Type> = {
   title: string,
   columns: Type,
   rowsData: Type[],
+  editedRowId: string | null,
   onDelete: (id: string) => void,
+  onEdit: (id: string) => void,
 };
 
 class Table<Type extends RowData> {
@@ -70,35 +72,48 @@ class Table<Type extends RowData> {
   };
 
   private appendActionsCell = (tr: HTMLTableRowElement, id: string) => {
-    const { onDelete } = this.props;
+    const { editedRowId, onDelete, onEdit } = this.props;
+
     const td = document.createElement('td');
+    td.className = 'd-flex gap-2 justify-content-end';
+
+    const btnEdit = document.createElement('button');
+    btnEdit.style.width = '80px';
+    btnEdit.className = `btn btn-${editedRowId === id ? 'secondary' : 'warning'}`;
+    btnEdit.type = 'button';
+    btnEdit.innerHTML = editedRowId === id ? 'Cancel' : 'Update';
+    btnEdit.addEventListener('click', () => onEdit(id));
+
     const btnDelete = document.createElement('button');
     btnDelete.className = 'btn btn-danger';
     btnDelete.type = 'button';
-    btnDelete.innerHTML = '⨉';
+    btnDelete.innerHTML = 'Delete';
     btnDelete.addEventListener('click', () => onDelete(id));
 
-    td.append(btnDelete);
+    td.append(btnEdit, btnDelete);
     tr.append(td);
   };
 
   private renderBodyView = (): void => {
-    const { rowsData, columns } = this.props;
+    const { rowsData, columns, editedRowId } = this.props;
 
     this.tbody.innerHTML = '';
     const rowsHtmlElements = rowsData
       .map((rowData) => {
-        const rowHtmlElement = document.createElement('tr');
+        const tr = document.createElement('tr');
+        if (rowData.id === editedRowId) {
+          tr.style.backgroundColor = '#fffcd9';
+        }
 
         const cellsHtmlString = Object.keys(columns)
           .map((key) => `<td>${rowData[key] ?? '---'}</td>`)
           .join(' ');
 
-        rowHtmlElement.innerHTML = cellsHtmlString;
+        tr.innerHTML = cellsHtmlString;
 
-        this.appendActionsCell(rowHtmlElement, rowData.id);
+        this.appendActionsCell(tr, rowData.id);
 
-        return rowHtmlElement;
+        return tr;
       });
 
     this.tbody.append(...rowsHtmlElements);

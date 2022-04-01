@@ -21,10 +21,13 @@ class App {
 
   private productForm: ProductForm;
 
+  private editedProductId: string | null;
+
   public constructor(selector: string) {
     const foundElement = document.querySelector<HTMLElement>(selector);
     if (foundElement === null) throw new Error(`Nerastas elementas su selektoriumi '${selector}'`);
 
+    this.editedProductId = null;
     this.selectedCategoryId = null;
     this.htmlElement = foundElement;
     this.productsCollection = new ProductsCollection({ products, categories, productsCategories });
@@ -37,8 +40,10 @@ class App {
         categories: 'Kategorijos',
         description: 'Aprašymas',
       },
+      editedRowId: this.editedProductId,
       rowsData: this.productsCollection.all.map(stringifyProps),
       onDelete: this.handleProductDelete,
+      onEdit: this.handleProductEdit,
     });
     const categoryOptions = [
       { value: '-1', title: 'Visos kategorijos' },
@@ -55,6 +60,12 @@ class App {
 
   private handleProductDelete = (productId: string): void => {
     this.productsCollection.deleteProduct(productId);
+
+    this.renderView();
+  };
+
+  private handleProductEdit = (productId: string): void => {
+    this.editedProductId = this.editedProductId === productId ? null : productId;
 
     this.renderView();
   };
@@ -95,18 +106,20 @@ class App {
   };
 
   private renderView = (): void => {
-    const { selectedCategoryId } = this;
+    const { selectedCategoryId, editedProductId } = this;
     const category = categories.find((c) => c.id === selectedCategoryId);
 
     if (selectedCategoryId && category) {
       this.productsTable.updateProps({
         title: category.title,
         rowsData: this.productsCollection.getByCategoryId(selectedCategoryId).map(stringifyProps),
+        editedRowId: editedProductId,
       });
     } else {
       this.productsTable.updateProps({
         title: 'Visos prekės',
         rowsData: this.productsCollection.all.map(stringifyProps),
+        editedRowId: editedProductId,
       });
     }
   };
