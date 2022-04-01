@@ -1,7 +1,7 @@
 import Product from './product';
 
 type ProductJoined = Product & {
-  categories: string,
+  categoriesIds: string[],
 };
 
 export default ProductJoined;

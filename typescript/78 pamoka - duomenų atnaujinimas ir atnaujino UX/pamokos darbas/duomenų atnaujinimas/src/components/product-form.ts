@@ -16,8 +16,19 @@ type Fields = {
   description: TextField
 };
 
+type Values = {
+  title: string,
+  price: string,
+  categories: string[],
+  description?: string
+};
+
 type ProductFormProps = {
+  title: string,
+  submitBtnText: string,
+  isEdited: boolean,
   onSubmit: (values: FormValues) => void,
+  values?: Values
 };
 
 class ProductForm {
@@ -54,6 +65,7 @@ class ProductForm {
     };
 
     this.initialize();
+    this.renderView();
   }
 
   private handleSubmit = (e: SubmitEvent): void => {
@@ -88,8 +100,6 @@ class ProductForm {
     this.htmlHeadingElement.innerHTML = 'Sukurti naują produktą';
 
     this.htmlSubmitBtnElement.type = 'submit';
-    this.htmlSubmitBtnElement.className = 'btn btn-success';
-    this.htmlSubmitBtnElement.innerHTML = 'Sukurti';
 
     const fieldsContainer = document.createElement('div');
     fieldsContainer.className = 'd-flex flex-column gap-3';
@@ -97,12 +107,69 @@ class ProductForm {
     fieldsContainer.append(...htmlFieldElements);
 
     this.htmlElement.addEventListener('submit', this.handleSubmit);
+    this.htmlElement.style.width = '300px';
     this.htmlElement.className = 'card d-flex flex-column gap-3 p-3';
     this.htmlElement.append(
       this.htmlHeadingElement,
       fieldsContainer,
       this.htmlSubmitBtnElement,
     );
+  };
+
+  private renderView = (): void => {
+    const {
+      title, submitBtnText, isEdited, values,
+    } = this.props;
+
+    this.htmlHeadingElement.innerHTML = title;
+    this.htmlSubmitBtnElement.innerHTML = submitBtnText;
+
+    if (isEdited) {
+      this.htmlElement.classList.add('border');
+      this.htmlElement.classList.add('border-warning');
+      this.htmlSubmitBtnElement.className = 'btn btn-warning';
+    } else {
+      this.htmlElement.classList.remove('border');
+      this.htmlElement.classList.remove('border-warning');
+      this.htmlSubmitBtnElement.className = 'btn btn-success';
+    }
+
+    if (values) {
+      // this.fields.title.updateProps({
+      //   value: values.title,
+      // });
+      // this.fields.price.updateProps({
+      //   value: values.price,
+      // });
+      // this.fields.categories.updateProps({
+      //   selectedValues: values.categories,
+      // });
+
+      // if (values.description !== undefined) {
+      //   this.fields.description.updateProps({
+      //     value: values.description,
+      //   });
+      // }
+
+      const fieldsArr = Object
+        .entries(this.fields) as [keyof Values, TextField | CheckboxGroupField][];
+      fieldsArr.forEach(([name, field]) => {
+        if (field instanceof TextField) {
+          field.updateProps({ value: values[name] as string });
+        } else {
+          field.updateProps({ selectedValues: values[name] as string[] });
+        }
+      });
+    }
+  };
+
+  public updateProps = (newProps: Partial<ProductFormProps>): void => {
+    this.props = {
+      ...this.props,
+      ...newProps,
+    };
+
+    this.renderView();
   };
 }
 

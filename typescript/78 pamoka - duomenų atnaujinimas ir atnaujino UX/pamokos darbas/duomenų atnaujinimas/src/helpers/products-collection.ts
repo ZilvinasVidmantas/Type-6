@@ -23,17 +23,17 @@ class ProductsCollection {
   private joinProduct = (product: Product): ProductJoined => {
     const { categories, productsCategories } = this.props;
 
-    const productCategoriesIds = productsCategories
+    const allProductCategoriesIds = productsCategories
       .filter((pc) => pc.productId === product.id)
       .map((pc) => pc.categoryId);
 
-    const productCategories = categories
-      .filter((category) => productCategoriesIds.includes(category.id))
-      .map((category) => category.title);
+    const productCategoryIds = categories
+      .filter((category) => allProductCategoriesIds.includes(category.id))
+      .map((c) => c.id);
 
     return {
       ...product,
-      categories: productCategories.join(', '),
+      categoriesIds: productCategoryIds,
     };
   };
 
@@ -89,6 +89,42 @@ class ProductsCollection {
     });
 
     products.push(newProduct);
+  };
+
+  public update = (
+    productId: string,
+    { categories: categoriesIds, ...productProps }: ProductProps,
+  ): void => {
+    const { products, categories, productsCategories } = this.props;
+
+    const productIndex = products.findIndex((p) => p.id === productId);
+    if (productIndex === -1) {
+      alert(`Atnaujino klaida: produktas nerastas pagal id: '${productId}'`);
+      return;
+    }
+
+    const existingCategoriesIds = categories.map((c) => c.id);
+    if (categoriesIds.some((categoryId) => !existingCategoriesIds.includes(categoryId))) {
+      alert('Atnaujino klaida: nėra pasirinktų kategorijų');
+    }
+
+    // Pašalinamos produktų kategorijos susiejančios esamą produktą su kategorijomis
+    this.props.productsCategories = productsCategories.filter((pc) => pc.productId !== productId);
+
+    const newProductCategories = categoriesIds.map((categoryId) => ({
+      id: createId(),
+      productId,
+      categoryId,
+    }));
+
+    this.props.productsCategories.push(...newProductCategories);
+
+    const updatedProduct = {
+      ...products[productIndex],
+      ...productProps,
+    };
+
+    products.splice(productIndex, 1, updatedProduct);
   };
 }
 

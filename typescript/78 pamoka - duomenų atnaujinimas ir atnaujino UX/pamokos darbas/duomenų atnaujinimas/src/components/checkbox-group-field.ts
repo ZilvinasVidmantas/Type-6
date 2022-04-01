@@ -9,7 +9,8 @@ type CheckboxOption = {
 type CheckboxGroupFieldProps = {
   labelText: string,
   name: string,
-  options: CheckboxOption[]
+  options: CheckboxOption[],
+  selectedValues?: string[],
 };
 
 class CheckboxGroupField {
@@ -29,7 +30,7 @@ class CheckboxGroupField {
   }
 
   private renderOptionsView = (): void => {
-    const { name, options } = this.props;
+    const { name, options, selectedValues } = this.props;
 
     const inputGroups = options.map(({ value, label }) => {
       const inputId = createId();
@@ -48,6 +49,9 @@ class CheckboxGroupField {
       input.id = inputId;
       input.value = value;
       input.name = name;
+      if (selectedValues && selectedValues.includes(value)) {
+        input.checked = true;
+      }
 
       inputGroup.append(
         input,
@@ -56,6 +60,8 @@ class CheckboxGroupField {
 
       return inputGroup;
     });
+
+    this.htmlCheckboxContainer.innerHTML = '';
     this.htmlCheckboxContainer.append(...inputGroups);
   };
 
@@ -73,6 +79,15 @@ class CheckboxGroupField {
 
     this.htmlLabelElement.innerHTML = labelText;
     this.renderOptionsView();
+  };
+
+  public updateProps = (newProps: Partial<CheckboxGroupFieldProps>): void => {
+    this.props = {
+      ...this.props,
+      ...newProps,
+    };
+
+    this.renderView();
   };
 }
 

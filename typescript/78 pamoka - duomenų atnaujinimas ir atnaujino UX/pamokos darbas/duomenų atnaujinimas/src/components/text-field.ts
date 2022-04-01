@@ -2,7 +2,8 @@ import createId from '../helpers/create-id';
 
 type TextFieldProps = {
   labelText: string,
-  name: string
+  name: string,
+  value?: string,
 };
 
 class TextField {
@@ -35,11 +36,23 @@ class TextField {
     );
   };
 
-  public renderView = (): void => {
-    const { labelText, name } = this.props;
+  private renderView = (): void => {
+    const { labelText, name, value } = this.props;
 
     this.htmlLabelElement.innerHTML = labelText;
     this.htmlInputElement.name = name;
+    if (value !== undefined) {
+      this.htmlInputElement.value = value;
+    }
+  };
+
+  public updateProps = (newProps: Partial<TextFieldProps>): void => {
+    this.props = {
+      ...this.props,
+      ...newProps,
+    };
+
+    this.renderView();
   };
 }
 
