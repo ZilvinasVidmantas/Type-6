@@ -32,13 +32,13 @@ type ProductFormProps = {
 };
 
 class ProductForm {
-  public htmlElement: HTMLFormElement;
+  private fields: Fields;
 
   private htmlHeadingElement: HTMLHeadingElement;
 
   private htmlSubmitBtnElement: HTMLButtonElement;
 
-  private fields: Fields;
+  public htmlElement: HTMLFormElement;
 
   public constructor(private props: ProductFormProps) {
     this.htmlElement = document.createElement('form');

@@ -42,28 +42,35 @@ const formatProductTableRow = ({
 };
 
 class App {
-  private htmlElement: HTMLElement;
-
   private productsCollection: ProductsCollection;
-
-  private productsTable: Table<ProductTableRow>;
 
   private selectedCategoryId: string | null;
 
+  private editedProductId: string | null;
+
   private categorySelect: SelectField;
+
+  private productsTable: Table<ProductTableRow>;
 
   private productForm: ProductForm;
 
-  private editedProductId: string | null;
+  private htmlElement: HTMLElement;
 
   public constructor(selector: string) {
     const foundElement = document.querySelector<HTMLElement>(selector);
     if (foundElement === null) throw new Error(`Nerastas elementas su selektoriumi '${selector}'`);
 
-    this.editedProductId = null;
-    this.selectedCategoryId = null;
-    this.htmlElement = foundElement;
     this.productsCollection = new ProductsCollection({ products, categories, productsCategories });
+    this.selectedCategoryId = null;
+    this.editedProductId = null;
+    const categoryOptions = [
+      { value: '-1', title: 'Visos kategorijos' },
+      ...categories.map(({ id, title }) => ({ title, value: id })),
+    ];
+    this.categorySelect = new SelectField({
+      options: categoryOptions,
+      onChange: this.handleChangeCategory,
+    });
     this.productsTable = new Table({
       ...defaultTableProps,
       columns: {
@@ -78,18 +85,11 @@ class App {
       onDelete: this.handleProductDelete,
       onEdit: this.handleEditProduct,
     });
-    const categoryOptions = [
-      { value: '-1', title: 'Visos kategorijos' },
-      ...categories.map(({ id, title }) => ({ title, value: id })),
-    ];
-    this.categorySelect = new SelectField({
-      options: categoryOptions,
-      onChange: this.handleChangeCategory,
-    });
     this.productForm = new ProductForm({
       ...defaultFormProps,
       onSubmit: this.handleCreateProduct,
     });
+    this.htmlElement = foundElement;
   }
 
   private handleChangeCategory = (categoryId: string): void => {
@@ -100,8 +100,8 @@ class App {
     this.renderView();
   };
 
-  private handleCreateProduct = ({ price, ...values }: FormValues) => {
-    this.productsCollection.add({
+  private handleCreateProduct = ({ price, ...values }: FormValues): void => {
+    this.productsCollection.create({
       price: Number(price),
       ...values,
     });
@@ -115,7 +115,7 @@ class App {
     this.renderView();
   };
 
-  private handleUpdateProduct = ({ price, ...values }: FormValues) => {
+  private handleUpdateProduct = ({ price, ...values }: FormValues): void => {
     if (this.editedProductId) {
       this.productsCollection.update(this.editedProductId, {
         price: Number(price),
@@ -129,7 +129,7 @@ class App {
   };
 
   private handleProductDelete = (productId: string): void => {
-    this.productsCollection.deleteProduct(productId);
+    this.productsCollection.delete(productId);
 
     this.renderView();
   };
@@ -152,10 +152,10 @@ class App {
     this.htmlElement.append(container);
   };
 
-  private renderView = (): void => {
-    const { selectedCategoryId, editedProductId, productForm } = this;
-    const category = categories.find((c) => c.id === selectedCategoryId);
+  private renderProductsTableView = (): void => {
+    const { selectedCategoryId, editedProductId } = this;
 
+    const category = categories.find((c) => c.id === selectedCategoryId);
     if (selectedCategoryId && category) {
       this.productsTable.updateProps({
         title: category.title,
@@ -170,6 +170,10 @@ class App {
         editedRowId: editedProductId,
       });
     }
+  };
+
+  private renderProductFormView = (): void => {
+    const { editedProductId, productForm } = this;
 
     if (editedProductId) {
       const editedProduct = this.productsCollection.all.find((p) => p.id === editedProductId);
@@ -199,6 +203,11 @@ class App {
         onSubmit: this.handleCreateProduct,
       });
     }
+  };
+
+  private renderView = (): void => {
+    this.renderProductsTableView();
+    this.renderProductFormView();
   };
 }
 

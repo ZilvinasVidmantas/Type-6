@@ -7,11 +7,11 @@ type TextFieldProps = {
 };
 
 class TextField {
-  public htmlElement: HTMLDivElement;
-
   private htmlLabelElement: HTMLLabelElement;
 
   private htmlInputElement: HTMLInputElement;
+
+  public htmlElement: HTMLDivElement;
 
   public constructor(private props: TextFieldProps) {
     this.htmlElement = document.createElement('div');
@@ -22,7 +22,7 @@ class TextField {
     this.renderView();
   }
 
-  public initialize = (): void => {
+  private initialize = (): void => {
     const fieldId = createId();
     this.htmlLabelElement.setAttribute('for', fieldId);
 

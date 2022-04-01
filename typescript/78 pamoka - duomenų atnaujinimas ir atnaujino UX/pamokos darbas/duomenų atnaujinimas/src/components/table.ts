@@ -15,11 +15,11 @@ export type TableProps<Type> = {
 };
 
 class Table<Type extends RowData> {
-  public htmlElement: HTMLTableElement;
+  private thead: HTMLTableSectionElement;
 
   private tbody: HTMLTableSectionElement;
 
-  private thead: HTMLTableSectionElement;
+  public htmlElement: HTMLTableElement;
 
   public constructor(private props: TableProps<Type>) {
     this.checkColumnsCompatability();
@@ -71,7 +71,7 @@ class Table<Type extends RowData> {
     `;
   };
 
-  private appendActionsCell = (tr: HTMLTableRowElement, id: string) => {
+  private renderActionsCell = (tr: HTMLTableRowElement, id: string) => {
     const { editedRowId, onDelete, onEdit } = this.props;
 
     const td = document.createElement('td');
@@ -111,7 +111,7 @@ class Table<Type extends RowData> {
 
         tr.innerHTML = cellsHtmlString;
 
-        this.appendActionsCell(tr, rowData.id);
+        this.renderActionsCell(tr, rowData.id);
 
         return tr;
       });

@@ -14,11 +14,11 @@ type CheckboxGroupFieldProps = {
 };
 
 class CheckboxGroupField {
-  public htmlElement: HTMLDivElement;
-
   private htmlLabelElement: HTMLLabelElement;
 
   private htmlCheckboxContainer: HTMLDivElement;
+
+  public htmlElement: HTMLDivElement;
 
   public constructor(private props: CheckboxGroupFieldProps) {
     this.htmlElement = document.createElement('div');

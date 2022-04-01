@@ -59,13 +59,7 @@ class ProductsCollection {
     return selectedProducts.map(this.joinProduct);
   };
 
-  public deleteProduct = (productId: string): void => {
-    const { products } = this.props;
-
-    this.props.products = products.filter((p) => p.id !== productId);
-  };
-
-  public add = ({ categories: categoriesIds, ...props }: ProductProps): void => {
+  public create = ({ categories: categoriesIds, ...props }: ProductProps): void => {
     const { products, categories, productsCategories } = this.props;
 
     const existingCategoriesIds = categories.map((c) => c.id);
@@ -125,6 +119,12 @@ class ProductsCollection {
     };
 
     products.splice(productIndex, 1, updatedProduct);
+  };
+
+  public delete = (productId: string): void => {
+    const { products } = this.props;
+
+    this.props.products = products.filter((p) => p.id !== productId);
   };
 }
 

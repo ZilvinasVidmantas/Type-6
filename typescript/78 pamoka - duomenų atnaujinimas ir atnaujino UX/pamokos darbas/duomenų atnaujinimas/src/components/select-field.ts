@@ -9,9 +9,9 @@ type SelectFieldProps = {
 };
 
 class SelectField {
-  public htmlElement: HTMLDivElement;
-
   private htmlSelect: HTMLSelectElement;
+
+  public htmlElement: HTMLDivElement;
 
   public constructor(private props: SelectFieldProps) {
     this.htmlElement = document.createElement('div');
