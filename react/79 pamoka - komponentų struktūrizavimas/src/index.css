@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+}
+
+.container {
+  display: block;
+  width: 1200px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: auto;
+}

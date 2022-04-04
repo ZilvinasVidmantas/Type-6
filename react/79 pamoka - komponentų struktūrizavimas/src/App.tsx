@@ -1,9 +1,12 @@
 import React from 'react';
+import Navbar from './navbar';
+import MainSection from './sections/main-section';
 
 const App: React.FC = () => (
-  <div>
-    Cia yra div elementas
-  </div>
+  <>
+    <Navbar />
+    <MainSection />
+  </>
 );
 
 export default App;
