@@ -1,0 +1,19 @@
+JavaScript uždavinių sprendimas su TypeScript [3]
+  * function-tasks-1 [0.5]
+  * function-tasks-2 [1]
+  * object-tasks [1]
+  * function-tasks-array-terative-1 [0.5]
+
+TypeScript individualūs darbai:
+  * 62-66 pamokų individualūs darbai [2]
+  * 69-73 pamokų individualūs darbai [2]
+  * 74-78 pamokų darbai - [3]
+
+pateikti vardas-pavarde.zip failą, kurį atsidaręs rasiu sprendimus tokiuose aplankuose:
+  function-tasks-1/
+  function-tasks-2/
+  object-tasks/
+  function-tasks-array-terative-1/
+  ts-62-66/
+  ts-69-73/
+  ts-74-78/
