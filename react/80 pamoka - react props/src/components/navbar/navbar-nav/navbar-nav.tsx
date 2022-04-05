@@ -11,7 +11,7 @@ const style: React.CSSProperties = {
   background: theme.colors.dark,
 };
 
-const navbarNavItemsData: NavbarNavItemProps[] = [
+const navbarNavItemsProps: NavbarNavItemProps[] = [
   { href: '#home', title: 'Home' },
   { href: '#product', title: 'Product' },
   { href: '#company', title: 'Company' },
@@ -20,7 +20,7 @@ const navbarNavItemsData: NavbarNavItemProps[] = [
 
 const NavbarNav: React.FC = () => (
   <div style={style}>
-    {navbarNavItemsData.map((props) => <NavbarNavItem {...props} />)}
+    {navbarNavItemsProps.map((props) => <NavbarNavItem {...props} />)}
   </div>
 );
 
