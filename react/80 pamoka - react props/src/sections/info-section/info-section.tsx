@@ -7,7 +7,6 @@ const style: React.CSSProperties = {
   columnGap: 50,
   paddingTop: 60,
   paddingBottom: 60,
-
 };
 
 const InfoSection: React.FC = () => (
@@ -17,5 +16,17 @@ const InfoSection: React.FC = () => (
     <InfoSectionCard title="Services" paragraphText="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo repellat repudiandae deleniti sed rerum eaque aperiam eos ullam ratione doloribus." />
   </div>
 );
+
+/*
+  Pagal pavyzdį faile navbar-nav.tsx atvaizduokie  {InfoSection} korteles
+  {InfoSectionCard} naudodami metodą {Array.prototype.map}. Tam reikės:
+    * suformuoti duomenų masyvą, naudojant {InfoSectionCardProps}
+    * atvaizduoti duomenis, naudojant {Array.prototype.map}
+
+  pertrauka iki: 11:15
+  užduotis iki: 11:25
+
+  tęsiame: 11:25
+*/
 
 export default InfoSection;
