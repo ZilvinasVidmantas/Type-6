@@ -1,5 +1,7 @@
 import React from 'react';
 import Container from '../../components/container';
+import ContentSectionNav from './content-section-nav/content-section-nav';
+import ContentSectionContainer from './content-section-container';
 
 const style: React.CSSProperties = {
   paddingTop: 60,
@@ -13,13 +15,18 @@ const subSectionParagraphText = 'Lorem ipsum dolor sit amet consectetur adipisic
 const ContentSection: React.FC = () => (
   <div style={style}>
     <Container>
-      <h2>Content</h2>
-      <p>{paragraphText}</p>
+      <ContentSectionContainer>
+        <div>
+          <h2>Content</h2>
+          <p>{paragraphText}</p>
 
-      <article>
-        <h3>Sub Header</h3>
-        <p>{subSectionParagraphText}</p>
-      </article>
+          <article>
+            <h3>Sub Header</h3>
+            <p>{subSectionParagraphText}</p>
+          </article>
+        </div>
+        <ContentSectionNav />
+      </ContentSectionContainer>
     </Container>
   </div>
 );
