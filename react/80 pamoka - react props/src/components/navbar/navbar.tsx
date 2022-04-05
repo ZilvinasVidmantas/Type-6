@@ -1,5 +1,6 @@
 import React from 'react';
 import theme from '../../theme';
+import Container from '../container';
 import NavbarLogo from './navbar-logo';
 import NavbarNav from './navbar-nav';
 
@@ -15,8 +16,10 @@ const style: React.CSSProperties = {
 
 const Navbar: React.FC = () => (
   <div style={style}>
-    <NavbarLogo />
-    <NavbarNav />
+    <Container>
+      <NavbarLogo />
+      <NavbarNav />
+    </Container>
   </div>
 );
 

@@ -1,10 +1,9 @@
 import React from 'react';
 import InfoSectionCard, { InfoSectionCardProps } from './info-section-card';
+import Container from '../../components/container';
+import InfoSectionCardContainer from './info-section-card-container';
 
 const style: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'center',
-  columnGap: 50,
   paddingTop: 60,
   paddingBottom: 60,
 };
@@ -26,7 +25,11 @@ const infoSectionCardsProps: InfoSectionCardProps[] = [
 
 const InfoSection: React.FC = () => (
   <div style={style}>
-    {infoSectionCardsProps.map((props) => <InfoSectionCard {...props} />)}
+    <Container>
+      <InfoSectionCardContainer>
+        {infoSectionCardsProps.map((props) => <InfoSectionCard {...props} />)}
+      </InfoSectionCardContainer>
+    </Container>
   </div>
 );
 
