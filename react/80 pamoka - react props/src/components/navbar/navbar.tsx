@@ -1,6 +1,7 @@
 import React from 'react';
-import theme from '../theme/theme';
-import Container from './container';
+import theme from '../../theme';
+import NavbarLogo from './navbar-logo';
+import NavbarNav from './navbar-nav';
 
 const style: React.CSSProperties = {
   position: 'fixed',
@@ -14,9 +15,8 @@ const style: React.CSSProperties = {
 
 const Navbar: React.FC = () => (
   <div style={style}>
-    <Container>
-      Navbar
-    </Container>
+    <NavbarLogo />
+    <NavbarNav />
   </div>
 );
 
