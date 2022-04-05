@@ -8,8 +8,8 @@ const style: React.CSSProperties = {
   top: '0px',
   left: '0px',
   right: '0px',
-  backgroundColor: 'black',
-  color: 'white',
+  backgroundColor: theme.colors.dark,
+  color: theme.colors.white,
   height: theme.navbarHeight,
 };
 
