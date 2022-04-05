@@ -9,7 +9,3 @@ html {
 *, :after, :before {
   box-sizing: border-box;
 }
-
-* {
-  box-shadow: 0 0 0 1px red;
-}
