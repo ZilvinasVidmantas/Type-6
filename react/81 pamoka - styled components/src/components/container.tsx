@@ -1,15 +1,30 @@
-import React from 'react';
+import styled from 'styled-components';
 
-const style: React.CSSProperties = {
-  display: 'block',
-  width: '1200px',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-  margin: 'auto',
-};
+const Container = styled.div(({ theme }) => `
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
-const Container: React.FC = ({ children }) => (
-  <div style={style}>{children}</div>
-);
+  @media (min-width: ${theme.breakpoints.sm}) {
+    width: 540px;
+    margin: auto;
+  }
+
+  @media (min-width: ${theme.breakpoints.md}) {
+    width: 720px;
+  }
+
+  @media (min-width: ${theme.breakpoints.lg}) {
+    width: 960px;
+  }
+
+  @media (min-width: ${theme.breakpoints.xl}) {
+    width: 1140px;
+  }
+
+  @media (min-width: ${theme.breakpoints.xxl}) {
+    width: 1320px;
+  }
+`);
 
 export default Container;

@@ -11,5 +11,13 @@ declare module 'styled-components' {
       whiteHover: string;
       grey: string;
     };
+
+    breakpoints: {
+      sm: string,
+      md: string,
+      lg: string,
+      xl: string,
+      xxl: string,
+    }
   }
 }
