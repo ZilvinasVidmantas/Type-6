@@ -1,14 +1,10 @@
-import React from 'react';
+import styled from 'styled-components';
 
-const style: React.CSSProperties = {
-  height: '100vh',
-  backgroundImage: 'url(/assets/main-section-cover.jpg)',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-};
-
-const MainSection: React.FC = () => (
-  <main style={style} />
-);
+const MainSection = styled.main`
+  height: '100vh';
+  background-image: 'url(/assets/main-section-cover.jpg)';
+  background-size: 'cover';
+  background-position: 'center';
+`;
 
 export default MainSection;
