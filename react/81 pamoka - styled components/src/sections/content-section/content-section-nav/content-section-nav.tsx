@@ -16,7 +16,7 @@ const ContentSectionNav: React.FC = () => (
   <div style={style}>
     <h2>Navigation</h2>
     <ContentSectionNavItemsContainer>
-      {navbarNavItemsProps.map((props) => <ContentSectionNavItem {...props} />)}
+      {navbarNavItemsProps.map((props) => <ContentSectionNavItem key={props.title} {...props} />)}
     </ContentSectionNavItemsContainer>
   </div>
 );

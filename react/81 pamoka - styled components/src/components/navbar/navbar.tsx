@@ -21,7 +21,7 @@ const Navbar: React.FC = () => (
       <NavbarLogo src="/assets/logo.svg" alt="page logo" />
       <NavbarNav>
         {navbarLinksProps.map(({ href, title }) => (
-          <NavbarNavLink href={href}>{title}</NavbarNavLink>
+          <NavbarNavLink key={title} href={href}>{title}</NavbarNavLink>
         ))}
       </NavbarNav>
     </Container>

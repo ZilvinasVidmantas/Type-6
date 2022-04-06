@@ -27,7 +27,7 @@ const InfoSection: React.FC = () => (
   <div style={style}>
     <Container>
       <InfoSectionCardContainer>
-        {infoSectionCardsProps.map((props) => <InfoSectionCard {...props} />)}
+        {infoSectionCardsProps.map((props) => <InfoSectionCard key={props.title} {...props} />)}
       </InfoSectionCardContainer>
     </Container>
   </div>
