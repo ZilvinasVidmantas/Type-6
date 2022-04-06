@@ -31,4 +31,9 @@ export const NavbarNavLink = styled.a(({ theme }) => `
   padding: 10px;
   color: ${theme.colors.white};
   text-decoration: none;
+
+  :hover {
+    color: ${theme.colors.whiteHover};
+    background: ${theme.colors.darkHover};
+  }
 `);

@@ -5,7 +5,9 @@ const theme: DefaultTheme = {
 
   colors: {
     dark: '#252525',
+    darkHover: '#353535',
     white: '#ffffff',
+    whiteHover: '#eeeeee',
     grey: '#dedede',
   },
 };
