@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from '../../components/container';
-import { InfoSectionWrapper, InfoSectionCard, InfoSectionCardContainer } from './styles';
+import Section from '../../components/section';
+import { InfoSectionCard, InfoSectionCardContainer } from './styles';
 
 const infoSectionCardsProps = [
   {
@@ -18,7 +19,7 @@ const infoSectionCardsProps = [
 ];
 
 const InfoSection: React.FC = () => (
-  <InfoSectionWrapper>
+  <Section>
     <Container>
       <InfoSectionCardContainer>
         {infoSectionCardsProps.map(({ title, paragraphText }) => (
@@ -29,7 +30,7 @@ const InfoSection: React.FC = () => (
         ))}
       </InfoSectionCardContainer>
     </Container>
-  </InfoSectionWrapper>
+  </Section>
 );
 
 export default InfoSection;
