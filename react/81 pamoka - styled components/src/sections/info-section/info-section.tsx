@@ -1,14 +1,8 @@
 import React from 'react';
-import InfoSectionCard, { InfoSectionCardProps } from './info-section-card';
 import Container from '../../components/container';
-import InfoSectionCardContainer from './info-section-card-container';
+import { InfoSectionWrapper, InfoSectionCard, InfoSectionCardContainer } from './styles';
 
-const style: React.CSSProperties = {
-  paddingTop: 60,
-  paddingBottom: 60,
-};
-
-const infoSectionCardsProps: InfoSectionCardProps[] = [
+const infoSectionCardsProps = [
   {
     title: 'About',
     paragraphText: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo repellat repudiandae deleniti sed rerum eaque aperiam eos ullam ratione doloribus.',
@@ -24,13 +18,18 @@ const infoSectionCardsProps: InfoSectionCardProps[] = [
 ];
 
 const InfoSection: React.FC = () => (
-  <div style={style}>
+  <InfoSectionWrapper>
     <Container>
       <InfoSectionCardContainer>
-        {infoSectionCardsProps.map((props) => <InfoSectionCard key={props.title} {...props} />)}
+        {infoSectionCardsProps.map(({ title, paragraphText }) => (
+          <InfoSectionCard>
+            <h2>{title}</h2>
+            <p>{paragraphText}</p>
+          </InfoSectionCard>
+        ))}
       </InfoSectionCardContainer>
     </Container>
-  </div>
+  </InfoSectionWrapper>
 );
 
 export default InfoSection;
