@@ -3,7 +3,7 @@ import Button from '../../../components/button';
 import Container from '../../../components/container';
 import Divider from '../../../components/divider';
 import Section from '../../../components/section';
-import { CounterText, StateExampleContainer } from '../styles';
+import { CounterText, StateManagmentExampleContainer } from '../styles';
 
 const StatePageStateManagementSection: React.FC = () => {
   const [counter, setCounter] = useState(5);
@@ -36,13 +36,13 @@ const StatePageStateManagementSection: React.FC = () => {
           After using dispatch function (to change state variable) component automaticly re-renders.
         </p>
 
-        <StateExampleContainer>
+        <StateManagmentExampleContainer>
           <Button type="button" onClick={() => setCounter(counter + 1)}>Increase state</Button>
           <CounterText>
             <span>Counter: </span>
             <span>{counter}</span>
           </CounterText>
-        </StateExampleContainer>
+        </StateManagmentExampleContainer>
         <Divider />
       </Container>
     </Section>

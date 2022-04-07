@@ -31,6 +31,7 @@ module.exports = {
     'linebreak-style': [2, 'unix'],
     'react/prop-types': [0],
     'max-len': [0],
+    'jsx-a11y/label-has-associated-control': [0],
     'react/jsx-props-no-spreading': [0],
     'react/function-component-definition': [2, {
       'namedComponents': 'arrow-function',

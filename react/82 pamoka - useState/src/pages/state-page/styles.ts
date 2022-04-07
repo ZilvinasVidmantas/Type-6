@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StateExampleContainer = styled.div`
+export const StateManagmentExampleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
