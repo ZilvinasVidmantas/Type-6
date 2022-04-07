@@ -18,7 +18,7 @@ const infoSectionCardsProps = [
   },
 ];
 
-const InfoSection: React.FC = () => (
+const HomePageInfoSection: React.FC = () => (
   <Section>
     <Container>
       <InfoSectionCardContainer>
@@ -33,4 +33,4 @@ const InfoSection: React.FC = () => (
   </Section>
 );
 
-export default InfoSection;
+export default HomePageInfoSection;

@@ -1,13 +1,13 @@
 import React from 'react';
-import MainSection from './sections/main-section';
-import InfoSection from './sections/info-section';
-import ContentSection from './sections/content-section';
+import HomePageMainSection from './sections/home-page-main-section';
+import HomePageInfoSection from './sections/home-page-info-section';
+import HomePageContentSection from './sections/home-page-content-section';
 
 const Home: React.FC = () => (
   <>
-    <MainSection />
-    <InfoSection />
-    <ContentSection />
+    <HomePageMainSection />
+    <HomePageInfoSection />
+    <HomePageContentSection />
   </>
 );
 
