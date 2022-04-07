@@ -1,7 +1,7 @@
 import React from 'react';
-import Container from '../../components/container';
+import Container from '../../../../components/container';
 import ContentSectionNav from './content-section-nav';
-import Section from '../../components/section';
+import Section from '../../../../components/section';
 import { ContentSectionContainer } from './styles';
 
 const paragraphText = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod vitae sed error ea expedita? Veritatis doloribus dolorem ipsum dignissimos quaerat repellat inventore nobis hic voluptatibus. Perspiciatis minima ducimus fuga, dignissimos dolore, magnam odio corrupti quae eligendi excepturi ipsum dolores labore?';

@@ -9,16 +9,15 @@ import {
 } from './styles';
 
 const navbarLinksProps = [
-  { href: '#home', title: 'Home' },
-  { href: '#product', title: 'Product' },
-  { href: '#company', title: 'Company' },
-  { href: '#contacts', title: 'Contact' },
+  { href: '/state', title: 'State management' },
 ];
 
 const Navbar: React.FC = () => (
   <NavbarWrapper>
     <Container>
-      <NavbarLogo src="/assets/logo.svg" alt="page logo" />
+      <a href="/">
+        <NavbarLogo src="/assets/logo.svg" alt="page logo" />
+      </a>
       <NavbarNav>
         {navbarLinksProps.map(({ href, title }) => (
           <NavbarNavLink key={title} href={href}>{title}</NavbarNavLink>

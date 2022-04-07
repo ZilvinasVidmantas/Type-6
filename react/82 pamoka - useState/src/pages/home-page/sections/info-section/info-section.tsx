@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from '../../components/container';
-import Section from '../../components/section';
+import Container from '../../../../components/container';
+import Section from '../../../../components/section';
 import { InfoSectionCard, InfoSectionCardContainer } from './styles';
 
 const infoSectionCardsProps = [

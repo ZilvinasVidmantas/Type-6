@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const NavbarWrapper = styled.div(({ theme }) => `
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -16,14 +16,13 @@ export const NavbarLogo = styled.img`
   padding: 10px;
 `;
 
-export const NavbarNav = styled.div(({ theme }) => `
+export const NavbarNav = styled.div`
   display: flex;
   gap: 5px;
   height: 60px;
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: ${theme.colors.dark};
-`);
+`;
 
 export const NavbarNavLink = styled.a(({ theme }) => `
   display: block;

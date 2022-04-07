@@ -1,16 +1,24 @@
 import React from 'react';
-import Navbar from './components/navbar';
-import MainSection from './sections/main-section';
-import InfoSection from './sections/info-section';
-import ContentSection from './sections/content-section';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
+
+import BasicLayout from './layouts/basic-layout';
+import HomePage from './pages/home-page';
+import StatePage from './pages/state-page';
 
 const App: React.FC = () => (
-  <>
-    <Navbar />
-    <MainSection />
-    <InfoSection />
-    <ContentSection />
-  </>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<BasicLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="state" element={<StatePage />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
+
 );
 
 export default App;
