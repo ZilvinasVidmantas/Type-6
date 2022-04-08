@@ -6,7 +6,18 @@ import Button from '../../../components/button';
 import { Form } from '../styles';
 
 const StatePageControlledComponentsSection: React.FC = () => {
-  const [value, setValue] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    /*
+      Atspausdinkite (konsolėje) visų įvesties laukų reikšmes
+      Po atspausdinimo, išvalykite visas visas įvesties laukų reikšmes
+    */
+  };
 
   return (
     <Section>
@@ -18,12 +29,24 @@ const StatePageControlledComponentsSection: React.FC = () => {
           <strong>two-way binding</strong>
         </p>
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <h3>Registration</h3>
-          <TextField label="Email" />
-          <TextField label="Password" />
-          <TextField label="Password confirmation" />
-          <Button>Register</Button>
+          <TextField
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            label="Password confirmation"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+          />
+          <Button type="submit">Register</Button>
         </Form>
 
       </Container>
