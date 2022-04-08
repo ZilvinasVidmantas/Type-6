@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Container from '../../../components/container';
 import Section from '../../../components/section';
-import Divider from '../../../components/divider';
 import TextField from '../../../components/text-field';
+import Button from '../../../components/button';
+import { Form } from '../styles';
 
 const StatePageControlledComponentsSection: React.FC = () => {
   const [value, setValue] = useState('');
@@ -17,9 +18,14 @@ const StatePageControlledComponentsSection: React.FC = () => {
           <strong>two-way binding</strong>
         </p>
 
-        <TextField />
+        <Form>
+          <h3>Registration</h3>
+          <TextField label="Email" />
+          <TextField label="Password" />
+          <TextField label="Password confirmation" />
+          <Button>Register</Button>
+        </Form>
 
-        <Divider />
       </Container>
     </Section>
   );

@@ -43,7 +43,6 @@ const StatePageStateManagementSection: React.FC = () => {
             <span>{counter}</span>
           </CounterText>
         </StateManagmentExampleContainer>
-        <Divider />
       </Container>
     </Section>
   );

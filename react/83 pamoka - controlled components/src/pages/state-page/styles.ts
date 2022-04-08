@@ -27,3 +27,13 @@ export const Video = styled.iframe`
   width: 100%;
   height: 360px;
 `;
+
+export const Form = styled.form`
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px 1px #0005;
+`;
