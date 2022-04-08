@@ -34,16 +34,22 @@ const StatePageControlledComponentsSection: React.FC = () => {
         <Form onSubmit={handleSubmit} onReset={handleReset}>
           <h3>Registration</h3>
           <TextField
+            name="email"
+            type="email"
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            name="password"
+            type="password"
             label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
+            name="paswword"
+            type="password"
             label="Password confirmation"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}

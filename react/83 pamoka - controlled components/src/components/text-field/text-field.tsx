@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, InputHTMLAttributes } from 'react';
 import { v4 as createId } from 'uuid';
 import { TextFieldWrapper, TextFieldInput } from './styles';
 
-type TextFieldProps = {
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
+
+type TextFieldProps = InputProps & {
   label: string,
-  value: string,
-  onChange: React.ChangeEventHandler<HTMLInputElement>,
 };
 
-const TextField: React.FC<TextFieldProps> = ({ label, value, onChange }) => {
+const TextField: React.FC<TextFieldProps> = ({
+  label,
+  type = 'text',
+  ...inputProps
+}) => {
   const [id] = useState(createId());
 
   return (
     <TextFieldWrapper>
       <label htmlFor={id}>{label}</label>
       <TextFieldInput
-        type="text"
         id={id}
-        value={value}
-        onChange={onChange}
+        type={type}
+        {...inputProps}
       />
     </TextFieldWrapper>
   );

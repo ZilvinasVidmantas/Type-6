@@ -38,5 +38,6 @@ module.exports = {
       'unnamedComponents': 'arrow-function',
     }],
     'no-restricted-exports': [0],
+    'react/require-default-props': [0],
   },
 };
