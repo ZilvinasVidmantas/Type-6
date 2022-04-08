@@ -5,6 +5,7 @@ const Button = styled.button`
   padding: 0.7em 1em;
   letter-spacing: 0.1em;
   cursor: pointer;
+  text-align: center;
 `;
 
 export default Button;

@@ -3,18 +3,22 @@ import Container from '../../../components/container';
 import Section from '../../../components/section';
 import TextField from '../../../components/text-field';
 import Button from '../../../components/button';
-import { Form } from '../styles';
+import { Form, FormButtonContainer } from '../styles';
 
 const StatePageControlledComponentsSection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const handleReset = () => {
     setEmail('');
     setPassword('');
     setPasswordConfirmation('');
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    handleReset();
   };
 
   return (
@@ -27,7 +31,7 @@ const StatePageControlledComponentsSection: React.FC = () => {
           <strong>two-way binding</strong>
         </p>
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} onReset={handleReset}>
           <h3>Registration</h3>
           <TextField
             label="Email"
@@ -44,7 +48,10 @@ const StatePageControlledComponentsSection: React.FC = () => {
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
-          <Button type="submit">Register</Button>
+          <FormButtonContainer>
+            <Button type="reset">Clear fields</Button>
+            <Button type="submit">Register</Button>
+          </FormButtonContainer>
         </Form>
 
       </Container>

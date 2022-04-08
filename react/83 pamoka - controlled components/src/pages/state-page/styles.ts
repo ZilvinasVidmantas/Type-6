@@ -37,3 +37,9 @@ export const Form = styled.form`
   padding: 20px;
   box-shadow: 0 2px 4px 1px #0005;
 `;
+
+export const FormButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`;
