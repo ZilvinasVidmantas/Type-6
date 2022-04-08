@@ -12,11 +12,9 @@ const StatePageControlledComponentsSection: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
-    /*
-      Atspausdinkite (konsolėje) visų įvesties laukų reikšmes
-      Po atspausdinimo, išvalykite visas visas įvesties laukų reikšmes
-    */
+    setEmail('');
+    setPassword('');
+    setPasswordConfirmation('');
   };
 
   return (
