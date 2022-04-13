@@ -1,23 +1,30 @@
-import '@mui/material/styles';
-
-// declare module '@mui/material/styles' {
-//   interface Theme {
-//     testas: number
-//   }
-// }
+import '@mui/material';
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
     navbar: CSSProperties;
+    section: CSSProperties
   }
 }
 
 declare module '@mui/material/styles/createPalette' {
   interface PaletteOptions {
-    manoSpalva?: PaletteColorOptions;
+    blue?: PaletteColorOptions;
+    red?: PaletteColorOptions;
+    green?: PaletteColorOptions;
   }
 
   interface Palette {
-    manoSpalva: PaletteColor;
+    blue: PaletteColor;
+    red: PaletteColor;
+    green: PaletteColor;
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    blue: true;
+    red: true;
+    green: true;
   }
 }

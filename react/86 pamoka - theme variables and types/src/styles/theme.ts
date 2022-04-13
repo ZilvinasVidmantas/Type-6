@@ -1,24 +1,21 @@
 import { createTheme } from '@mui/material';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fc5203',
-      light: '#ff6f2b',
-      dark: '#e04800',
-      contrastText: '#ffffff',
-    },
+const theme = createTheme();
 
-    manoSpalva: {
-      main: '#546548',
-    },
+const createColor = (color: string) => theme.palette.augmentColor({ color: { main: color } });
+
+const lightTheme = createTheme(theme, {
+  palette: {
+    red: createColor('#dd2222'),
+    green: createColor('#22dd22'),
+    blue: createColor('#2222dd'),
+    primary: createColor('#fc5203'),
+
     background: {
       default: '#fafafa',
     },
   },
-});
 
-const lightTheme = createTheme(theme, {
   mixins: {
     navbar: {
       display: 'flex',
@@ -26,9 +23,11 @@ const lightTheme = createTheme(theme, {
       alignItems: 'center',
       height: 56,
     },
+    section: {
+      paddingTop: theme.spacing(6),
+      paddingBottom: theme.spacing(6),
+    },
   },
 });
-
-console.log(lightTheme);
 
 export default lightTheme;
