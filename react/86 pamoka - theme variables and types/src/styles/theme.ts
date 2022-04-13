@@ -8,6 +8,10 @@ const theme = createTheme({
       dark: '#e04800',
       contrastText: '#ffffff',
     },
+
+    manoSpalva: {
+      main: '#546548',
+    },
     background: {
       default: '#fafafa',
     },
@@ -16,14 +20,11 @@ const theme = createTheme({
 
 const lightTheme = createTheme(theme, {
   mixins: {
-    toolbar: {
-      minHeight: 56,
-      [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
-        minHeight: 56,
-      },
-      [theme.breakpoints.up('sm')]: {
-        minHeight: 56,
-      },
+    navbar: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      height: 56,
     },
   },
 });
