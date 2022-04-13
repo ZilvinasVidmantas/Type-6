@@ -14,4 +14,20 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+const lightTheme = createTheme(theme, {
+  mixins: {
+    toolbar: {
+      minHeight: 56,
+      [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+        minHeight: 56,
+      },
+      [theme.breakpoints.up('sm')]: {
+        minHeight: 56,
+      },
+    },
+  },
+});
+
+console.log(lightTheme);
+
+export default lightTheme;

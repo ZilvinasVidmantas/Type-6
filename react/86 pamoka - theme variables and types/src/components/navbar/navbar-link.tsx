@@ -6,7 +6,7 @@ const NavbarLink = styled(NavLink)(({ theme }) => ({
   alignItems: 'center',
   color: theme.palette.common.white,
   textDecoration: 'none',
-  alignSelf: 'stretch',
+  height: '100%',
   padding: theme.spacing(0, 2),
   transition: theme.transitions.create('color'),
 
