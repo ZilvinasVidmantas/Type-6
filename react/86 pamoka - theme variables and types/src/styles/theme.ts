@@ -1,10 +1,10 @@
-import { createTheme } from '@mui/material';
+import { createTheme, PaletteColor } from '@mui/material';
 
 const theme = createTheme();
 
-const createColor = (color: string) => theme.palette.augmentColor({ color: { main: color } });
+const createColor = (color: string): PaletteColor => theme.palette.augmentColor({ color: { main: color } });
 
-const lightTheme = createTheme(theme, {
+const lightTheme = createTheme({
   palette: {
     red: createColor('#dd2222'),
     green: createColor('#22dd22'),
@@ -28,6 +28,10 @@ const lightTheme = createTheme(theme, {
       paddingBottom: theme.spacing(6),
     },
   },
-});
+
+  typography: {
+    fontFamily: '\'-apple-system\',\'BlinkMacSystemFont\'',
+  },
+}, theme);
 
 export default lightTheme;
