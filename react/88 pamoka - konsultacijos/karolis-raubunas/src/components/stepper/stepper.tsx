@@ -59,6 +59,11 @@ function SwipeableTextMobileStepper() {
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
+        springConfig={{
+          duration: '0.5s', // CIA
+          easeFunction: 'ease',
+          delay: '0s',
+        }}
       >
         {images.map((step, index) => (
           <div key={step.label}>
