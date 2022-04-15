@@ -1,25 +1,26 @@
 import React from 'react';
 import {
-  Box,
   Button,
-  Card,
   CardActions,
   CardContent,
   Typography,
 } from '@mui/material';
+import OutlinedCard from '../../Components-global/outlined-card';
 
-export type PropsType = {
+export type PricingPageCardProps = {
   planName: string,
   price: string,
   off: string,
   get: string,
 };
 
-export const CardOne = ({
-  planName, price, off, get,
-}: PropsType) => (
-
-  <>
+const PricingPageCard: React.FC<PricingPageCardProps> = ({
+  planName,
+  price,
+  off,
+  get,
+}) => (
+  <OutlinedCard>
     <CardContent>
       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
         {planName}
@@ -31,11 +32,7 @@ export const CardOne = ({
         per month
       </Typography>
       <Typography variant="body2">
-        Save
-        {' '}
-        {off}
-        {' '}
-        off
+        {`Save ${off} off`}
         <br />
         {get}
       </Typography>
@@ -43,10 +40,7 @@ export const CardOne = ({
     <CardActions>
       <Button variant="contained" sx={{ textTransform: 'none' }}>Get Broke ass fuck Plan</Button>
     </CardActions>
-  </>
+  </OutlinedCard>
 );
-export const OutlinedCard = () => (
-  <Box sx={{ minWidth: 275, m: 5 }}>
-    <Card variant="outlined" sx={{ bgColor: 'light' }}>{CardOne}</Card>
-  </Box>
-);
+
+export default PricingPageCard;

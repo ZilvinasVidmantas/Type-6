@@ -1,6 +1,7 @@
 import '@mui/material';
 
 declare module '@mui/material/styles/createPalette' {
+
   interface PaletteOptions {
     red?: PaletteColorOptions;
     black?: PaletteColorOptions;
