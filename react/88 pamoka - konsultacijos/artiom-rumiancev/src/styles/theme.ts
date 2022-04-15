@@ -31,15 +31,15 @@ const avocadoTheme = createTheme({
       default: '#f7e5cd',
     },
   },
-  typography: {
-    fontFamily: 'Comfortaa',
-  },
   mixins: {
     section: {
       height: 100,
       width: 200,
       background: '#8da98e',
     },
+  },
+  typography: {
+    fontFamily: 'Comfortaa',
   },
 });
 
@@ -62,4 +62,7 @@ export const avocadoSameHeightNavbar = createTheme(avocadoTheme, {
   },
 });
 
+console.log(avocadoSameHeightNavbar);
+
 export default avocadoTheme;
+
