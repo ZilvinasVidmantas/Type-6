@@ -13,8 +13,9 @@ const Navbar: React.FC = () => (
       <Box sx={(theme) => theme.mixins.navbar}>
         <Logo size={40} />
         <Box sx={{ alignSelf: 'stretch' }}>
-          <NavbarLink to="/">Home</NavbarLink>
-          <NavbarLink to="/buttons">Buttons</NavbarLink>
+          <NavbarLink to="/">Pagrindinis</NavbarLink>
+          <NavbarLink to="/vietoves">Vietovės</NavbarLink>
+          <NavbarLink to="/ispudziai">Įspūdžiai</NavbarLink>
         </Box>
       </Box>
     </Container>

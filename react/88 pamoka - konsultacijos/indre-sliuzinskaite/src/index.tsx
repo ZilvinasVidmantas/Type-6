@@ -7,7 +7,6 @@ import {
 
 import lightTheme from './styles/theme';
 import App from './app';
-import namas from "./namas.jpg";
 
 ReactDOM.render(
   <React.StrictMode>
