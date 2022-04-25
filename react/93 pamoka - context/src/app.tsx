@@ -1,13 +1,19 @@
 import React from 'react';
 import {
-  Typography,
-  Box,
-} from '@mui/material';
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import HomePage from './pages/home-page';
+import ProfilePage from './pages/profile-page';
 
 const App: React.FC = () => (
-  <Box component="main">
-    <Typography component="h1" variant="h2">React context</Typography>
-  </Box>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/profile" element={<ProfilePage />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 export default App;
