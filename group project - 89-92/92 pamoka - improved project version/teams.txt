@@ -1,0 +1,58 @@
+# Audra po Kaldra - SubCategory list
+* Gerardas Anusevičius - LEAD
+* Viktor Kruk - Servicų panaudojimas SubCategory puslapiui
+* Artiom Rumiancev - DB + Services
+* Gerardas Barštys - komponentų struktūra ir reikalingi prop'sai
+* Indrė Sliužinskaitė - komponentų struktūra ir reikalingi prop'sai
+
+# Kaštonų medžiotojai - Home page
+* Martynas Petrauskis - LEAD
+* Milda Pauzaitė - komponentų struktūra ir reikalingi prop'sai
+* Edvinas Petrauskas - Servicų panaudojimas Home puslapiui
+* Mindaugas Greizė - komponentų struktūra ir reikalingi prop'sai
+
+# Ambalai - Global components and theme settings
+* Augustinas Vagnoris - LEAD
+* Egidijus Patrauskas - Temos nustatymai ir tipai
+* Rokas Jazbutis - globalių komponentų kūrimas
+* Andrius Pocius - globalių komponentų kūrimas
+
+# No-Lifers - Category page
+* Karolis Raubūnas - LEAD
+* Bogomil Zubrickij - Servicų panaudojimas Category puslapiui
+* Milda Beržanskaitė - DB + Services
+* Deimantė Brijūnienė - komponentų struktūra ir reikalingi prop'sai
+
+/*
+  --------------------------- Tribe Meats ---------------------- 
+  1. Kiekviena komanda susigalvoja savo puslapio išdėstymą
+  2. Kiekviena komanda suskaido savo puslapį komponentais
+  3. Kiekviena komanda turi susirašyti, kokių propsų reikės kiekvienam komponenetui
+  4. Kiekviena komanda turi susirašyti kokių duomenų reiks iš serverio
+  5. Darbų pasiskirstymas, pvz:
+    * Atskirtų komponentų/sekcijų kūrimas su dirbtiniais duomenimis
+    * duomenų formavimas
+    * service'ų kūrimas
+    * nuotraukų siuntimas
+    * informacijos pildymas
+  
+  ------------------ Tuo metu kol Tribe'ai dirba - vyksta Vadovų pasitarimas -------
+  0. git šakų vardinimo metodologija:
+    {grupės-šifras}-{užduoties-nr}-{užduties-aprašymas}
+  1. Navigacijos klausimų aptarimas, kaip vadinsis puslapių route'ai?
+    * Gerardas Anusevičius vadovas apisiema sudaryto route'us
+  2. Duomenų bazės tipai ir jų kūrimas
+    * Augustinas Vagnoris vadovas apsiema tipų aprašymų
+  3. Bendri temos nustatymai:
+    * breakpointai
+    * navbar aukštis
+    * spalvos
+    * šriftas
+    * ir t.t.
+  4. Po pasitarimo, turie pasidaryti dar vieną Tribe meet'ą ir pranešti pakitimus
+  5. Tie vadovai kurie neturi nurodytų darbų, ir juau yra patikrinę visus PullRequest'us gali imtis
+    bet kokių darbų.
+    
+
+*/
+
