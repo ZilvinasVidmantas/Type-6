@@ -1,10 +1,10 @@
 import { Container, Typography } from '@mui/material';
 import React from 'react';
 
-const HomePage: React.FC = () => (
+const LoginPage: React.FC = () => (
   <Container>
-    <Typography>Home</Typography>
+    <Typography>Login</Typography>
   </Container>
 );
 
-export default HomePage;
+export default LoginPage;
