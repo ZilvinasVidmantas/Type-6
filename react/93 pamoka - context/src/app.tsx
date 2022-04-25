@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Typography,
-  Box
+  Box,
 } from '@mui/material';
 
 const App: React.FC = () => (
