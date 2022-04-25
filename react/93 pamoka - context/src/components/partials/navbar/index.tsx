@@ -2,10 +2,10 @@ import {
   AppBar, Box, Container, Toolbar,
 } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import NavbarLink from './navbar-link';
 
 const Navbar: React.FC = () => (
-  <AppBar position="sticky">
+  <AppBar position="sticky" sx={{ bgcolor: 'grey.900' }}>
     <Container>
       <Toolbar sx={{
         px: { xs: 0, sm: 0 },
@@ -13,11 +13,11 @@ const Navbar: React.FC = () => (
       }}
       >
         <Box>
-          <Link to="/">Home</Link>
+          <NavbarLink to="/">Home</NavbarLink>
         </Box>
         <Box>
-          <Link to="/auth/login">Login</Link>
-          <Link to="/auth/register">Register</Link>
+          <NavbarLink to="/auth/login">Login</NavbarLink>
+          <NavbarLink to="/auth/register">Register</NavbarLink>
         </Box>
       </Toolbar>
     </Container>
