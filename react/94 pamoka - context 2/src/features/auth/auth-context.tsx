@@ -8,12 +8,12 @@ export type AuthContextType = {
 
 const initialValue: AuthContextType = {
   user: null,
-  loggedIn: false,
+  loggedIn: true,
 };
 
 const AuthContext = createContext(initialValue);
 
-export const AuthProvider: React.FC = ({ ...children }) => (
+export const AuthProvider: React.FC = ({ children }) => (
   <AuthContext.Provider value={initialValue}>
     {children}
   </AuthContext.Provider>
