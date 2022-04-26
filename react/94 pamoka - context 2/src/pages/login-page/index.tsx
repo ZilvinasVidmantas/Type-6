@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box,
   Button,
   Container, Paper, TextField, Typography,
 } from '@mui/material';
 import SecurityIcon from '@mui/icons-material/Security';
+import AuthContext from '../../features/auth/auth-context';
 
 const LoginPage: React.FC = () => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    console.log({
-      email,
-      password,
-    });
+    login();
   };
 
   return (
