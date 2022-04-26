@@ -8,17 +8,20 @@ import HomePage from './pages/home-page';
 import ProfilePage from './pages/profile-page';
 import LoginPage from './pages/login-page';
 import VisitorLayout from './layouts/visitor-layout';
+import { AuthProvider } from './features/auth/auth-context';
 
 const App: React.FC = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<VisitorLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="auth/login" element={<LoginPage />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<VisitorLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="auth/login" element={<LoginPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
 );
 
 export default App;
