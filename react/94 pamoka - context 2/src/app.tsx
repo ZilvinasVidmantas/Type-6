@@ -9,19 +9,27 @@ import ProfilePage from './pages/profile-page';
 import LoginPage from './pages/login-page';
 import VisitorLayout from './layouts/visitor-layout';
 import { AuthProvider } from './features/auth/auth-context';
+import RequireAuth from './routing/require-auth';
 
 const App: React.FC = () => (
-  <AuthProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<VisitorLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="profile" element={<ProfilePage />} />
           <Route path="auth/login" element={<LoginPage />} />
+          <Route
+            path="profile"
+            element={(
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
+            )}
+          />
         </Route>
       </Routes>
-    </BrowserRouter>
-  </AuthProvider>
+    </AuthProvider>
+  </BrowserRouter>
 );
 
 export default App;

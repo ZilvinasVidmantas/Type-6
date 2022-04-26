@@ -1,10 +1,11 @@
 import React, { createContext, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User } from '../../types/index';
 
 export type AuthContextType = {
   user: null | User,
   loggedIn: boolean,
-  login: () => void,
+  login: (next: string) => void,
   logout: () => void,
 };
 
@@ -22,15 +23,19 @@ const initialValue: AuthContextType = {
 const AuthContext = createContext(initialValue);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState<AuthContextType['loggedIn']>(false);
   const [user, setUser] = useState<AuthContextType['user']>(null);
 
-  const login = () => {
+  const login: AuthContextType['login'] = (next) => {
     setLoggedIn(true);
+    // Panaudosiu redirect linką, jeigu toks yra
+    navigate(next);
   };
 
-  const logout = () => {
+  const logout: AuthContextType['logout'] = () => {
     setLoggedIn(false);
+    navigate('/');
   };
 
   const providerValue = useMemo(() => ({

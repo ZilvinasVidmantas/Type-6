@@ -5,17 +5,19 @@ import {
   Container, Paper, TextField, Typography,
 } from '@mui/material';
 import SecurityIcon from '@mui/icons-material/Security';
+import { useSearchParams } from 'react-router-dom';
 import AuthContext from '../../features/auth/auth-context';
 
 const LoginPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
-    login();
+    const nextPage = searchParams.get('next') ?? '/';
+    login(nextPage);
   };
 
   return (
