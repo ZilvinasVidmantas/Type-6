@@ -40,8 +40,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     logout,
   }), [loggedIn, user]);
 
-  console.log(providerValue);
-
   return (
     <AuthContext.Provider value={providerValue}>
       {children}
