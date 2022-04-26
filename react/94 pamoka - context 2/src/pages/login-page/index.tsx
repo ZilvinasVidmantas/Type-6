@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Container sx={{ pt: 3 }}>
+    <Container sx={{ pt: 20 }}>
       <Paper
         component="form"
         elevation={3}
