@@ -5,6 +5,7 @@ export type AuthContextType = {
   user: null | User,
   loggedIn: boolean,
   login: () => void,
+  logout: () => void,
 };
 
 const initialValue: AuthContextType = {
@@ -12,6 +13,9 @@ const initialValue: AuthContextType = {
   loggedIn: false,
   login: () => {
     throw new Error('AuthContext.login is not implemented');
+  },
+  logout: () => {
+    throw new Error('AuthContext.logout is not implemented');
   },
 };
 
@@ -22,14 +26,18 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<AuthContextType['user']>(null);
 
   const login = () => {
-    console.log('vartotojas prisijungia');
     setLoggedIn(true);
+  };
+
+  const logout = () => {
+    setLoggedIn(false);
   };
 
   const providerValue = useMemo(() => ({
     user,
     loggedIn,
     login,
+    logout,
   }), [loggedIn, user]);
 
   console.log(providerValue);
