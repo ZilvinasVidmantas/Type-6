@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import useAuth from '../hooks/use-auth';
+import { Box, Typography } from '@mui/material';
+import ButtonField from "../components/button-field";
 
 type LocationState = {
   from?: {
@@ -32,16 +34,16 @@ function LoginPage() {
   }
 
   return (
-    <div>
-      <p>You must log in to view the page at {from}</p>
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username: <input name="username" type="text" />
-        </label>{" "}
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <Box>
+      <Typography>You must log in to view the page at {from}</Typography>
+      <Box component="form" onSubmit={handleSubmit} >
+        <ButtonField
+          btnText="Login"
+          label="Username"
+          name="username"
+        />
+      </Box>
+    </Box>
   );
 }
 
