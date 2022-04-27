@@ -59,34 +59,33 @@ Nefunkciniai reikalavimai:
 Vertinimas:
   1  Pasiekiama repozitorija su readme.md failu, kurioje aprašyta kaip pasileisti projektą. [1]
   2  Veikiantys kliento pusės maršrutai [1]
-  3  Panaudota localStorage [1]
-  4  Panaudota globalios puslapio būsenos technologijos( react-context || redux.js ) [1]
-  5  Prisitaikantis dizainas [2]
-    5.1 Nors vienas puslapis yra responsive [1]
-    5.2 Visi puslapiai yra responsive [1]
+  3  Panaudota localStorage arba sessionStorage [1]
+  4  Panaudota globalios puslapio būsenos technologijos( react-context arba redux.js ) [1]
+  5  Prisitaikantis dizainas visiems puslapiams [1]
   6  Autentifikacija ir Autorizacija [1-2]
     6.1 viena rolė [1]
     6.2 kelios rolės [1]
   7  Teisingais ryšiais sudaryta ir pakankamo struktūrinio turinio duomenų bazė [1]
-  8  Duomenų filtracija (ir|arba) paieška [1-2]
-    8.1 paieška [1]
-    8.2 filtracija [1]
+  8  Duomenų filtracija (ir|arba) paieška [1]
   9  Panaudota komponentų biblioteka su pritaikytais temos nustatymais [1]
-    9.1 Panaudoti komponentai
-    9.2 Panaudoti temos nustatymai
-  10  Puslapiavimas (ir|arba) infinite* scroll [1-2]
-    10.1 infinite scroll [1]
-    10.2 puslapiavimas [1]
-  11   FULLSTACK CRUD veiksmai [1-3] 
-    11.1 Vienos struktūros daliniai CRUD veiksmai [1]
-    11.2 Vienos struktūros pilni CRUD veiksmai [1]
-    11.3 Struktūros susijusios su kita struktūra CRUD veiksmai [1]
-  12   Formos validacija [1]
+  10  Puslapiavimas (ir|arba) infinite* scroll [1]
+  11  FULLSTACK CRUD veiksmai [1-2] 
+    11.1 Vienos struktūros pilni CRUD veiksmai [1]
+    11.2 Struktūros susijusios su kita struktūra CRUD veiksmai [1]
+  12  Formos validacija [1]
 
-  TypeScript nebūvimas React aplikacijoje: -2
-    * Visiškas nebuvimas -1
-    * Nesuderinti tipai -1
+  minimalus taškų skaičius išlaikymui: 5
+  maksimalus taškų skaičius: 14
+
+  Surinkus 6 taškus - pažymys 6
+  Surinkus 11 taškų - pažymys 10
+  Surinkus 14 taškų - pažymys 10
+
+  Taškų yra daugiau nei pažymių tam, kad galėtumėte laisviau
+  išvystyti savo projekto idėją per daug neprisirišant prie vertinimo kriterijų.
+  Pvz.: 
+    * Kuriate reprezentacinį puslapį tik su ADMIN turinio valdymo sistema, 
+      jums nereikalingos kelios rolės. 
+    * Jeigu jūsų puslapio idėja išpildyta naudojant scroll'inant puslapį, jums
+      nereikia router'io
     
-  min: 5
-  max: 19
-  max-vertinimas: 10
