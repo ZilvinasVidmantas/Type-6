@@ -33,3 +33,7 @@ const App: React.FC = () => (
 );
 
 export default App;
+
+// Sukurkite apsaugą RequireVisitor LoginPage route'ui
+//    Jeigu prisijungęs vartotojas bando patekti į Visitor rolės puslapį,
+//    jis turi būti nukreipiamas į HomePage
