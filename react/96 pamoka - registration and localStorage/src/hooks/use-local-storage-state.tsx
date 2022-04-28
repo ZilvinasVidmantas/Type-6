@@ -1,30 +1,15 @@
 import { useState, useEffect } from 'react';
 
-type UseLocalStorageState = <T>(initialValue: T, name: string, deleteOnUnmount?: boolean) => [T, (newValue: T) => void];
+type UseLocalStorage = <T>(name: string, defaultValue: T) => [T, (newValue: T) => void];
 
-const useLocalStorageState: UseLocalStorageState = (initialValue, name, deleteOnUnmount = false) => {
-  const [value, setValue] = useState(initialValue);
-
-  const handleUnmount = (ev: BeforeUnloadEvent) => {
-    ev.preventDefault();
-    if (deleteOnUnmount) {
-      localStorage.removeItem(name);
-    }
-  };
-
-  useEffect(() => {
+const useLocalStorage: UseLocalStorage = (name, initialValue) => {
+  const [value, setValue] = useState(() => {
     const existingValue = localStorage.getItem(name);
-    if (existingValue) {
-      const newValue = JSON.parse(existingValue) as typeof value;
-      setValue(newValue);
-    }
 
-    window.addEventListener('beforeunload', handleUnmount);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleUnmount);
-    };
-  }, []);
+    return existingValue
+      ? JSON.parse(existingValue) as typeof initialValue
+      : initialValue;
+  });
 
   useEffect(() => {
     const stringifiedValue = JSON.stringify(value);
@@ -34,4 +19,4 @@ const useLocalStorageState: UseLocalStorageState = (initialValue, name, deleteOn
   return [value, setValue];
 };
 
-export default useLocalStorageState;
+export default useLocalStorage;
