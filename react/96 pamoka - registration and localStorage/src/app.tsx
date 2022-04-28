@@ -7,6 +7,8 @@ import {
 import HomePage from './pages/home-page';
 import ProfilePage from './pages/profile-page';
 import LoginPage from './pages/login-page';
+import RegisterPage from './pages/register-page/index';
+
 import VisitorLayout from './layouts/visitor-layout';
 import { AuthProvider } from './features/auth/auth-context';
 import RequireAuth from './routing/require-auth';
@@ -23,6 +25,14 @@ const App: React.FC = () => (
             element={(
               <RequireVisitor>
                 <LoginPage />
+              </RequireVisitor>
+            )}
+          />
+          <Route
+            path="auth/register"
+            element={(
+              <RequireVisitor>
+                <RegisterPage />
               </RequireVisitor>
             )}
           />
