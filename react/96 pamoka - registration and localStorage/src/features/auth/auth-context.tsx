@@ -1,6 +1,7 @@
 import React, { createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../../types/index';
+import useLocalStorageState from '../../hooks/use-local-storage-state';
 
 export type AuthContextType = {
   user: null | User,
@@ -24,7 +25,7 @@ const AuthContext = createContext(initialValue);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState<AuthContextType['loggedIn']>(false);
+  const [loggedIn, setLoggedIn] = useLocalStorageState<AuthContextType['loggedIn']>(false, 'loggedIn');
   const [user, setUser] = useState<AuthContextType['user']>(null);
 
   const login: AuthContextType['login'] = (next) => {
