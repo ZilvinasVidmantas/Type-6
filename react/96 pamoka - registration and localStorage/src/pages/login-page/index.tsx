@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
-import {
-  Box,
-  Button,
-  Container, Paper, TextField, Typography,
-} from '@mui/material';
-import SecurityIcon from '@mui/icons-material/Security';
 import { useSearchParams } from 'react-router-dom';
+import { TextField } from '@mui/material';
+
 import AuthContext from '../../features/auth/auth-context';
+import AuthForm from '../../components/auth-form';
 
 const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -21,52 +18,26 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Container sx={{ pt: 20 }}>
-      <Paper
-        component="form"
-        elevation={3}
-        sx={{
-          display: 'flex',
-          mx: 'auto',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 1,
-          p: 3,
-          width: 400,
-        }}
-        onSubmit={handleSubmit}
-      >
-        <SecurityIcon color="primary" sx={{ fontSize: 45 }} />
-        <Typography component="h1" variant="h4">
-          Login
-        </Typography>
-
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          width: 1 / 1,
-          my: 2,
-        }}
-        >
-          <TextField
-            type="email"
-            label="Email"
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            type="password"
-            label="Password"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Box>
-        <Button variant="contained" size="large" type="submit">Login</Button>
-      </Paper>
-    </Container>
+    <AuthForm
+      formTitle="Login"
+      submitText="Login"
+      onSubmit={handleSubmit}
+    >
+      <TextField
+        type="email"
+        label="Email"
+        fullWidth
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <TextField
+        type="password"
+        label="Password"
+        fullWidth
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </AuthForm>
   );
 };
 
