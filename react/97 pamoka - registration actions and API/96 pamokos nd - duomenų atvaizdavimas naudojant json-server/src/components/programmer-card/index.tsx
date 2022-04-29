@@ -6,7 +6,7 @@ import {
   Button,
   Divider,
 } from '@mui/material';
-import Programmer from '../../types/programmer';
+import { Programmer } from '../../types';
 import ProgrammerCardProperty from './programmer-card-property';
 import Img from '../img';
 
@@ -26,7 +26,6 @@ const ProgrammerCard: React.FC<ProgrammerCardProps> = ({
   >
     <Box
       sx={{
-        background: 'red',
         height: { xs: 270, sm: '100%', lg: 270 },
         width: { xs: '100%', sm: 300, lg: '100%' },
         flexBasis: 300,
