@@ -4,17 +4,10 @@ import {
   Paper,
   Typography,
   Button,
-  styled,
 } from '@mui/material';
 import Programmer from '../../types/programmer';
 import ProgrammerCardProperty from './programmer-card-property';
-
-const Img = styled('img')({
-  width: '100%',
-  height: 270,
-  objectFit: 'cover',
-  objectPosition: 'top',
-});
+import Img from '../img';
 
 type ProgrammerCardProps = Omit<Programmer, 'id'>;
 
@@ -22,7 +15,7 @@ const ProgrammerCard: React.FC<ProgrammerCardProps> = ({
   name, surname, languages, technologies, img, yearsOfExperience,
 }) => (
   <Paper elevation={3}>
-    <Img src={img} alt="" />
+    <Img src={img} sx={{ height: 270 }} alt="" />
     <Box sx={{ p: 3, pt: 1 }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Typography
