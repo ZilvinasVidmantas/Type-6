@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Container,
   Box,
@@ -10,6 +11,7 @@ import {
 } from '@mui/material';
 
 type Programmer = {
+  id: string,
   name: string,
   surname: string,
   languages: string[],
@@ -29,10 +31,16 @@ const HomePage: React.FC = () => {
   const [programmers, setProgrammers] = useState<Programmer[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/programmers')
-      .then((response) => response.json())
-      .then((fetchedProgrammers) => {
-        setProgrammers(fetchedProgrammers as Programmer[]);
+    // fetch('http://localhost:8000/programmers')
+    //   .then((response) => response.json())
+    //   .then((fetchedProgrammers) => {
+    //     setProgrammers(fetchedProgrammers as Programmer[]);
+    //   })
+    //   .catch(console.error);
+
+    axios.get<Programmer[]>('http://localhost:8000/programmers')
+      .then((axiosResponse) => {
+        setProgrammers(axiosResponse.data);
       })
       .catch(console.error);
   }, []);
@@ -44,13 +52,18 @@ const HomePage: React.FC = () => {
       </Typography>
       <Grid container spacing={3}>
         {programmers.map(({
-          name, surname, languages, technologies, img, yearsOfExperience,
+          id, name, surname, languages, technologies, img, yearsOfExperience,
         }) => (
-          <Grid item xs={4}>
+          <Grid key={id} item xs={4}>
             <Paper sx={{ p: 3 }} elevation={3}>
               <Img src={img} alt="" />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Typography variant="h5" sx={{ textAlign: 'center' }}>{`${name} ${surname}`}</Typography>
+                <Typography
+                  variant="h5"
+                  sx={{ textAlign: 'center' }}
+                >
+                  {`${name} ${surname}`}
+                </Typography>
                 <Box>
                   <Typography variant="h6">Languages</Typography>
                   <Typography sx={{ pl: 3 }}>{languages.join(', ')}</Typography>
