@@ -1,0 +1,48 @@
+{
+  "programmers": [
+    {
+      "name": "Serbentautas",
+      "surname": "Bordiūras",
+      "languages": [
+        "Java",
+        "JavaScript"
+      ],
+      "technologies": [
+        "Java Spring",
+        "React.js",
+        "Express.js"
+      ],
+      "img": "https://image.shutterstock.com/image-photo/smiling-attractive-man-glasses-modern-260nw-717279865.jpg",
+      "yearsOfExperience": 3
+    },
+    {
+      "name": "Jovalas",
+      "surname": "Johanas",
+      "languages": [
+        ".NET",
+        "JavaScript"
+      ],
+      "technologies": [
+        "AZURE services",
+        "Angular.js"
+      ],
+      "img": "https://media.istockphoto.com/photos/confused-nerd-guy-picture-id168250344?k=20&m=168250344&s=612x612&w=0&h=V7seKY4kuNv1Uym-2J3trEo_ZOOVMCQAR3eqlBnFNVo=",
+      "yearsOfExperience": 5
+    },
+    {
+      "name": "Volonija",
+      "surname": "Kengūrienė",
+      "languages": [
+        "PHP",
+        "JavaScript"
+      ],
+      "technologies": [
+        "Wordpress",
+        "Laravel",
+        "Vue.js"
+      ],
+      "img": "https://media.istockphoto.com/photos/geeky-girl-picture-id536217043?k=20&m=536217043&s=612x612&w=0&h=8WxDgS_PY_PO5Iu8xsjNKSuFfpwtoyI-08uLsFxOiZg=",
+      "yearsOfExperience": 4
+    }
+  ]
+}
