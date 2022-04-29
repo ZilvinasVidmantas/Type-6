@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
       </Typography>
       <Grid container spacing={6}>
         {programmers.map(({ id, ...programmerProps }) => (
-          <Grid key={id} item xs={4}>
+          <Grid key={id} item xs={12} lg={4}>
             <ProgrammerCard {...programmerProps} />
           </Grid>
         ))}
