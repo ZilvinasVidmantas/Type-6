@@ -56,7 +56,7 @@ const ProgrammerCard: React.FC<ProgrammerCardProps> = ({
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
         <Button variant="contained" color="primary">Info</Button>
-        <Button variant="contained" color="info">Call</Button>
+        <Button variant="contained" color="secondary">Call</Button>
       </Box>
     </Box>
   </Paper>
