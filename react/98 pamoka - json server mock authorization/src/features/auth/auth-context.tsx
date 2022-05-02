@@ -7,13 +7,19 @@ import AuthService from './auth-service';
 export type AuthContextType = {
   user: null | User,
   loggedIn: boolean,
+  error: string | null,
+  clearError: VoidFunction,
   login: (crudentials: Crudentials, next: string) => void,
-  logout: () => void,
+  logout: VoidFunction,
 };
 
 const initialValue: AuthContextType = {
   user: null,
   loggedIn: false,
+  error: null,
+  clearError: () => {
+    throw new Error('AuthContext.clearError is not implemented');
+  },
   login: () => {
     throw new Error('AuthContext.login is not implemented');
   },
@@ -28,15 +34,16 @@ export const AuthProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useLocalStorage<AuthContextType['loggedIn']>('loggedIn', false);
   const [user, setUser] = useState<AuthContextType['user']>(null);
+  const [error, setError] = useState<AuthContextType['error']>(null);
 
   const login: AuthContextType['login'] = async (crudentials: Crudentials, next) => {
     try {
       const loggedInUser = await AuthService.login(crudentials);
       console.log('Sekmingai prisijungta');
       console.table(loggedInUser);
-    } catch (error) {
-      console.log('Pagauta klaida');
-      console.log(error);
+    } catch (err) {
+      const { message } = (err as Error);
+      setError(message);
     }
     // setLoggedIn(true);
     // Panaudosiu redirect linką, jeigu toks yra
@@ -48,12 +55,18 @@ export const AuthProvider: React.FC = ({ children }) => {
     navigate('/');
   };
 
+  const clearError: AuthContextType['clearError'] = () => {
+    setError(null);
+  };
+
   const providerValue = useMemo(() => ({
     user,
     loggedIn,
+    error,
+    clearError,
     login,
     logout,
-  }), [loggedIn, user]);
+  }), [loggedIn, user, error]);
 
   return (
     <AuthContext.Provider value={providerValue}>

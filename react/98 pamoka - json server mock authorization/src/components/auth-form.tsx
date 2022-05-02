@@ -24,24 +24,31 @@ const AuthForm: React.FC<AuthFormProps> = ({
   onSubmit,
   children,
 }) => {
-  const authContext = useContext(AuthContext);
+  const { error, clearError } = useContext(AuthContext);
+
+  console.log({
+    error,
+    clearError,
+  });
 
   return (
     <Container sx={{ position: 'relative', pt: 20 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Alert
-          sx={{
-            position: 'absolute',
-            top: 0,
-            minWidth: contentWidth,
-            mt: 12,
-          }}
-          color="error"
-          onClose={() => { }}
-        >
-          This is a success alert — check it out!
-        </Alert>
-      </Box>
+      {error && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Alert
+            sx={{
+              position: 'absolute',
+              top: 0,
+              minWidth: contentWidth,
+              mt: 12,
+            }}
+            color="error"
+            onClose={clearError}
+          >
+            {error}
+          </Alert>
+        </Box>
+      )}
       <Paper
         component="form"
         elevation={3}
