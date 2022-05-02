@@ -33,21 +33,19 @@ const AuthContext = createContext(initialValue);
 export const AuthProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useLocalStorage<AuthContextType['loggedIn']>('loggedIn', false);
-  const [user, setUser] = useState<AuthContextType['user']>(null);
+  const [user, setUser] = useLocalStorage<AuthContextType['user']>('user', null);
   const [error, setError] = useState<AuthContextType['error']>(null);
 
   const login: AuthContextType['login'] = async (crudentials: Crudentials, next) => {
     try {
       const loggedInUser = await AuthService.login(crudentials);
-      console.log('Sekmingai prisijungta');
-      console.table(loggedInUser);
+      setLoggedIn(true);
+      setUser(loggedInUser);
+      navigate(next);
     } catch (err) {
       const { message } = (err as Error);
       setError(message);
     }
-    // setLoggedIn(true);
-    // Panaudosiu redirect linką, jeigu toks yra
-    // navigate(next);
   };
 
   const logout: AuthContextType['logout'] = () => {

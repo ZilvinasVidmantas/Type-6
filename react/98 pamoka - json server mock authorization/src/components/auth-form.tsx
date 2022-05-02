@@ -26,11 +26,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
 }) => {
   const { error, clearError } = useContext(AuthContext);
 
-  console.log({
-    error,
-    clearError,
-  });
-
   return (
     <Container sx={{ position: 'relative', pt: 20 }}>
       {error && (
