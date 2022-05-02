@@ -13,22 +13,7 @@ export type AuthContextType = {
   logout: VoidFunction,
 };
 
-const initialValue: AuthContextType = {
-  user: null,
-  loggedIn: false,
-  error: null,
-  clearError: () => {
-    throw new Error('AuthContext.clearError is not implemented');
-  },
-  login: () => {
-    throw new Error('AuthContext.login is not implemented');
-  },
-  logout: () => {
-    throw new Error('AuthContext.logout is not implemented');
-  },
-};
-
-const AuthContext = createContext(initialValue);
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
