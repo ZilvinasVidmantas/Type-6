@@ -7,13 +7,14 @@ import {
   MenuList,
   MenuItem,
   Divider,
+  Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../features/auth/auth-context';
 
 const NavbarAuthMenu: React.FC = () => {
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const popperAnchorRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +32,17 @@ const NavbarAuthMenu: React.FC = () => {
       ref={popperAnchorRef}
       sx={{ display: 'inline-flex', alignItems: 'center', height: 64 }}
     >
-      <Avatar onClick={handleMenuOpen}>HK</Avatar>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          cursor: 'pointer',
+        }}
+        onClick={handleMenuOpen}
+      >
+        <Typography sx={{ mr: 2, userSelect: 'none' }}>{user?.email}</Typography>
+        <Avatar src={user?.img}>{`${user?.name[0]}${user?.surname[0]}`}</Avatar>
+      </Box>
       <Popper
         placement="bottom-end"
         anchorEl={popperAnchorRef.current}
