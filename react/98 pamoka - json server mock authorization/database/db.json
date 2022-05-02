@@ -1,9 +1,11 @@
 {
-  "programmers": [
+  "users": [
     {
       "id": "111",
       "name": "Serbentautas",
       "surname": "Bordiūras",
+      "email": "user1@gmail.com",
+      "password": "Vilnius123",
       "languages": [
         "Java",
         "JavaScript"
@@ -20,6 +22,8 @@
       "id": "112",
       "name": "Jovalas",
       "surname": "Johanas",
+      "email": "user2@gmail.com",
+      "password": "Vilnius123",
       "languages": [
         ".NET",
         "JavaScript"
@@ -35,6 +39,8 @@
       "id": "113",
       "name": "Volonija",
       "surname": "Kūgelė",
+      "email": "user3@gmail.com",
+      "password": "Vilnius123",
       "languages": [
         "PHP",
         "JavaScript"

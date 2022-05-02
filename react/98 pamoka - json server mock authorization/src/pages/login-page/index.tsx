@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const nextPage = searchParams.get('next') ?? '/';
-    login(nextPage);
+    login({ email, password }, nextPage);
   };
 
   return (
