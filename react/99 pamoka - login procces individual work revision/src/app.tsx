@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container } from '@mui/material';
 import people from './data/people';
 import SortingSelect from './components/sorting-select';
 import PeopleTable from './components/people-table';
@@ -40,10 +41,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="App">
+    <Container sx={{ mt: 3 }}>
       <SortingSelect onChange={handleSortingChange} />
       <PeopleTable data={data} />
-    </div>
+    </Container>
   );
 };
 
