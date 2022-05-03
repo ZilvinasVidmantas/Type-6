@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import './styles.css';
 
-const people = [
+type Person = {
+  id: string,
+  name: string,
+  surname: string,
+  weight: number,
+  height: number,
+};
+
+const people: Person[] = [
   {
     id: '1',
     name: 'Argolija',
@@ -32,10 +40,68 @@ const people = [
   },
 ];
 
+type TableProps = {
+  data: Person[] // Array<Person>
+};
+
+const Table: React.FC<TableProps> = ({ data }) => (
+  <table className="table">
+    <thead>
+      <tr>
+        <th>Vardas</th>
+        <th>Pavarde</th>
+        <th>Svoris</th>
+        <th>Ūgis</th>
+      </tr>
+    </thead>
+    <tbody>
+      {data.map(({
+        id, name, surname, weight, height,
+      }) => (
+        <tr key={id}>
+          <td>{name}</td>
+          <td>{surname}</td>
+          <td>
+            {weight}
+            {' '}
+            kg
+          </td>
+          <td>
+            {height}
+            {' '}
+            cm
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
+type SortingSelectProps = {
+  onChange: (a: string) => void,
+};
+
+const SortingSelect: React.FC<SortingSelectProps> = ({ onChange }) => (
+  <div>
+    <strong>Select sorting: </strong>
+    <select onChange={(e) => onChange(e.target.value)}>
+      <option value="-1">---</option>
+      <option value="name-asc">Name ASC</option>
+      <option value="surname-asc">Surname ASC</option>
+      <option value="height-asc">Height ASC</option>
+      <option value="weight-asc">Weight ASC</option>
+      <option value="name-desc">Name DESC</option>
+      <option value="surname-desc">Surname DESC</option>
+      <option value="height-desc">Height DESC</option>
+      <option value="weight-desc">Weight DESC</option>
+    </select>
+  </div>
+);
+
 const App: React.FC = () => {
   const [data, setData] = useState(people);
 
-  const handleSortingChange = (orderBy) => {
+  const handleSortingChange = (orderBy: string): void => {
     let newData = [...data];
     switch (orderBy) {
       case 'name-asc':
@@ -75,55 +141,5 @@ const App: React.FC = () => {
     </div>
   );
 };
-
-const SortingSelect: React.FC = ({ onChange }) => (
-  <div>
-    <strong>Select sorting: </strong>
-    <select onChange={(e) => onChange(e.target.value)}>
-      <option value="-1">---</option>
-      <option value="name-asc">Name ASC</option>
-      <option value="surname-asc">Surname ASC</option>
-      <option value="height-asc">Height ASC</option>
-      <option value="weight-asc">Weight ASC</option>
-      <option value="name-desc">Name DESC</option>
-      <option value="surname-desc">Surname DESC</option>
-      <option value="height-desc">Height DESC</option>
-      <option value="weight-desc">Weight DESC</option>
-    </select>
-  </div>
-);
-
-const Table: React.FC = ({ data }) => (
-  <table className="table">
-    <thead>
-      <tr>
-        <th>Vardas</th>
-        <th>Pavarde</th>
-        <th>Svoris</th>
-        <th>Ūgis</th>
-      </tr>
-    </thead>
-    <tbody>
-      {data.map(({
-        id, name, surname, weight, height,
-      }) => (
-        <tr key={id}>
-          <td>{name}</td>
-          <td>{surname}</td>
-          <td>
-            {weight}
-            {' '}
-            kg
-          </td>
-          <td>
-            {height}
-            {' '}
-            cm
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-);
 
 export default App;
