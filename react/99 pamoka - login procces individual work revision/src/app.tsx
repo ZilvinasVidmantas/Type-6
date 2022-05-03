@@ -1,102 +1,7 @@
 import React, { useState } from 'react';
-import './styles.css';
-
-type Person = {
-  id: string,
-  name: string,
-  surname: string,
-  weight: number,
-  height: number,
-};
-
-const people: Person[] = [
-  {
-    id: '1',
-    name: 'Argolija',
-    surname: 'Zuikutė',
-    weight: 80,
-    height: 170,
-  },
-  {
-    id: '2',
-    name: 'Brolys',
-    surname: 'Sesauskas',
-    weight: 98,
-    height: 180,
-  },
-  {
-    id: '3',
-    name: 'Kengija',
-    surname: 'Krimavičienė',
-    weight: 65,
-    height: 165,
-  },
-  {
-    id: '4',
-    name: 'Zonkus',
-    surname: 'Varagauskas',
-    weight: 100,
-    height: 190,
-  },
-];
-
-type TableProps = {
-  data: Person[] // Array<Person>
-};
-
-const Table: React.FC<TableProps> = ({ data }) => (
-  <table className="table">
-    <thead>
-      <tr>
-        <th>Vardas</th>
-        <th>Pavarde</th>
-        <th>Svoris</th>
-        <th>Ūgis</th>
-      </tr>
-    </thead>
-    <tbody>
-      {data.map(({
-        id, name, surname, weight, height,
-      }) => (
-        <tr key={id}>
-          <td>{name}</td>
-          <td>{surname}</td>
-          <td>
-            {weight}
-            {' '}
-            kg
-          </td>
-          <td>
-            {height}
-            {' '}
-            cm
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-);
-
-type SortingSelectProps = {
-  onChange: (a: string) => void,
-};
-
-const SortingSelect: React.FC<SortingSelectProps> = ({ onChange }) => (
-  <div>
-    <strong>Select sorting: </strong>
-    <select onChange={(e) => onChange(e.target.value)}>
-      <option value="-1">---</option>
-      <option value="name-asc">Name ASC</option>
-      <option value="surname-asc">Surname ASC</option>
-      <option value="height-asc">Height ASC</option>
-      <option value="weight-asc">Weight ASC</option>
-      <option value="name-desc">Name DESC</option>
-      <option value="surname-desc">Surname DESC</option>
-      <option value="height-desc">Height DESC</option>
-      <option value="weight-desc">Weight DESC</option>
-    </select>
-  </div>
-);
+import people from './data/people';
+import SortingSelect from './components/sorting-select';
+import PeopleTable from './components/people-table';
 
 const App: React.FC = () => {
   const [data, setData] = useState(people);
@@ -137,7 +42,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <SortingSelect onChange={handleSortingChange} />
-      <Table data={data} />
+      <PeopleTable data={data} />
     </div>
   );
 };
