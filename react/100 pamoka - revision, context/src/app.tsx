@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Container } from '@mui/material';
-import people from './data/people';
-import SortingSelect from './components/sorting-select';
+import initPeople from './data/people';
+import PeopleOrderSelect from './components/people-order-select';
 import PeopleTable from './components/people-table';
 
 const App: React.FC = () => {
-  const [data, setData] = useState(people);
+  const [people, setPeople] = useState(initPeople);
+  const [order, setOrder] = useState('-1');
 
-  const handleSortingChange = (orderBy: string): void => {
-    let newData = [...data];
-    switch (orderBy) {
+  const handleSortingChange = (newOrder: string): void => setOrder(newOrder);
+
+  const formattedPeople = useMemo(() => {
+    let newData = [...people];
+
+    switch (order) {
       case 'name-asc':
         newData.sort((a, b) => a.name.localeCompare(b.name));
         break;
@@ -35,15 +39,19 @@ const App: React.FC = () => {
         newData.sort((a, b) => b.weight - a.weight);
         break;
       default:
-        newData = people;
+        newData = initPeople;
     }
-    setData(newData);
-  };
+
+    return newData;
+  }, [order, people]);
 
   return (
     <Container sx={{ mt: 3 }}>
-      <SortingSelect onChange={handleSortingChange} />
-      <PeopleTable data={data} />
+      <PeopleOrderSelect
+        onChange={handleSortingChange}
+        value={order}
+      />
+      <PeopleTable data={formattedPeople} />
     </Container>
   );
 };
