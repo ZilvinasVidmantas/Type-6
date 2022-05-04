@@ -1,24 +1,29 @@
 import React from 'react';
+import { Box, TextField, MenuItem } from '@mui/material';
 
 type SortingSelectProps = {
   onChange: (a: string) => void,
 };
 
 const SortingSelect: React.FC<SortingSelectProps> = ({ onChange }) => (
-  <div>
-    <strong>Select sorting: </strong>
-    <select onChange={(e) => onChange(e.target.value)}>
-      <option value="-1">---</option>
-      <option value="name-asc">Name ASC</option>
-      <option value="surname-asc">Surname ASC</option>
-      <option value="height-asc">Height ASC</option>
-      <option value="weight-asc">Weight ASC</option>
-      <option value="name-desc">Name DESC</option>
-      <option value="surname-desc">Surname DESC</option>
-      <option value="height-desc">Height DESC</option>
-      <option value="weight-desc">Weight DESC</option>
-    </select>
-  </div>
+  <Box>
+    <TextField
+      select
+      label="Select sorting"
+      onChange={(e) => onChange(e.target.value)}
+      sx={{ minWidth: 300, mb: 2 }}
+    >
+      <MenuItem value="-1">...select filter</MenuItem>
+      <MenuItem value="name-asc">Name ASC</MenuItem>
+      <MenuItem value="surname-asc">Surname ASC</MenuItem>
+      <MenuItem value="height-asc">Height ASC</MenuItem>
+      <MenuItem value="weight-asc">Weight ASC</MenuItem>
+      <MenuItem value="name-desc">Name DESC</MenuItem>
+      <MenuItem value="surname-desc">Surname DESC</MenuItem>
+      <MenuItem value="height-desc">Height DESC</MenuItem>
+      <MenuItem value="weight-desc">Weight DESC</MenuItem>
+    </TextField>
+  </Box>
 );
 
 export default SortingSelect;

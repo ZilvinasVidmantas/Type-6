@@ -12,7 +12,7 @@ import {
 import Person from '../types/person';
 
 type PeopleTableProps = {
-  data: Person[] // Array<Person>
+  data: Person[]
 };
 
 const HeaderCell = styled(TableCell)(({ theme }) => ({
@@ -37,11 +37,7 @@ const PeopleTable: React.FC<PeopleTableProps> = ({ data }) => (
         }) => (
           <TableRow
             key={id}
-            sx={{
-              '&:nth-of-type(2n - 1)': {
-                bgcolor: 'grey.50',
-              },
-            }}
+            sx={{ '&:nth-of-type(2n - 1)': { bgcolor: 'grey.50' } }}
           >
             <TableCell align="right">{name}</TableCell>
             <TableCell align="right">{surname}</TableCell>
