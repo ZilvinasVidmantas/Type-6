@@ -1,0 +1,15 @@
+.App {
+  font-family: sans-serif;
+}
+
+.table {
+  margin-top: 20px;
+  width: 100%;
+  background: black;
+  border-spacing: 2px;
+}
+
+.table td,
+.table th {
+  background: white;
+}
