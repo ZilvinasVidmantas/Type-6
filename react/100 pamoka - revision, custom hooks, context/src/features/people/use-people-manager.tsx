@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import initPeople from '../data/people';
-import Person from '../types/person';
+import initPeople from '../../data/people';
+import Person from '../../types/person';
 
 type PersonSortProps = 'name' | 'surname' | 'height' | 'weight';
 type SortingDirections = 'asc' | 'desc';

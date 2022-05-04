@@ -1,6 +1,6 @@
 import React, { createContext, useState, useMemo } from 'react';
-import Person from '../types/person';
-import usePeopleManager from '../hooks/usePeopleManager';
+import Person from '../../types/person';
+import usePeopleManager from './use-people-manager';
 
 type PeopleContextType = {
   people: Person[],

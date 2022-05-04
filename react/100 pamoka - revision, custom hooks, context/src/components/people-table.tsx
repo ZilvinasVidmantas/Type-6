@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   Paper,
   styled,
 } from '@mui/material';
-import PeopleContext from '../contexts/people-context';
+import usePeopleContext from '../features/people/use-people-context';
 
 const HeaderCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.common.white,
@@ -17,7 +17,7 @@ const HeaderCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const PeopleTable: React.FC = () => {
-  const { people } = useContext(PeopleContext);
+  const { people } = usePeopleContext();
 
   return (
     <TableContainer component={Paper}>

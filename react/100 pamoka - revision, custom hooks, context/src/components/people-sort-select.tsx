@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { TextField, MenuItem } from '@mui/material';
-import PeopleContext from '../contexts/people-context';
+import usePeopleContext from '../features/people/use-people-context';
 
 const PeopleSortSelect: React.FC = () => {
-  const { sortingTypes, sorting, setSorting } = useContext(PeopleContext);
+  const { sortingTypes, sorting, setSorting } = usePeopleContext();
 
   return (
     <TextField
