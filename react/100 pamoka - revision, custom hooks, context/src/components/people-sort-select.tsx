@@ -3,13 +3,13 @@ import { TextField, MenuItem } from '@mui/material';
 import PeopleContext from '../contexts/people-context';
 
 const PeopleSortSelect: React.FC = () => {
-  const { sortingTypes, sorting, changeSorting } = useContext(PeopleContext);
+  const { sortingTypes, sorting, setSorting } = useContext(PeopleContext);
 
   return (
     <TextField
       select
       label="Select sorting"
-      onChange={(e) => changeSorting(e.target.value)}
+      onChange={(e) => setSorting(e.target.value)}
       value={sorting}
       sx={{ minWidth: 300, mb: 2 }}
     >

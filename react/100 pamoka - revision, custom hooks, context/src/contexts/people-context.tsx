@@ -6,7 +6,7 @@ type PeopleContextType = {
   people: Person[],
   sortingTypes: string[],
   sorting: string,
-  changeSorting: (newSorting: string) => void,
+  setSorting: (newSorting: string) => void,
 };
 
 const PeopleContext = createContext<PeopleContextType>({} as PeopleContextType);
@@ -15,13 +15,11 @@ export const PeopleProvider: React.FC = ({ children }) => {
   const [sorting, setSorting] = useState('-1');
   const { people, sortingTypes } = usePeopleManager(sorting);
 
-  const changeSorting = (newSorting: string): void => setSorting(newSorting);
-
   const providerValue = useMemo(() => ({
     people,
     sortingTypes,
     sorting,
-    changeSorting,
+    setSorting,
   }), [people]);
 
   return (
