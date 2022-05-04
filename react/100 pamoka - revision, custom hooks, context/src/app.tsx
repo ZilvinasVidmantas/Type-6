@@ -1,25 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container } from '@mui/material';
 import PeopleSortSelect from './components/people-sort-select';
 import PeopleTable from './components/people-table';
-import usePeopleManager from './hooks/usePeopleManager';
 
-const App: React.FC = () => {
-  const [order, setOrder] = useState('-1');
-  const { people, sortingTypes } = usePeopleManager(order);
+import { PeopleProvider } from './contexts/people-context';
 
-  const handleSortingChange = (newOrder: string): void => setOrder(newOrder);
-
-  return (
-    <Container sx={{ mt: 3 }}>
-      <PeopleSortSelect
-        onChange={handleSortingChange}
-        value={order}
-        options={sortingTypes}
-      />
-      <PeopleTable data={people} />
-    </Container>
-  );
-};
+const App: React.FC = () => (
+  <Container sx={{ mt: 3 }}>
+    <PeopleProvider>
+      <PeopleSortSelect />
+      <PeopleTable />
+    </PeopleProvider>
+  </Container>
+);
 
 export default App;
