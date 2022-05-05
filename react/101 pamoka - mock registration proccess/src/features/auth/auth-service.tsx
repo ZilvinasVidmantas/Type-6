@@ -1,6 +1,15 @@
 import axios from 'axios';
 import { Crudentials, TemporaryUser, User } from '../../types';
 
+/*
+  Sukurkite funkciją register ir ją išeksportuokite iš namespace 'AuthService'
+  funkcijos register veikimas
+    * parsiunčiami visi vartotojai
+    * Jeigu toks vartotjojas jau egzistuoja, metama(throw) klaida
+    * sukurkite vartotoją serveryje: https://www.npmjs.com/package/json-server
+    * Pakoreguokite User tipą, jog name, surname ir img savybės būtų neprivalomos
+    * grąžinkite sukurtą vartotoją
+*/
 namespace AuthService {
 
   export const login = async ({ email, password }: Crudentials): Promise<User> => {
@@ -25,6 +34,16 @@ namespace AuthService {
       email: tempUser.email,
       img: tempUser.img,
     };
+  };
+
+  export const register = async ({ email, password }: Crudentials): Promise<User> => {
+    // throw new Error('Registracijos klaida');
+    const mockUser = {
+      id: 'testinis-id',
+      email: 'testas@gmail.com',
+    };
+
+    return mockUser;
   };
 
 }

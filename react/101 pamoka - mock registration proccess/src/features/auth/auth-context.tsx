@@ -39,10 +39,15 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const register: AuthContextType['register'] = async (userRegistration) => {
     console.log(userRegistration);
+    // Patikrinkite ar sutampa slaptažodžiai, jei ne išsaugokite klaidą ir nutraukite procesą
+    // Kvieskite AuthService.register funkciją perduodami Crudentials tipo duomenis
+    // Jei metama klaida, ją išsaugokite
+    // Jei gaunate vartotoją sėkmingai, išsaugokite vartotoją
   };
 
   const logout: AuthContextType['logout'] = () => {
     setLoggedIn(false);
+    setUser(null);
     navigate('/');
   };
 
