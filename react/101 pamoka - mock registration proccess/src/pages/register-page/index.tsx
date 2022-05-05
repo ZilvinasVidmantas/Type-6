@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField } from '@mui/material';
-
 import AuthForm from '../../components/auth-form';
+import AuthContext from '../../features/auth/auth-context';
 
 const RegisterPage: React.FC = () => {
+  const { register } = useContext(AuthContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [repPassword, setRepPassword] = useState<string>('');
+  const [repeatPassword, setRepeatPassword] = useState<string>('');
 
-  /*
-    1. AuthProvider sukurkite funkciją 'register', kuri priimtų prisijungimo duomenis
-      duomenis kolkas tiesiog atspausdinkite
-    2. RegisterPage sukurkite 'submitHandler'į, kuris formos duomenis perduotų AuthProvider
-      funkcijai 'register'
-  */
+  const handleRegister: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    register({ email, password, repeatPassword });
+  };
 
   return (
     <AuthForm
       formTitle="Register"
       submitText="Register"
+      onSubmit={handleRegister}
     >
       <TextField
         type="email"
@@ -38,8 +38,8 @@ const RegisterPage: React.FC = () => {
         type="password"
         label="Repeat password"
         fullWidth
-        value={repPassword}
-        onChange={(e) => setRepPassword(e.target.value)}
+        value={repeatPassword}
+        onChange={(e) => setRepeatPassword(e.target.value)}
       />
     </AuthForm>
   );

@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Crudentials, User } from '../../types';
+import { Crudentials, User, UserRegistration } from '../../types';
 import useLocalStorage from '../../hooks/use-local-storage-state';
 import AuthService from './auth-service';
 
@@ -10,6 +10,7 @@ export type AuthContextType = {
   error: string | null,
   clearError: VoidFunction,
   login: (crudentials: Crudentials, next: string) => void,
+  register: (userRegistration: UserRegistration) => void,
   logout: VoidFunction,
 };
 
@@ -21,7 +22,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useLocalStorage<AuthContextType['user']>('user', null);
   const [error, setError] = useState<AuthContextType['error']>(null);
 
-  const login: AuthContextType['login'] = async (crudentials: Crudentials, next) => {
+  const login: AuthContextType['login'] = async (crudentials, next) => {
     if (error) {
       setError(null);
     }
@@ -34,6 +35,10 @@ export const AuthProvider: React.FC = ({ children }) => {
       const { message } = (err as Error);
       setError(message);
     }
+  };
+
+  const register: AuthContextType['register'] = async (userRegistration) => {
+    console.log(userRegistration);
   };
 
   const logout: AuthContextType['logout'] = () => {
@@ -51,6 +56,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     error,
     clearError,
     login,
+    register,
     logout,
   }), [loggedIn, user, error]);
 
