@@ -2,7 +2,7 @@ import React, { createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Crudentials, User, UserRegistration } from '../../types';
 import useLocalStorage from '../../hooks/use-local-storage-state';
-import AuthService from './auth-service';
+import AuthService, { AuthPromise } from './auth-service';
 
 export type AuthContextType = {
   user: null | User,
@@ -18,15 +18,12 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useLocalStorage<AuthContextType['loggedIn']>('loggedIn', false);
   const [user, setUser] = useLocalStorage<AuthContextType['user']>('user', null);
   const [error, setError] = useState<AuthContextType['error']>(null);
 
-  const login: AuthContextType['login'] = async (crudentials, next) => {
-    if (error) setError(null);
+  const authenticate = async (crudentials: Crudentials, authMethod: AuthPromise, next = '/') => {
     try {
-      const loggedInUser = await AuthService.login(crudentials);
-      setLoggedIn(true);
+      const loggedInUser = await authMethod(crudentials);
       setUser(loggedInUser);
       navigate(next);
     } catch (err) {
@@ -35,33 +32,22 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  const register: AuthContextType['register'] = async (userRegistration) => {
+  const login: AuthContextType['login'] = async (crudentials, next) => {
     if (error) setError(null);
-    // Patikrinkite ar sutampa slaptažodžiai, jei ne išsaugokite klaidą ir nutraukite procesą
-    if (userRegistration.password !== userRegistration.repeatPassword) {
+    authenticate(crudentials, AuthService.login, next);
+  };
+
+  const register: AuthContextType['register'] = async ({ email, password, repeatPassword }) => {
+    if (error) setError(null);
+    if (password !== repeatPassword) {
       setError('Slaptažodžiai nesutampa');
       return;
     }
-    const crudentials: Crudentials = {
-      email: userRegistration.email,
-      password: userRegistration.password,
-    };
-    try {
-      // Kvieskite AuthService.register funkciją perduodami Crudentials tipo duomenis
-      const loggedInUser = await AuthService.register(crudentials);
-      // Jei gaunate vartotoją sėkmingai, išsaugokite vartotoją
-      setLoggedIn(true);
-      setUser(loggedInUser);
-      navigate('/');
-    } catch (err) {
-      // Jei metama klaida, ją išsaugokite
-      const { message } = (err as Error);
-      setError(message);
-    }
+    const crudentials: Crudentials = { email, password };
+    authenticate(crudentials, AuthService.register);
   };
 
   const logout: AuthContextType['logout'] = () => {
-    setLoggedIn(false);
     setUser(null);
     navigate('/');
   };
@@ -72,13 +58,13 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const providerValue = useMemo(() => ({
     user,
-    loggedIn,
+    loggedIn: Boolean(user),
     error,
     clearError,
     login,
     register,
     logout,
-  }), [loggedIn, user, error]);
+  }), [user, error]);
 
   return (
     <AuthContext.Provider value={providerValue}>
