@@ -8,6 +8,13 @@ const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [repPassword, setRepPassword] = useState<string>('');
 
+  /*
+    1. AuthProvider sukurkite funkciją 'register', kuri priimtų prisijungimo duomenis
+      duomenis kolkas tiesiog atspausdinkite
+    2. RegisterPage sukurkite 'submitHandler'į, kuris formos duomenis perduotų AuthProvider
+      funkcijai 'register'
+  */
+
   return (
     <AuthForm
       formTitle="Register"

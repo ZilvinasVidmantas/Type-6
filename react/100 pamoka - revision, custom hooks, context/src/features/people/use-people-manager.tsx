@@ -30,7 +30,6 @@ const usePeopleManager = (sortingType: string) => {
   const people = useMemo(() => {
     const peopleCopy = [...initPeople];
     const sortingTypeExists = isSortingType(sortingType);
-
     if (sortingTypeExists) {
       const sortBy = sortingFunctions[sortingType];
       peopleCopy.sort(sortBy);
