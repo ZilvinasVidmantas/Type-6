@@ -27,7 +27,9 @@ const NavbarAuthMenu: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const userInitials = `${user?.name && user.name[0]}${user?.surname && user.surname[0]}`;
+  const userInitials = user && user.name && user.surname
+    ? user.name[0] + user.surname[0]
+    : null;
 
   return (
     <Box
@@ -43,7 +45,8 @@ const NavbarAuthMenu: React.FC = () => {
         onClick={handleMenuOpen}
       >
         <Typography sx={{ mr: 2, userSelect: 'none' }}>{user?.email}</Typography>
-        <Avatar src={user?.img}>{userInitials}</Avatar>
+        {(userInitials || user?.img) && <Avatar src={user?.img}>{userInitials}</Avatar>}
+
       </Box>
       <Popper
         placement="bottom-end"

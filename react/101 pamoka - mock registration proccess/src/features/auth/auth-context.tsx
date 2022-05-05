@@ -23,9 +23,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<AuthContextType['error']>(null);
 
   const login: AuthContextType['login'] = async (crudentials, next) => {
-    if (error) {
-      setError(null);
-    }
+    if (error) setError(null);
     try {
       const loggedInUser = await AuthService.login(crudentials);
       setLoggedIn(true);
@@ -38,11 +36,28 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   const register: AuthContextType['register'] = async (userRegistration) => {
-    console.log(userRegistration);
+    if (error) setError(null);
     // Patikrinkite ar sutampa slaptažodžiai, jei ne išsaugokite klaidą ir nutraukite procesą
-    // Kvieskite AuthService.register funkciją perduodami Crudentials tipo duomenis
-    // Jei metama klaida, ją išsaugokite
-    // Jei gaunate vartotoją sėkmingai, išsaugokite vartotoją
+    if (userRegistration.password !== userRegistration.repeatPassword) {
+      setError('Slaptažodžiai nesutampa');
+      return;
+    }
+    const crudentials: Crudentials = {
+      email: userRegistration.email,
+      password: userRegistration.password,
+    };
+    try {
+      // Kvieskite AuthService.register funkciją perduodami Crudentials tipo duomenis
+      const loggedInUser = await AuthService.register(crudentials);
+      // Jei gaunate vartotoją sėkmingai, išsaugokite vartotoją
+      setLoggedIn(true);
+      setUser(loggedInUser);
+      navigate('/');
+    } catch (err) {
+      // Jei metama klaida, ją išsaugokite
+      const { message } = (err as Error);
+      setError(message);
+    }
   };
 
   const logout: AuthContextType['logout'] = () => {

@@ -7,7 +7,6 @@ import { Crudentials, TemporaryUser, User } from '../../types';
     * parsiunčiami visi vartotojai
     * Jeigu toks vartotjojas jau egzistuoja, metama(throw) klaida
     * sukurkite vartotoją serveryje: https://www.npmjs.com/package/json-server
-    * Pakoreguokite User tipą, jog name, surname ir img savybės būtų neprivalomos
     * grąžinkite sukurtą vartotoją
 */
 namespace AuthService {
@@ -36,7 +35,7 @@ namespace AuthService {
     };
   };
 
-  export const register = async ({ email, password }: Crudentials): Promise<User> => {
+  export const register = async (crudentials: Crudentials): Promise<User> => {
     // throw new Error('Registracijos klaida');
     const mockUser = {
       id: 'testinis-id',
