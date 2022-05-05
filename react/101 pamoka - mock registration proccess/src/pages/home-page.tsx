@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
   const [programmers, setProgrammers] = useState<Programmer[]>([]);
 
   useEffect(() => {
-    axios.get<Programmer[]>('http://localhost:8000/users')
+    axios.get<Programmer[]>('http://localhost:8000/programmers?_expand=user')
       .then(({ data }) => setProgrammers(data))
       .catch(console.error);
   }, []);

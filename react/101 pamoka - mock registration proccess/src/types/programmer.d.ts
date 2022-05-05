@@ -1,10 +1,10 @@
+import User from './user';
+
 type Programmer = {
   id: string,
-  name: string,
-  surname: string,
+  user: Required<User>,
   languages: string[],
   technologies: string[],
-  img: string,
   yearsOfExperience: number,
 };
 

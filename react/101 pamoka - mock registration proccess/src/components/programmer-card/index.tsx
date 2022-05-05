@@ -13,7 +13,10 @@ import Img from '../img';
 type ProgrammerCardProps = Omit<Programmer, 'id'>;
 
 const ProgrammerCard: React.FC<ProgrammerCardProps> = ({
-  name, surname, languages, technologies, img, yearsOfExperience,
+  languages,
+  technologies,
+  yearsOfExperience,
+  user: { name, surname, img },
 }) => (
   <Paper
     elevation={3}

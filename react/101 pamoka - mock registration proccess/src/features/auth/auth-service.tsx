@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { Crudentials, TemporaryUser, User } from '../../types';
 
-/*
-  Sukurkite funkciją register ir ją išeksportuokite iš namespace 'AuthService'
-  funkcijos register veikimas
-    * parsiunčiami visi vartotojai
-    * Jeigu toks vartotjojas jau egzistuoja, metama(throw) klaida
-    * sukurkite vartotoją serveryje: https://www.npmjs.com/package/json-server
-    * grąžinkite sukurtą vartotoją
-*/
-
 export type AuthPromise = (crudential: Crudentials) => Promise<User>;
 
 namespace AuthService {
@@ -39,14 +30,22 @@ namespace AuthService {
     };
   };
 
-  export const register: AuthPromise = async (crudentials: Crudentials) => {
-    // throw new Error('Registracijos klaida');
-    const mockUser = {
-      id: 'testinis-id',
-      email: 'testas@gmail.com',
+  export const register: AuthPromise = async ({ email, password }: Crudentials) => {
+    const { data: tempUsers } = await axios.get<TemporaryUser[]>('http://localhost:8000/users');
+
+    const userExists = tempUsers.map((x) => x.email).includes(email);
+    if (userExists) {
+      throw new Error('Toks vartotojas jau egzistuoja. Pasirinkite kitą el. paštą');
+    }
+
+    const { data: createdTempUser } = await axios.post('http://localhost:8000/users', { email, password });
+
+    const createdUser: User = {
+      id: createdTempUser.id,
+      email: createdTempUser.email,
     };
 
-    return mockUser;
+    return createdUser;
   };
 
 }

@@ -6,6 +6,8 @@ import Img from '../../components/img';
 const ProfilePage: React.FC = () => {
   const { user } = useContext(AuthContext);
 
+  const needsProfileUpdate = user && (!user.name || !user.surname || !user.img);
+
   return (
     <Container>
       <Typography
@@ -13,7 +15,12 @@ const ProfilePage: React.FC = () => {
         variant="h3"
         sx={{ textAlign: 'center' }}
       >
-        {`Hello, ${user?.name} ${user?.surname}`}
+        {
+          needsProfileUpdate
+            ? 'Please fill your profile data'
+            : `Hello, ${user?.name} ${user?.surname}`
+        }
+
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Img src={user?.img} />
