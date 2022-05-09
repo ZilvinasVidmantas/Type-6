@@ -19,7 +19,6 @@ const RegisterPage: React.FC = () => {
       formTitle="Register"
       submitText="Register"
       onSubmit={handleRegister}
-      btnActive
     >
       <TextField
         type="email"

@@ -14,7 +14,7 @@ import AuthContext from '../features/auth/auth-context';
 type AuthFormProps = {
   formTitle: string,
   submitText: string,
-  btnActive: boolean,
+  btnActive?: boolean,
   onSubmit?: React.FormEventHandler<HTMLFormElement>,
 };
 
@@ -23,12 +23,11 @@ const contentWidth = 400;
 const AuthForm: React.FC<AuthFormProps> = ({
   formTitle,
   submitText,
-  btnActive,
-  loading,
+  btnActive = true,
   onSubmit,
   children,
 }) => {
-  const { error, clearError } = useContext(AuthContext);
+  const { loading, error, clearError } = useContext(AuthContext);
 
   return (
     <Container sx={{ position: 'relative', pt: 20 }}>
@@ -78,7 +77,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
           variant="contained"
           size="large"
           type="submit"
-          disabled={!btnActive} // Užbukinti mygtuką, kuomet forma kraunasi
+          disabled={!btnActive || loading}
         >
           {loading ? <CircularProgress /> : submitText}
         </Button>

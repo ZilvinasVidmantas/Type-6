@@ -15,7 +15,7 @@ type LoginValues = {
 type LoginFormikConfig = FormikConfig<LoginValues>;
 
 const initialValues: LoginValues = {
-  email: 'user1@gmail.com',
+  email: '',
   password: '',
 };
 
@@ -37,13 +37,6 @@ const validationSchema = Yup.object({
 const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { login, loading } = useContext(AuthContext);
-  /*
-    Panaudokite 'loading' reikšmęm kad:
-      * padaryti įvesties laukus nekeičiamus
-      * užbukinti submit mygtuką
-      * pakeisti submit mygtuko tekstą turinį į Progress animaciją
-        * https://mui.com/material-ui/react-progress/
-  */
 
   const handleLogin: LoginFormikConfig['onSubmit'] = ({ email, password }) => {
     const nextPage = searchParams.get('next') ?? '/';
@@ -79,8 +72,8 @@ const LoginPage: React.FC = () => {
         <AuthForm
           formTitle="Login"
           submitText="Login"
-          onSubmit={handleSubmit}
           btnActive={dirty && isValid}
+          onSubmit={handleSubmit}
         >
           <TextField
             name="email"
@@ -92,7 +85,7 @@ const LoginPage: React.FC = () => {
             onBlur={handleBlur}
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
-          // disabled
+            disabled={loading}
           />
           <TextField
             name="password"
@@ -104,6 +97,7 @@ const LoginPage: React.FC = () => {
             onBlur={handleBlur}
             error={touched.password && Boolean(errors.password)}
             helperText={touched.password && errors.password}
+            disabled={loading}
           />
         </AuthForm>
       </div>
