@@ -71,7 +71,14 @@ const AuthForm: React.FC<AuthFormProps> = ({
         >
           {children}
         </Box>
-        <Button variant="contained" size="large" type="submit">{submitText}</Button>
+        <Button
+          variant="contained"
+          size="large"
+          type="submit"
+          disabled
+        >
+          {submitText}
+        </Button>
       </Paper>
     </Container>
   );
