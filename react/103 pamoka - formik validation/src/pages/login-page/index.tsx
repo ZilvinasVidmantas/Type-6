@@ -59,49 +59,37 @@ const LoginPage: React.FC = () => {
   });
 
   return (
-    <div>
-      <pre style={{
-        position: 'fixed', top: 300, left: 50, fontSize: 20,
-      }}
-      >
-        {JSON.stringify({
-          isValid, dirty, values, touched, errors,
-        }, null, 4)}
-      </pre>
-      <div style={{ paddingLeft: 300 }}>
-        <AuthForm
-          formTitle="Login"
-          submitText="Login"
-          btnActive={dirty && isValid}
-          onSubmit={handleSubmit}
-        >
-          <TextField
-            name="email"
-            type="email"
-            label="Email"
-            fullWidth
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email && errors.email}
-            disabled={loading}
-          />
-          <TextField
-            name="password"
-            type="password"
-            label="Password"
-            fullWidth
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.password && Boolean(errors.password)}
-            helperText={touched.password && errors.password}
-            disabled={loading}
-          />
-        </AuthForm>
-      </div>
-    </div>
+    <AuthForm
+      formTitle="Login"
+      submitText="Login"
+      btnActive={dirty && isValid}
+      onSubmit={handleSubmit}
+    >
+      <TextField
+        name="email"
+        type="email"
+        label="Email"
+        fullWidth
+        value={values.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={touched.email && Boolean(errors.email)}
+        helperText={touched.email && errors.email}
+        disabled={loading}
+      />
+      <TextField
+        name="password"
+        type="password"
+        label="Password"
+        fullWidth
+        value={values.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={touched.password && Boolean(errors.password)}
+        helperText={touched.password && errors.password}
+        disabled={loading}
+      />
+    </AuthForm>
   );
 };
 
