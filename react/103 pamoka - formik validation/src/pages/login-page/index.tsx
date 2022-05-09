@@ -15,7 +15,7 @@ type LoginValues = {
 type LoginFormikConfig = FormikConfig<LoginValues>;
 
 const initialValues: LoginValues = {
-  email: '',
+  email: 'user1@gmail.com',
   password: '',
 };
 
@@ -43,7 +43,6 @@ const LoginPage: React.FC = () => {
       * užbukinti submit mygtuką
       * pakeisti submit mygtuko tekstą turinį į Progress animaciją
         * https://mui.com/material-ui/react-progress/
-
   */
 
   const handleLogin: LoginFormikConfig['onSubmit'] = ({ email, password }) => {
@@ -93,6 +92,7 @@ const LoginPage: React.FC = () => {
             onBlur={handleBlur}
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
+          // disabled
           />
           <TextField
             name="password"

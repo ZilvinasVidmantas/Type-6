@@ -6,6 +6,7 @@ import {
   Container,
   Paper,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import SecurityIcon from '@mui/icons-material/Security';
 import AuthContext from '../features/auth/auth-context';
@@ -23,6 +24,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
   formTitle,
   submitText,
   btnActive,
+  loading,
   onSubmit,
   children,
 }) => {
@@ -76,9 +78,9 @@ const AuthForm: React.FC<AuthFormProps> = ({
           variant="contained"
           size="large"
           type="submit"
-          disabled={!btnActive}
+          disabled={!btnActive} // Užbukinti mygtuką, kuomet forma kraunasi
         >
-          {submitText}
+          {loading ? <CircularProgress /> : submitText}
         </Button>
       </Paper>
     </Container>
