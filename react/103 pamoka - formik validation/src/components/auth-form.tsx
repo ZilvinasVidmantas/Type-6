@@ -13,6 +13,7 @@ import AuthContext from '../features/auth/auth-context';
 type AuthFormProps = {
   formTitle: string,
   submitText: string,
+  btnActive: boolean,
   onSubmit?: React.FormEventHandler<HTMLFormElement>,
 };
 
@@ -21,6 +22,7 @@ const contentWidth = 400;
 const AuthForm: React.FC<AuthFormProps> = ({
   formTitle,
   submitText,
+  btnActive,
   onSubmit,
   children,
 }) => {
@@ -75,7 +77,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
           variant="contained"
           size="large"
           type="submit"
-          disabled
+          disabled={!btnActive}
         >
           {submitText}
         </Button>

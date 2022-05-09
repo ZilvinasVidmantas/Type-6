@@ -52,8 +52,8 @@ const LoginPage: React.FC = () => {
     values,
     touched,
     errors,
-    dirty, // Ar reikšmės skiriasi nuo pradinių reikšmių ?
-    isValid, // Ar errors objektas yra tuščias ?
+    dirty,
+    isValid,
     handleChange,
     handleBlur,
     handleSubmit,
@@ -78,6 +78,7 @@ const LoginPage: React.FC = () => {
           formTitle="Login"
           submitText="Login"
           onSubmit={handleSubmit}
+          btnActive={dirty && isValid}
         >
           <TextField
             name="email"
@@ -92,7 +93,7 @@ const LoginPage: React.FC = () => {
           />
           <TextField
             name="password"
-            type="text"
+            type="password"
             label="Password"
             fullWidth
             value={values.password}
