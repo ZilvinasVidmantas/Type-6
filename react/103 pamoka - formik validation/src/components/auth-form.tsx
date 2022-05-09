@@ -78,8 +78,9 @@ const AuthForm: React.FC<AuthFormProps> = ({
           size="large"
           type="submit"
           disabled={!btnActive || loading}
+          sx={{ width: 120, height: 45 }}
         >
-          {loading ? <CircularProgress /> : submitText}
+          {loading ? <CircularProgress size={25} /> : submitText}
         </Button>
       </Paper>
     </Container>
