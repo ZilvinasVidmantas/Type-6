@@ -43,6 +43,11 @@ const LoginPage: React.FC = () => {
     login({ email, password }, nextPage);
   };
 
+  /*
+    Sukurkite logiką, kad AuthForm esantis mygtukas taptų aktyvus, tik tuomet,
+    kaip formik.dirty ir formik.isValid yra true.
+  */
+
   const {
     values,
     touched,
