@@ -31,6 +31,27 @@ const validate: LoginFormikConfig['validate'] = ({ email, password }) => {
   return newErrors;
 };
 
+/*
+  Pakeiskite validate funkciją yup schema
+    * Sukurkite Yup validacijos schemą:
+      * https://github.com/jquense/yup
+      * https://formik.org/docs/examples/with-material-ui
+      * Stuktūra:
+        * email:
+          * privaloma
+          * min 6 simboliai
+          * max 32 simboliai
+          * turi būti paštas
+        * password:
+          * min 1 diždioji
+          * min 1 mažoji
+          * min 1 skaičius
+          * min 8 simboliai
+          * max 32 simboliai
+    * pateikia validacijos schemą useFormik nustatymams
+    * Pačią schemą išsaugokite virš komponento
+*/
+
 const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { login } = useContext(AuthContext);
