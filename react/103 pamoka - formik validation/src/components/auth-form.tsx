@@ -62,7 +62,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
       >
         <SecurityIcon color="primary" sx={{ fontSize: 45 }} />
         <Typography component="h1" variant="h4">{formTitle}</Typography>
-
         <Box sx={{
           display: 'flex',
           flexDirection: 'column',

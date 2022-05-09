@@ -36,17 +36,20 @@ const validationSchema = Yup.object({
 
 const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const { login } = useContext(AuthContext);
+  const { login, loading } = useContext(AuthContext);
+  /*
+    Panaudokite 'loading' reikšmęm kad:
+      * padaryti įvesties laukus nekeičiamus
+      * užbukinti submit mygtuką
+      * pakeisti submit mygtuko tekstą turinį į Progress animaciją
+        * https://mui.com/material-ui/react-progress/
+
+  */
 
   const handleLogin: LoginFormikConfig['onSubmit'] = ({ email, password }) => {
     const nextPage = searchParams.get('next') ?? '/';
     login({ email, password }, nextPage);
   };
-
-  /*
-    Sukurkite logiką, kad AuthForm esantis mygtukas taptų aktyvus, tik tuomet,
-    kaip formik.dirty ir formik.isValid yra true.
-  */
 
   const {
     values,
