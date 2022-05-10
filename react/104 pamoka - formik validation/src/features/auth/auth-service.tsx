@@ -48,6 +48,12 @@ namespace AuthService {
     return createdUser;
   };
 
+  export const checkEmailAvailability = async (email: string): Promise<boolean> => {
+    const { data: tempUsers } = await axios.get<TemporaryUser[]>('http://localhost:8000/users');
+    const emails = tempUsers.map((x) => x.email);
+
+    return !emails.includes(email);
+  };
 }
 
 export default AuthService;
