@@ -1,45 +1,62 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { TextField } from '@mui/material';
+import { useFormik, FormikConfig } from 'formik';
 import AuthForm from '../../components/auth-form';
 import AuthContext from '../../features/auth/auth-context';
+import { UserRegistration } from '../../types';
+
+type RegisterConfig = FormikConfig<UserRegistration>;
+
+const initialValues = {
+  email: '',
+  password: '',
+  repeatPassword: '',
+};
 
 const RegisterPage: React.FC = () => {
   const { register } = useContext(AuthContext);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [repeatPassword, setRepeatPassword] = useState<string>('');
 
-  const handleRegister: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const handleRegister: RegisterConfig['onSubmit'] = ({ email, password, repeatPassword }) => {
     register({ email, password, repeatPassword });
   };
+
+  const {
+    values,
+    handleChange, handleSubmit,
+  } = useFormik({
+    initialValues,
+    onSubmit: handleRegister,
+  });
 
   return (
     <AuthForm
       formTitle="Register"
       submitText="Register"
-      onSubmit={handleRegister}
+      onSubmit={handleSubmit}
     >
       <TextField
+        name="email"
         type="email"
         label="Email"
         fullWidth
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={values.email}
+        onChange={handleChange}
       />
       <TextField
+        name="password"
         type="password"
         label="Password"
         fullWidth
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={values.password}
+        onChange={handleChange}
       />
       <TextField
+        name="repeatPassword"
         type="password"
         label="Repeat password"
         fullWidth
-        value={repeatPassword}
-        onChange={(e) => setRepeatPassword(e.target.value)}
+        value={values.repeatPassword}
+        onChange={handleChange}
       />
     </AuthForm>
   );
