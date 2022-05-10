@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "id": "111",
+      "name": "Serbentautas",
+      "surname": "Bordiūras",
+      "email": "user1@gmail.com",
+      "password": "Vilnius123",
+      "img": "https://avatars.githubusercontent.com/u/5399488?s=400&v=4"
+    },
+    {
+      "id": "112",
+      "name": "Jovalas",
+      "surname": "Johanas",
+      "email": "user2@gmail.com",
+      "password": "Vilnius123",
+      "img": "https://media.istockphoto.com/photos/confused-nerd-guy-picture-id168250344?k=20&m=168250344&s=612x612&w=0&h=V7seKY4kuNv1Uym-2J3trEo_ZOOVMCQAR3eqlBnFNVo="
+    },
+    {
+      "id": "113",
+      "name": "Volonija",
+      "surname": "Kūgelė",
+      "email": "user3@gmail.com",
+      "password": "Vilnius123",
+      "img": "https://media.istockphoto.com/photos/geeky-girl-picture-id536217043?k=20&m=536217043&s=612x612&w=0&h=8WxDgS_PY_PO5Iu8xsjNKSuFfpwtoyI-08uLsFxOiZg="
+    },
+    {
+      "email": "user4@gmail.com",
+      "password": "Vilnius123",
+      "id": "kVtPtab"
+    }
+  ],
+  "programmers": [
+    {
+      "id": "111",
+      "userId": "111",
+      "languages": [
+        "Java",
+        "JavaScript"
+      ],
+      "technologies": [
+        "Java Spring",
+        "React.js",
+        "Express.js"
+      ],
+      "yearsOfExperience": 3
+    },
+    {
+      "id": "112",
+      "userId": "112",
+      "languages": [
+        ".NET",
+        "JavaScript"
+      ],
+      "technologies": [
+        "AZURE services",
+        "Angular.js"
+      ],
+      "yearsOfExperience": 5
+    },
+    {
+      "id": "113",
+      "userId": "113",
+      "languages": [
+        "PHP",
+        "JavaScript"
+      ],
+      "technologies": [
+        "Wordpress",
+        "Laravel",
+        "Vue.js"
+      ],
+      "yearsOfExperience": 4
+    }
+  ]
+}
