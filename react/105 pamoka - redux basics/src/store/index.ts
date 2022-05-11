@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { createStore, Reducer } from 'redux';
+import { useSelector } from 'react-redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 type Item = {
@@ -13,6 +14,9 @@ type Item = {
 export type State = {
   items: Item[],
 };
+
+export const useReduxSelector = <Selected = unknown>
+  (selector: (state: State) => Selected) => useSelector<State, Selected>(selector);
 
 type Action = {
   type: string,

@@ -6,12 +6,11 @@ import {
   Paper,
   Grid,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { State } from '../../store';
+import { useReduxSelector } from '../../store';
 import Img from '../../components/img';
 
 const ShopPage: React.FC = () => {
-  const items = useSelector((state: State) => state.items);
+  const items = useReduxSelector((state) => state.items);
 
   return (
     <Container>
