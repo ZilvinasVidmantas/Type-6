@@ -10,9 +10,8 @@ type Item = {
   amount: number,
 };
 
-type State = {
+export type State = {
   items: Item[],
-  kitaSavybe: string,
 };
 
 type Action = {
@@ -21,8 +20,35 @@ type Action = {
 };
 
 const initialState: State = {
-  items: [],
-  kitaSavybe: 'belekas',
+  items: [
+    {
+      id: '1',
+      images: [
+        'https://www.ubuy.vn/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNTFhcUNwa2xJSUwuX0FDX1NMMTAwMF8uanBn.jpg',
+      ],
+      price: 199.99,
+      categories: ['artilery', 'hobies'],
+      amount: 7,
+    },
+    {
+      id: '2',
+      images: [
+        'https://www.ubuy.com/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNjFINEpETHJHREwuX0FDX1NMMTAwMF8uanBn.jpg',
+      ],
+      price: 39.99,
+      categories: ['artilery', 'hobies'],
+      amount: 24,
+    },
+    {
+      id: '3',
+      images: [
+        'https://i0.wp.com/sabersmith.com/wp-content/uploads/2020/07/Hand-Half-Gold-Black-on-Green-with-Wire.jpg?fit=800%2C1200&ssl=1',
+      ],
+      price: 479.99,
+      categories: ['close-combat', 'hobies'],
+      amount: 4,
+    },
+  ],
 };
 
 // Reducer'is - tai funkcija kuri reaguoja į ACTION'us ir pagal ACTION'o tipą
