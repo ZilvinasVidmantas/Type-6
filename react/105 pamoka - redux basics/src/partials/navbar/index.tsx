@@ -24,6 +24,7 @@ const Navbar: React.FC = () => {
         >
           <Box>
             <NavbarLink to="/">Home</NavbarLink>
+            <NavbarLink to="/shop">Shop</NavbarLink>
           </Box>
           <Box>
             {loggedIn ? <NavbarAuthMenu /> : <NavbarVisitorMenu />}

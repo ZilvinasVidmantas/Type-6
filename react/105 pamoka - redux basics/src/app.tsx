@@ -1,10 +1,14 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+// all
 import HomePage from './pages/home-page';
-import ProfilePage from './pages/profile-page';
+import ShopPage from './pages/shop-page/index';
+// visitor
 import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page/index';
+// auth
+import ProfilePage from './pages/profile-page';
 
 import VisitorLayout from './layouts/visitor-layout';
 import { AuthProvider } from './features/auth/auth-context';
@@ -16,6 +20,7 @@ const App: React.FC = () => (
     <Routes>
       <Route path="/" element={<VisitorLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="/shop" element={<ShopPage />} />
         <Route
           path="auth/login"
           element={(
