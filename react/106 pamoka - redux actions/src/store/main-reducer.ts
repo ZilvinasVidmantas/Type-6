@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
+import { v4 as createId } from 'uuid';
 import { State, Action } from './types';
 
 const initialState: State = {
@@ -43,7 +44,7 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
       ...state,
       cart: [
         ...state.cart,
-        { id: '1', itemId: action.payload.id, amount: 1 },
+        { id: createId(), itemId: action.payload.id, amount: 1 },
       ],
     };
   }
