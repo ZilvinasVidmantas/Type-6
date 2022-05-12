@@ -32,10 +32,22 @@ const initialState: State = {
       amount: 4,
     },
   ],
+  cart: [],
 };
 
 // Reducer'is - tai funkcija kuri reaguoja į ACTION'us ir pagal ACTION'o tipą
 // Grąžinau pakitusią ir naują state reikšmę
-const mainReducer: Reducer<State, Action> = (state = initialState, action) => ({ ...state });
+const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
+  if (action.type === 'ADD_TO_CART') {
+    return {
+      ...state,
+      cart: [
+        ...state.cart,
+        { id: '1', itemId: action.payload.id, amount: 1 },
+      ],
+    };
+  }
+  return { ...state };
+};
 
 export default mainReducer;

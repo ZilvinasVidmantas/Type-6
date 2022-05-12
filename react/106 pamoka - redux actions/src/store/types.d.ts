@@ -14,7 +14,7 @@ export type CartItem = {
 
 export type State = {
   items: Item[],
-  cart?: CartItem[]
+  cart: CartItem[]
 };
 
 export type Action = {

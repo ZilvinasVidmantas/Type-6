@@ -8,12 +8,16 @@ import {
   Button,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useDispatch } from 'react-redux';
 import { useRootSelector } from '../../store';
 import Img from '../../components/img';
 
 const ShopPage: React.FC = () => {
   const items = useRootSelector((state) => state.items);
   const cart = useRootSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  console.table(cart);
 
   return (
     <Container>
@@ -31,7 +35,14 @@ const ShopPage: React.FC = () => {
                   <Typography>{`amount: ${amount}`}</Typography>
                   <Typography>{`categories: ${categories.join(', ')}`}</Typography>
                 </Box>
-                <Button variant="contained" sx={{ alignSelf: 'flex-end' }}>
+                <Button
+                  variant="contained"
+                  sx={{ alignSelf: 'flex-end' }}
+                  onClick={() => dispatch({
+                    type: 'ADD_TO_CART',
+                    payload: { id },
+                  })}
+                >
                   <ShoppingCartIcon />
                 </Button>
               </Box>
