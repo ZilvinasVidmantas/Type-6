@@ -1,16 +1,4 @@
-export type Item = {
-  id: string,
-  images: string[],
-  price: number,
-  categories: string[],
-  amount: number,
-};
-
-export type CartItem = {
-  id: string,
-  itemId: string,
-  amount: number
-};
+import { Item, CartItem } from '../types';
 
 export type State = {
   items: Item[],

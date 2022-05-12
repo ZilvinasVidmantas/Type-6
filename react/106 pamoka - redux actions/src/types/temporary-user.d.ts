@@ -1,4 +1,4 @@
-type TemporaryUser = {
+export type TemporaryUser = {
   id: string,
   name: string,
   email: string,
@@ -6,5 +6,3 @@ type TemporaryUser = {
   surname: string,
   img: string,
 };
-
-export default TemporaryUser;
