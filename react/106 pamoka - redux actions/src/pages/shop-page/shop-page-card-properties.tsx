@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 
 type Property = {
   name: string,
-  value: any
+  value: string
 };
 
 type ShopPageCardPropertiesProps = {
@@ -16,7 +16,6 @@ const ShopPageCardProperties: React.FC<ShopPageCardPropertiesProps> = ({
   <Box>
     {properties.map(({ name, value }) => (
       <Typography key={name}>{`${name}: ${value}`}</Typography>
-
     ))}
   </Box>
 );

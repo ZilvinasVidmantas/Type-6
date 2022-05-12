@@ -10,20 +10,30 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Img from '../../components/img';
 import { Item } from '../../types';
 import ShopPageCardProperties from './shop-page-card-properties';
+import toReadCase from '../../helpers/to-read-case';
 
 type ShopPageCardProps = Item & {
   addToCart: (itemId: string) => void,
 };
 
-//
-
 const ShopPageCard: React.FC<ShopPageCardProps> = ({
   id,
   images,
   addToCart,
-  ...propertyObject
+  price,
+  categories,
+  amount,
+  additionalProps = {},
 }) => {
-  const itemProperties = Object.entries(propertyObject).map(([name, value]) => ({ name, value }));
+  const itemProperties = [
+    { name: 'Price', value: `${price}€` },
+    { name: 'Categories', value: categories.join(', ') },
+    { name: 'Amount', value: String(amount) },
+    ...Object.entries(additionalProps).map(([name, value]) => ({
+      name: toReadCase(name),
+      value,
+    })),
+  ];
 
   return (
     <Paper elevation={2}>

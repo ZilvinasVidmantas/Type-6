@@ -15,6 +15,7 @@ const initialState: State = {
       amount: 7,
       additionalProps: {
         arrowCount: '27',
+        distance: '200m',
       },
     },
     {
@@ -34,6 +35,10 @@ const initialState: State = {
       price: 479.99,
       categories: ['close-combat', 'hobies'],
       amount: 4,
+      additionalProps: {
+        length: '1.2m',
+        curvedAngle: 'none',
+      },
     },
   ],
   cart: [],
