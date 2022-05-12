@@ -6,8 +6,15 @@ export type Item = {
   amount: number,
 };
 
+export type CartItem = {
+  id: string,
+  itemId: string,
+  amount: number
+};
+
 export type State = {
   items: Item[],
+  cart?: CartItem[]
 };
 
 export type Action = {
