@@ -4,4 +4,7 @@ export type Item = {
   price: number,
   categories: string[],
   amount: number,
+  additionalProps?: {
+    [key in string]?: string
+  }
 };
