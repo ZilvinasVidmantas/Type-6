@@ -37,7 +37,6 @@ const initialState: State = {
       amount: 4,
       additionalProps: {
         length: '1.2m',
-        curvedAngle: 'none',
       },
     },
   ],

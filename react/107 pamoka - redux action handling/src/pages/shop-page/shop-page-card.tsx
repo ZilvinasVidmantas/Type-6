@@ -36,10 +36,18 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
   ];
 
   return (
-    <Paper elevation={2}>
+    <Paper
+      elevation={2}
+      sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+    >
       <Img src={images[0]} alt="" sx={{ height: 300, width: '100%' }} />
       <Box sx={{
-        display: 'flex', flexDirection: 'column', p: 2, gap: 2,
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        p: 2,
+        gap: 2,
       }}
       >
         <ShopPageCardProperties properties={itemProperties} />
