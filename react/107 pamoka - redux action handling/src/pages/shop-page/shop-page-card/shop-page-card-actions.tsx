@@ -22,6 +22,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   addToCart,
 }) => {
   const [amount, setAmount] = useState<number>(1);
+  console.log('new amount:', amount);
 
   return (
     <Box>

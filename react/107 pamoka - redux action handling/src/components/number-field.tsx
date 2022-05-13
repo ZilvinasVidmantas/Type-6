@@ -31,43 +31,31 @@ const NumberField: React.FC<NumberFieldProps> = ({
   onBlur,
   ...props
 }) => {
-  const [amount, setAmount] = useState<number | string>(value ?? 0);
+  const [fieldValue, setFieldValue] = useState<number | string>(value ?? 0);
 
   const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valueStr = e.target.value;
     if (valueStr === '') {
-      setAmount(valueStr);
+      setFieldValue(valueStr);
     } else {
       const newAmount: number = Math.floor(Number(valueStr));
-      let numericValue: number;
-      if (max) {
-        numericValue = newAmount > max ? max : newAmount;
-      } else {
-        numericValue = newAmount;
-      }
+      const numericValue: number = max && newAmount > max ? max : newAmount;
 
-      setAmount(numericValue);
+      setFieldValue(numericValue);
       if (onChange) onChange(e, numericValue);
     }
   };
 
   const handleTextFieldBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const newAmount = Number(e.target.value);
-    let numericValue: number = newAmount;
-    if (min && newAmount < min) {
-      numericValue = min;
-    }
-    if (max && newAmount > max) {
-      numericValue = max;
-    }
-    setAmount(numericValue);
+    const numericValue: number = min && newAmount < min ? min : newAmount;
+
+    setFieldValue(numericValue);
     if (onBlur) onBlur(e, numericValue);
   };
 
   useEffect(() => {
-    if (value) {
-      setAmount(value);
-    }
+    setFieldValue(value ?? 0);
   }, [value]);
 
   return (
@@ -91,7 +79,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           },
         }}
         disabled={disabled}
-        value={amount}
+        value={fieldValue}
         onChange={handleTextFieldChange}
         onBlur={handleTextFieldBlur}
         {...props}
