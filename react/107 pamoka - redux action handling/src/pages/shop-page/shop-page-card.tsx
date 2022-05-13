@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-  Typography,
   Box,
   Paper,
-  Button,
-  TextField,
 } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Img from '../../components/img';
+
 import { Item } from '../../types';
+import Img from '../../components/img';
 import ShopPageCardProperties from './shop-page-card-properties';
+import ShopPageCardActions from './shop-page-card-actions';
 import toReadCase from '../../helpers/to-read-case';
 
 type ShopPageCardProps = Item & {
@@ -51,44 +49,7 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
       }}
       >
         <ShopPageCardProperties properties={itemProperties} />
-        <Box sx={{
-          display: 'flex',
-          gap: 0.5,
-        }}
-        >
-          <TextField
-            size="small"
-            sx={{ alignSelf: 'stretch' }}
-            InputProps={{ sx: { height: '100%' } }}
-            inputProps={{ sx: { height: '100%' } }}
-          />
-          <Box sx={{
-            display: 'flex', flexDirection: 'column', width: 40, gap: 0.5,
-          }}
-          >
-            <Button
-              variant="contained"
-              size="small"
-              sx={{ minWidth: 'initial', p: 1, height: 20 }}
-            >
-              +
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              sx={{ minWidth: 'initial', p: 1, height: 20 }}
-            >
-              -
-            </Button>
-          </Box>
-          <Button
-            variant="contained"
-            onClick={() => addToCart(id)}
-          >
-            <Typography sx={{ pr: 1 }}>Pridėti</Typography>
-            <ShoppingCartIcon />
-          </Button>
-        </Box>
+        <ShopPageCardActions id={id} addToCart={addToCart} />
       </Box>
     </Paper>
   );
