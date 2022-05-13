@@ -49,7 +49,11 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
       }}
       >
         <ShopPageCardProperties properties={itemProperties} />
-        <ShopPageCardActions id={id} addToCart={addToCart} />
+        <ShopPageCardActions
+          id={id}
+          addToCart={addToCart}
+          available={amount > 0}
+        />
       </Box>
     </Paper>
   );

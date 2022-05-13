@@ -12,7 +12,7 @@ const initialState: State = {
       ],
       price: 199.99,
       categories: ['artilery', 'hobies'],
-      amount: 7,
+      amount: 0,
       additionalProps: {
         arrowCount: '27',
         distance: '200m',
