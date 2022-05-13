@@ -4,11 +4,11 @@ import {
   Paper,
 } from '@mui/material';
 
-import { Item } from '../../types';
-import Img from '../../components/img';
+import { Item } from '../../../types';
+import Img from '../../../components/img';
 import ShopPageCardProperties from './shop-page-card-properties';
 import ShopPageCardActions from './shop-page-card-actions';
-import toReadCase from '../../helpers/to-read-case';
+import toReadCase from '../../../helpers/to-read-case';
 
 type ShopPageCardProps = Item & {
   addToCart: (itemId: string) => void,
