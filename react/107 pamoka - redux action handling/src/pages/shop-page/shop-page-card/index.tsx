@@ -53,6 +53,7 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
           id={id}
           addToCart={addToCart}
           available={amount > 0}
+          max={amount}
         />
       </Box>
     </Paper>
