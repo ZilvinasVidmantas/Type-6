@@ -4,6 +4,7 @@ import {
   Box,
   Button,
 } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NumberField from '../../../components/number-field';
@@ -12,17 +13,26 @@ type ShopPageCardActionsProps = {
   id: string,
   available: boolean,
   max: number,
-  addToCart: (itemId: string) => void,
 };
 
 const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   id,
   available,
   max,
-  addToCart,
 }) => {
+  const dispatch = useDispatch();
   const [amount, setAmount] = useState<number>(1);
-  console.log('new amount:', amount);
+  // 9:05
+
+  const addToCart = (): void => {
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: {
+        id,
+        amount,
+      },
+    });
+  };
 
   return (
     <Box>
@@ -45,7 +55,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
         />
         <Button
           variant="contained"
-          onClick={() => addToCart(id)}
+          onClick={addToCart}
           disabled={!available}
         >
           <Typography sx={{ pr: 1 }}>Pridėti</Typography>

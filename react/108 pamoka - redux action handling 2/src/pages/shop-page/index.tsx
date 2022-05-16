@@ -6,21 +6,12 @@ import {
   Box,
 } from '@mui/material';
 
-import { useDispatch } from 'react-redux';
 import { useRootSelector } from '../../store';
 import ShopPageCard from './shop-page-card';
 
 const ShopPage: React.FC = () => {
   const items = useRootSelector((state) => state.items);
   const cart = useRootSelector((state) => state.cart);
-  const dispatch = useDispatch();
-
-  const addToCart = (id: string): void => {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: { id },
-    });
-  };
 
   return (
     <Container>
@@ -28,7 +19,7 @@ const ShopPage: React.FC = () => {
       <Grid container spacing={4}>
         {items.map((item) => (
           <Grid item key={item.id} xs={4}>
-            <ShopPageCard {...item} addToCart={addToCart} />
+            <ShopPageCard {...item} />
           </Grid>
         ))}
       </Grid>

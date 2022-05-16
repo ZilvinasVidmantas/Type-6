@@ -10,14 +10,11 @@ import ShopPageCardProperties from './shop-page-card-properties';
 import ShopPageCardActions from './shop-page-card-actions';
 import toReadCase from '../../../helpers/to-read-case';
 
-type ShopPageCardProps = Item & {
-  addToCart: (itemId: string) => void,
-};
+type ShopPageCardProps = Item;
 
 const ShopPageCard: React.FC<ShopPageCardProps> = ({
   id,
   images,
-  addToCart,
   price,
   categories,
   amount,
@@ -51,7 +48,6 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
         <ShopPageCardProperties properties={itemProperties} />
         <ShopPageCardActions
           id={id}
-          addToCart={addToCart}
           available={amount > 0}
           max={amount}
         />
