@@ -43,15 +43,25 @@ const initialState: State = {
   cart: [],
 };
 
-// Reducer'is - tai funkcija kuri reaguoja į ACTION'us ir pagal ACTION'o tipą
-// Grąžinau pakitusią ir naują state reikšmę
+/*
+  1. Šiame faile:
+    Sumažinti State.items kiekį pagal action.payload.amount ir action.payload.id, pagal tai kiek buvo įdėta į krepšelį
+  2. Po pridejimo atspausdinti:
+    * jeigu vartotojas prisijungęs atspausdinti konsolėje: 'Siunčiami duomenys į serverį'
+    * jeigu vartotojas neprisijungęs atspausdinti konsolėje: 'Išsaugomi duomenys LocalStorage'
+
+*/
 const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
   if (action.type === 'ADD_TO_CART') {
     return {
       ...state,
       cart: [
         ...state.cart,
-        { id: createId(), itemId: action.payload.id, amount: 1 },
+        {
+          id: createId(),
+          itemId: action.payload.id,
+          amount: action.payload.amount,
+        },
       ],
     };
   }

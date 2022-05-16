@@ -26,10 +26,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   const addToCart = (): void => {
     dispatch({
       type: 'ADD_TO_CART',
-      payload: {
-        id,
-        amount,
-      },
+      payload: { id, amount },
     });
   };
 
