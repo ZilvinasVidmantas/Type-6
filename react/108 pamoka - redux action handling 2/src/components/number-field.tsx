@@ -39,7 +39,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
       setFieldValue(valueStr);
     } else {
       const newAmount: number = Math.floor(Number(valueStr));
-      const numericValue: number = max && newAmount > max ? max : newAmount;
+      const numericValue: number = max !== undefined && newAmount > max ? max : newAmount;
 
       setFieldValue(numericValue);
       if (onChange) onChange(e, numericValue);
@@ -48,7 +48,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
 
   const handleTextFieldBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const newAmount = Number(e.target.value);
-    const numericValue: number = min && newAmount < min ? min : newAmount;
+    const numericValue: number = min !== undefined && newAmount < min ? min : newAmount;
 
     setFieldValue(numericValue);
     if (onBlur) onBlur(e, numericValue);
@@ -105,7 +105,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           size="small"
           sx={buttonSx}
           onClick={incAmount}
-          disabled={disabled || Boolean(max && fieldValue >= max)}
+          disabled={disabled || Boolean(max !== undefined && fieldValue >= max)}
           disableElevation
         >
           +
@@ -115,7 +115,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           size="small"
           sx={buttonSx}
           onClick={decAmount}
-          disabled={disabled || Boolean(min && fieldValue <= min)}
+          disabled={disabled || Boolean(min !== undefined && fieldValue <= min)}
           disableElevation
         >
           -

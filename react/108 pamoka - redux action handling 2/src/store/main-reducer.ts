@@ -69,15 +69,16 @@ const mainReducer: Reducer<State, Action> = (state = initialState, { type, paylo
     let items: State['items'];
 
     if (shopItem) {
-      //  ATNAUJINIMAS
-      // skirt: 2     naujas 6          buvo 4
-      const diff = payload.amount - shopItem.amount;
+      const diff = shopItem.amount - payload.amount;
+      items = state.items.map((item) => (item.id === payload.id
+        ? { ...item, amount: item.amount + diff }
+        : item));
 
+      cart = [...state.cart.filter(({ itemId }) => itemId !== payload.id)];
       shopItem.amount = payload.amount;
-      cart = [
-        ...state.cart.filter(({ itemId }) => itemId !== payload.id),
-        shopItem,
-      ];
+      if (shopItem.amount > 0) {
+        cart.push(shopItem);
+      }
     } else {
       items = state.items.map((item) => (item.id === payload.id
         ? { ...item, amount: item.amount - payload.amount }

@@ -21,7 +21,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   max,
 }) => {
   const dispatch = useDispatch();
-  const [amount, setAmount] = useState<number>(1);
+  const [amount, setAmount] = useState<number>(0);
 
   const addToCart = (): void => {
     dispatch({
@@ -43,7 +43,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
           sx={{ alignSelf: 'stretch' }}
           InputProps={{ sx: { height: '100%' } }}
           disabled={!available}
-          min={1}
+          min={0}
           max={max}
           value={amount}
           onChange={(_, newValue) => setAmount(newValue)}
