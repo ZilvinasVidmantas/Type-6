@@ -92,6 +92,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           variant="contained"
           size="small"
           sx={buttonSx}
+          onClick={() => setFieldValue(Number(fieldValue) + 1)}
           disabled={disabled || Boolean(max && fieldValue >= max)}
           disableElevation
         >
@@ -101,6 +102,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           variant="contained"
           size="small"
           sx={buttonSx}
+          onClick={() => setFieldValue(Number(fieldValue) - 1)}
           disabled={disabled || Boolean(min && fieldValue <= min)}
           disableElevation
         >
