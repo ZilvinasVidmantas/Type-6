@@ -51,6 +51,7 @@ const initialState: State = {
     * jeigu vartotojas prisijungęs atspausdinti konsolėje: 'Siunčiami duomenys į serverį'
     * jeigu vartotojas neprisijungęs atspausdinti konsolėje: 'Išsaugomi duomenys LocalStorage'
   3. Atnaujinant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą.
+  4. Pakeiskite likusių prekių kiekį pagal atnaujinto/naujo krepšelio item kiekį
 
 */
 const mainReducer: Reducer<State, Action> = (state = initialState, { type, payload }) => {
@@ -64,27 +65,33 @@ const mainReducer: Reducer<State, Action> = (state = initialState, { type, paylo
     }
 
     const shopItem = state.cart.find((cartItem) => cartItem.itemId === payload.id);
-    if (shopItem) {
-      console.log('Krepšelyje esantis daiktas:');
-      console.log(shopItem);
-    } else {
-      console.log('Krepšelyje tokio daikto dar nėra');
-    }
+    let cart: State['cart'];
+    let items: State['items'];
 
-    return {
-      items: state.items.map((item) => (
-        item.id === payload.id
-          ? { ...item, amount: item.amount - payload.amount }
-          : item
-      )),
-      cart: [
+    if (shopItem) {
+      //  ATNAUJINIMAS
+      // Kaip teisingai nurodyti likusių daiktų kiekį po atnaujinimo?
+      shopItem.amount = payload.amount;
+      cart = [
+        ...state.cart.filter(({ itemId }) => itemId !== payload.id),
+        shopItem,
+      ];
+    } else {
+      // PRIDEJIMAS
+      // Kaip teisingai nustayti likusių daiktų kiekį po pridėjimo?
+      cart = [
         ...state.cart,
         {
           id: createId(),
           itemId: payload.id,
           amount: payload.amount,
         },
-      ],
+      ];
+    }
+
+    return {
+      ...state,
+      cart,
     };
   }
   return { ...state };
