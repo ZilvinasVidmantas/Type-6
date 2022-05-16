@@ -70,15 +70,18 @@ const mainReducer: Reducer<State, Action> = (state = initialState, { type, paylo
 
     if (shopItem) {
       //  ATNAUJINIMAS
-      // Kaip teisingai nurodyti likusių daiktų kiekį po atnaujinimo?
+      // skirt: 2     naujas 6          buvo 4
+      const diff = payload.amount - shopItem.amount;
+
       shopItem.amount = payload.amount;
       cart = [
         ...state.cart.filter(({ itemId }) => itemId !== payload.id),
         shopItem,
       ];
     } else {
-      // PRIDEJIMAS
-      // Kaip teisingai nustayti likusių daiktų kiekį po pridėjimo?
+      items = state.items.map((item) => (item.id === payload.id
+        ? { ...item, amount: item.amount - payload.amount }
+        : item));
       cart = [
         ...state.cart,
         {
@@ -90,7 +93,7 @@ const mainReducer: Reducer<State, Action> = (state = initialState, { type, paylo
     }
 
     return {
-      ...state,
+      items,
       cart,
     };
   }
