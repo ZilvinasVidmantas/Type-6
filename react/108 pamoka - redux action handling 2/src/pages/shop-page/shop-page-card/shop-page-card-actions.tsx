@@ -22,7 +22,6 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
 }) => {
   const dispatch = useDispatch();
   const [amount, setAmount] = useState<number>(1);
-  // 9:05
 
   const addToCart = (): void => {
     dispatch({
