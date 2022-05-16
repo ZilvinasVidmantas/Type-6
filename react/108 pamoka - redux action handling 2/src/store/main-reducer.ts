@@ -49,18 +49,23 @@ const initialState: State = {
   2. Po pridejimo atspausdinti:
     * jeigu vartotojas prisijungęs atspausdinti konsolėje: 'Siunčiami duomenys į serverį'
     * jeigu vartotojas neprisijungęs atspausdinti konsolėje: 'Išsaugomi duomenys LocalStorage'
+  3. Papildant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą, v
 
 */
-const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
-  if (action.type === 'ADD_TO_CART') {
+const mainReducer: Reducer<State, Action> = (state = initialState, { type, payload }) => {
+  if (type === 'ADD_TO_CART') {
     return {
-      ...state,
+      items: state.items.map((item) => (
+        item.id === payload.id
+          ? { ...item, amount: item.amount - payload.amount }
+          : item
+      )),
       cart: [
         ...state.cart,
         {
           id: createId(),
-          itemId: action.payload.id,
-          amount: action.payload.amount,
+          itemId: payload.id,
+          amount: payload.amount,
         },
       ],
     };

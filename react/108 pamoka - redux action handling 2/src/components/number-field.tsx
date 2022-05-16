@@ -10,7 +10,7 @@ export type NumberFieldProps = Omit<TextFieldProps, 'type' | 'value' | 'inputPro
   min?: number,
   max?: number,
   value?: number,
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>, value: number) => void,
+  onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>, value: number) => void,
   onBlur?: (e: React.FocusEvent<HTMLInputElement>, value: number) => void,
 };
 
@@ -54,6 +54,18 @@ const NumberField: React.FC<NumberFieldProps> = ({
     if (onBlur) onBlur(e, numericValue);
   };
 
+  const incAmount = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const numerivValue = Number(fieldValue) + 1;
+    setFieldValue(numerivValue);
+    if (onChange) onChange(e, numerivValue);
+  };
+
+  const decAmount = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const numerivValue = Number(fieldValue) - 1;
+    setFieldValue(numerivValue);
+    if (onChange) onChange(e, numerivValue);
+  };
+
   useEffect(() => {
     setFieldValue(value ?? 0);
   }, [value]);
@@ -92,7 +104,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           variant="contained"
           size="small"
           sx={buttonSx}
-          onClick={() => setFieldValue(Number(fieldValue) + 1)}
+          onClick={incAmount}
           disabled={disabled || Boolean(max && fieldValue >= max)}
           disableElevation
         >
@@ -102,7 +114,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
           variant="contained"
           size="small"
           sx={buttonSx}
-          onClick={() => setFieldValue(Number(fieldValue) - 1)}
+          onClick={decAmount}
           disabled={disabled || Boolean(min && fieldValue <= min)}
           disableElevation
         >
