@@ -50,7 +50,7 @@ const initialState: State = {
   2. Po pridejimo atspausdinti:
     * jeigu vartotojas prisijungęs atspausdinti konsolėje: 'Siunčiami duomenys į serverį'
     * jeigu vartotojas neprisijungęs atspausdinti konsolėje: 'Išsaugomi duomenys LocalStorage'
-  3. Papildant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą.
+  3. Atnaujinant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą.
 
 */
 const mainReducer: Reducer<State, Action> = (state = initialState, { type, payload }) => {
@@ -61,6 +61,14 @@ const mainReducer: Reducer<State, Action> = (state = initialState, { type, paylo
       console.log('siunčiami duomeny į serverį');
     } else {
       console.log('išsaugomi duomenys localStorage');
+    }
+
+    const shopItem = state.cart.find((cartItem) => cartItem.itemId === payload.id);
+    if (shopItem) {
+      console.log('Krepšelyje esantis daiktas:');
+      console.log(shopItem);
+    } else {
+      console.log('Krepšelyje tokio daikto dar nėra');
     }
 
     return {
