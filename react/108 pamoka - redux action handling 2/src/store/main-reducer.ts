@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
 import { v4 as createId } from 'uuid';
+import { User } from '../types';
 import { State, Action } from './types';
 
 const initialState: State = {
@@ -49,11 +50,19 @@ const initialState: State = {
   2. Po pridejimo atspausdinti:
     * jeigu vartotojas prisijungęs atspausdinti konsolėje: 'Siunčiami duomenys į serverį'
     * jeigu vartotojas neprisijungęs atspausdinti konsolėje: 'Išsaugomi duomenys LocalStorage'
-  3. Papildant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą, v
+  3. Papildant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą.
 
 */
 const mainReducer: Reducer<State, Action> = (state = initialState, { type, payload }) => {
   if (type === 'ADD_TO_CART') {
+    const userJSON = localStorage.getItem('user');
+    const user = userJSON ? JSON.parse(userJSON) as User : null;
+    if (user) {
+      console.log('siunčiami duomeny į serverį');
+    } else {
+      console.log('išsaugomi duomenys localStorage');
+    }
+
     return {
       items: state.items.map((item) => (
         item.id === payload.id
