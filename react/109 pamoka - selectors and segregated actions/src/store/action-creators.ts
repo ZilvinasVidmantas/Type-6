@@ -1,28 +1,17 @@
-import { User, UserRegistration, Crudentials } from '../types';
+import { Dispatch } from 'redux';
+import { User, Crudentials } from '../types';
+import AuthService from '../features/auth/auth-service';
 import {
-  LoginAction,
-  RegisterAction,
   AddToCartAction,
   AuthSuccessAction,
   AuthFailureAction,
   AuthLoadingAction,
+  Action,
 } from './types';
 
-export const createLoginAction = (crudentials: Crudentials, next: string): LoginAction => ({
-  type: 'LOGIN_ACTION',
-  payload: {
-    crudentials,
-    next,
-  },
-});
-
-export const createRegisterAction = (userRegistration: UserRegistration, next: string): RegisterAction => ({
-  type: 'REGISTER_ACTION',
-  payload: {
-    userRegistration,
-    next,
-  },
-});
+export const authLoadingAction: AuthLoadingAction = {
+  type: 'AUTH_LOADING',
+};
 
 export const createAddToCartAction = (id: string, amount: number): AddToCartAction => ({
   type: 'ADD_TO_CART',
@@ -31,9 +20,9 @@ export const createAddToCartAction = (id: string, amount: number): AddToCartActi
   },
 });
 
-export const createAuthSuccessAction = (user: User): AuthSuccessAction => ({
+export const createAuthSuccessAction = (user: User, next?: string): AuthSuccessAction => ({
   type: 'AUTH_SUCCESS',
-  payload: { user },
+  payload: { user, next },
 });
 
 export const createAuthFailureAction = (error: string): AuthFailureAction => ({
@@ -41,24 +30,21 @@ export const createAuthFailureAction = (error: string): AuthFailureAction => ({
   payload: { error },
 });
 
-export const authFailureAction: AuthLoadingAction = {
-  type: 'AUTH_LOADING',
+export const createLoginAction = (
+  crudentials: Crudentials,
+  next?: string,
+) => async (dispatch: Dispatch<Action>): Promise<void> => {
+  // siunčiame Reducer'iui
+  dispatch(createAddToCartAction('asdasda', 55));
+  try {
+    const user = await AuthService.login(crudentials);
+    const authSuccessAction = createAuthSuccessAction(user, next);
+    // siunčiame Reducer'iui
+    dispatch(authSuccessAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const authFailureAction = createAuthFailureAction(errMsg);
+    // siunčiame Reducer'iui
+    dispatch(authFailureAction);
+  }
 };
-
-/*
-  Sukurti LoginAction tipą ir createLoginAction action-creator
-    payload: {
-      next: string,
-      crudentials: Crudentials
-    }
-
-  Sukurti RegisterAction tipą ir createRegisterAction action-creator
-    payload: {
-      next: string,
-      userRegistration: UserRegistration
-    }
-
-  tipus aprašykite faile types.d.ts
-
-  action'us ir action-creator'ius aprašykite šiame faile
-*/

@@ -2,8 +2,6 @@ import {
   Item,
   CartItem,
   User,
-  Crudentials,
-  UserRegistration,
 } from '../types';
 
 export type State = {
@@ -13,22 +11,6 @@ export type State = {
     user: User | null,
     error: string | null,
     loading: boolean,
-  }
-};
-
-export type LoginAction = {
-  type: 'LOGIN_ACTION',
-  payload: {
-    next: string,
-    crudentials: Crudentials,
-  }
-};
-
-export type RegisterAction = {
-  type: 'REGISTER_ACTION',
-  payload: {
-    next: string,
-    userRegistration: UserRegistration,
   }
 };
 
@@ -43,7 +25,8 @@ export type AddToCartAction = {
 export type AuthSuccessAction = {
   type: 'AUTH_SUCCESS',
   payload: {
-    user: User
+    user: User,
+    next?: string
   }
 };
 
