@@ -1,4 +1,10 @@
-import { Item, CartItem, User } from '../types';
+import {
+  Item,
+  CartItem,
+  User,
+  Crudentials,
+  UserRegistration,
+} from '../types';
 
 export type State = {
   items: Item[],
@@ -7,6 +13,22 @@ export type State = {
     user: User | null,
     error: string | null,
     loading: boolean,
+  }
+};
+
+export type LoginAction = {
+  type: 'LOGIN_ACTION',
+  payload: {
+    next: string,
+    crudentials: Crudentials,
+  }
+};
+
+export type RegisterAction = {
+  type: 'REGISTER_ACTION',
+  payload: {
+    next: string,
+    userRegistration: UserRegistration,
   }
 };
 

@@ -1,10 +1,28 @@
-import { User } from '../types/user';
+import { User, UserRegistration, Crudentials } from '../types';
 import {
+  LoginAction,
+  RegisterAction,
   AddToCartAction,
   AuthSuccessAction,
   AuthFailureAction,
   AuthLoadingAction,
 } from './types';
+
+export const createLoginAction = (crudentials: Crudentials, next: string): LoginAction => ({
+  type: 'LOGIN_ACTION',
+  payload: {
+    crudentials,
+    next,
+  },
+});
+
+export const createRegisterAction = (userRegistration: UserRegistration, next: string): RegisterAction => ({
+  type: 'REGISTER_ACTION',
+  payload: {
+    userRegistration,
+    next,
+  },
+});
 
 export const createAddToCartAction = (id: string, amount: number): AddToCartAction => ({
   type: 'ADD_TO_CART',
