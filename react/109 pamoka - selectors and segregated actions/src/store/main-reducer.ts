@@ -42,18 +42,27 @@ const initialState: State = {
     },
   ],
   cart: [],
+  auth: {
+    user: null,
+    error: null,
+    loading: false,
+  },
 };
 
 /*
-  1. Šiame faile:
-    Sumažinti State.items kiekį pagal action.payload.amount ir action.payload.id, pagal tai kiek buvo įdėta į krepšelį
-  2. Po pridejimo atspausdinti:
-    * jeigu vartotojas prisijungęs atspausdinti konsolėje: 'Siunčiami duomenys į serverį'
-    * jeigu vartotojas neprisijungęs atspausdinti konsolėje: 'Išsaugomi duomenys LocalStorage'
-  3. Atnaujinant jau užsakyto itemo kiekį, atnaujinti tą patį įrašą.
-  4. Pakeiskite likusių prekių kiekį pagal atnaujinto/naujo krepšelio item kiekį
+  clearError: VoidFunction,
+  login: (crudentials: Crudentials, next: string) => void,
+  register: (userRegistration: UserRegistration) => void,
+  logout: VoidFunction,
 
+  LOGIN - kviečiamas iš komponento
+  LOGIN_SUCCESS - LOGIN action'o rezultatas
+  LOGIN_FAILURE - LOGIN action'o rezultatas
+  REGISTER - kviečiamas iš komponento
+  REGISTER_SUCCESS - REGISTER action'o rezultatas
+  REGISTER_FAILURE - REGISTER action'o rezultatas
 */
+
 const mainReducer: Reducer<State, Action> = (state = initialState, { type, payload }) => {
   if (type === 'ADD_TO_CART') {
     const userJSON = localStorage.getItem('user');
@@ -94,11 +103,12 @@ const mainReducer: Reducer<State, Action> = (state = initialState, { type, paylo
     }
 
     return {
+      ...state,
       items,
       cart,
     };
   }
-  return { ...state };
+  return state;
 };
 
 export default mainReducer;

@@ -1,8 +1,13 @@
-import { Item, CartItem } from '../types';
+import { Item, CartItem, User } from '../types';
 
 export type State = {
   items: Item[],
-  cart: CartItem[]
+  cart: CartItem[],
+  auth: {
+    user: User | null,
+    error: string | null,
+    loading: boolean,
+  }
 };
 
 export type Action = {
