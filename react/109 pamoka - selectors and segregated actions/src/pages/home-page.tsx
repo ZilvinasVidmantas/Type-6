@@ -22,10 +22,6 @@ const dummyAction = (dispatch: any, getState: any) => {
   }, 3000);
 };
 
-// 5min
-// 10min
-// 10:40
-
 const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const [programmers, setProgrammers] = useState<Programmer[]>([]);

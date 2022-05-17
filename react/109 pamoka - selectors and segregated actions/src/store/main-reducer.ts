@@ -56,59 +56,73 @@ const initialState: State = {
   logout: VoidFunction,
 
   LOGIN - kviečiamas iš komponento
-  LOGIN_SUCCESS - LOGIN action'o rezultatas
-  LOGIN_FAILURE - LOGIN action'o rezultatas
   REGISTER - kviečiamas iš komponento
-  REGISTER_SUCCESS - REGISTER action'o rezultatas
-  REGISTER_FAILURE - REGISTER action'o rezultatas
+  + AUTH_SUCCESS - AUTH action'o rezultatas
+  + AUTH_FAILURE - AUTH action'o rezultatas
+  + AUTH_LOADING - AUTH action'ų papildomas veiksmas
 */
 
-const mainReducer: Reducer<State, Action> = (state = initialState, { type, payload }) => {
-  if (type === 'ADD_TO_CART') {
-    const userJSON = localStorage.getItem('user');
-    const user = userJSON ? JSON.parse(userJSON) as User : null;
-    if (user) {
-      console.log('siunčiami duomeny į serverį');
-    } else {
-      console.log('išsaugomi duomenys localStorage');
-    }
-
-    const shopItem = state.cart.find((cartItem) => cartItem.itemId === payload.id);
-    let cart: State['cart'];
-    let items: State['items'];
-
-    if (shopItem) {
-      const diff = shopItem.amount - payload.amount;
-      items = state.items.map((item) => (item.id === payload.id
-        ? { ...item, amount: item.amount + diff }
-        : item));
-
-      cart = [...state.cart.filter(({ itemId }) => itemId !== payload.id)];
-      shopItem.amount = payload.amount;
-      if (shopItem.amount > 0) {
-        cart.push(shopItem);
+const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD_TO_CART': {
+      const userJSON = localStorage.getItem('user');
+      const user = userJSON ? JSON.parse(userJSON) as User : null;
+      if (user) {
+        console.log('siunčiami duomeny į serverį');
+      } else {
+        console.log('išsaugomi duomenys localStorage');
       }
-    } else {
-      items = state.items.map((item) => (item.id === payload.id
-        ? { ...item, amount: item.amount - payload.amount }
-        : item));
-      cart = [
-        ...state.cart,
-        {
-          id: createId(),
-          itemId: payload.id,
-          amount: payload.amount,
-        },
-      ];
+
+      const shopItem = state.cart.find((cartItem) => cartItem.itemId === action.payload.id);
+      let cart: State['cart'];
+      let items: State['items'];
+
+      if (shopItem) {
+        const diff = shopItem.amount - action.payload.amount;
+        items = state.items.map((item) => (item.id === action.payload.id
+          ? { ...item, amount: item.amount + diff }
+          : item));
+
+        cart = [...state.cart.filter(({ itemId }) => itemId !== action.payload.id)];
+        shopItem.amount = action.payload.amount;
+        if (shopItem.amount > 0) {
+          cart.push(shopItem);
+        }
+      } else {
+        items = state.items.map((item) => (item.id === action.payload.id
+          ? { ...item, amount: item.amount - action.payload.amount }
+          : item));
+        cart = [
+          ...state.cart,
+          {
+            id: createId(),
+            itemId: action.payload.id,
+            amount: action.payload.amount,
+          },
+        ];
+      }
+
+      return {
+        ...state,
+        items,
+        cart,
+      };
     }
 
-    return {
-      ...state,
-      items,
-      cart,
-    };
+    case 'AUTH_SUCCESS': {
+      return state;
+    }
+
+    case 'AUTH_FAILURE': {
+      return state;
+    }
+
+    case 'AUTH_LOADING': {
+      return state;
+    }
+
+    default: return state;
   }
-  return state;
 };
 
 export default mainReducer;
