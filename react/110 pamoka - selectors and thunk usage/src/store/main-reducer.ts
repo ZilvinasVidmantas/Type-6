@@ -145,3 +145,9 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
 };
 
 export default mainReducer;
+
+// Įgalinti navigavimą pagal 'next' savybę po prisijungimo/registracijos;
+// Įgalinti redux auth state išlaikymą perkraunant puslapį;
+// 11:20
+// Peržiūrite kodą - 11:30
+// klausimai
