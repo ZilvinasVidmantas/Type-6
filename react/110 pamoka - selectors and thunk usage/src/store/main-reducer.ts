@@ -45,7 +45,6 @@ const initialState: State = {
     user: null,
     error: null,
     loading: false,
-    next: null,
   },
 };
 
@@ -95,7 +94,6 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
           ...state.auth,
           user: action.payload.user,
           loading: false,
-          next: action.payload.next ?? null,
         },
       };
     }

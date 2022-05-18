@@ -58,8 +58,8 @@ const RegisterPage: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const handleRegister: RegisterConfig['onSubmit'] = ({ email, password, repeatPassword }) => {
-    const nextPage = searchParams.get('next') ?? '/';
-    const registerAction = createRegisterAction({ email, password, repeatPassword }, nextPage);
+    const redirectLink = searchParams.get('redirect') ?? '/';
+    const registerAction = createRegisterAction({ email, password, repeatPassword });
     dispatch(registerAction);
   };
 

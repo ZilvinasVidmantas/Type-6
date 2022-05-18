@@ -12,7 +12,6 @@ export type State = {
     user: User | null,
     error: string | null,
     loading: boolean,
-    next: string | null
   }
 };
 
@@ -28,7 +27,6 @@ export type AuthSuccessAction = {
   type: 'AUTH_SUCCESS',
   payload: {
     user: User,
-    next?: string
   }
 };
 

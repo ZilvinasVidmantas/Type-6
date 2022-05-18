@@ -28,9 +28,9 @@ export const createAddToCartAction = (id: string, amount: number): AddToCartActi
   payload: { id, amount },
 });
 
-export const createAuthSuccessAction = (user: User, next?: string): AuthSuccessAction => ({
+export const createAuthSuccessAction = (user: User): AuthSuccessAction => ({
   type: 'AUTH_SUCCESS',
-  payload: { user, next },
+  payload: { user },
 });
 
 export const createAuthFailureAction = (error: string): AuthFailureAction => ({
@@ -40,13 +40,12 @@ export const createAuthFailureAction = (error: string): AuthFailureAction => ({
 
 export const createLoginAction = (
   crudentials: Crudentials,
-  next?: string,
 ) => async (dispatch: Dispatch<Action>): Promise<void> => {
   // siunčiame Reducer'iui
   dispatch(authLoadingAction);
   try {
     const user = await AuthService.login(crudentials);
-    const authSuccessAction = createAuthSuccessAction(user, next);
+    const authSuccessAction = createAuthSuccessAction(user);
     // siunčiame Reducer'iui
     dispatch(authSuccessAction);
   } catch (error) {
@@ -59,13 +58,12 @@ export const createLoginAction = (
 
 export const createRegisterAction = (
   userRegistration: UserRegistration,
-  next: string,
 ) => async (dispatch: Dispatch<Action>): Promise<void> => {
   // siunčiame Reducer'iui
   dispatch(authLoadingAction);
   try {
     const user = await AuthService.register(userRegistration);
-    const authSuccessAction = createAuthSuccessAction(user, next);
+    const authSuccessAction = createAuthSuccessAction(user);
     // siunčiame Reducer'iui
     dispatch(authSuccessAction);
   } catch (error) {
