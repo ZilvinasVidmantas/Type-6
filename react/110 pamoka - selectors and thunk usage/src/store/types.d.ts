@@ -12,6 +12,7 @@ export type State = {
     user: User | null,
     error: string | null,
     loading: boolean,
+    next: string | null
   }
 };
 

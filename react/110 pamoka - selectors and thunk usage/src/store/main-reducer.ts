@@ -45,6 +45,7 @@ const initialState: State = {
     user: null,
     error: null,
     loading: false,
+    next: null,
   },
 };
 
@@ -94,6 +95,7 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
           ...state.auth,
           user: action.payload.user,
           loading: false,
+          next: action.payload.next ?? null,
         },
       };
     }
@@ -148,6 +150,3 @@ export default mainReducer;
 
 // Įgalinti navigavimą pagal 'next' savybę po prisijungimo/registracijos;
 // Įgalinti redux auth state išlaikymą perkraunant puslapį;
-// 11:20
-// Peržiūrite kodą - 11:30
-// klausimai

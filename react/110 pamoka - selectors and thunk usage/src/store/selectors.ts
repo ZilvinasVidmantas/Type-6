@@ -7,3 +7,5 @@ export const selectUser = (state: State) => state.auth.user;
 export const selectAuthLoading = (state: State) => state.auth.loading;
 
 export const selectAuthError = (state: State) => state.auth.error;
+
+export const selectAuthNext = (state: State) => state.auth.next;
