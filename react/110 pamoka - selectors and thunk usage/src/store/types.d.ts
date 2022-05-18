@@ -12,7 +12,8 @@ export type State = {
     user: User | null,
     error: string | null,
     loading: boolean,
-  }
+  },
+  redirect: string | null,
 };
 
 export type AddToCartAction = {
@@ -27,6 +28,7 @@ export type AuthSuccessAction = {
   type: 'AUTH_SUCCESS',
   payload: {
     user: User,
+    redirect: string,
   }
 };
 
@@ -49,6 +51,10 @@ export type AuthClearErrorAction = {
   type: 'AUTH_CLEAR_ERROR',
 };
 
-export type Action = AddToCartAction | AuthSuccessAction | AuthFailureAction | AuthLoadingAction | AuthLogoutAction | AuthClearErrorAction;
+export type ClearRedirectAction = {
+  type: 'CLEAR_REDIRECT',
+};
+
+export type Action = AddToCartAction | AuthSuccessAction | AuthFailureAction | AuthLoadingAction | AuthLogoutAction | AuthClearErrorAction | ClearRedirectAction;
 
 export type AppDispatch = ThunkDispatch<State, undefined, Action>;

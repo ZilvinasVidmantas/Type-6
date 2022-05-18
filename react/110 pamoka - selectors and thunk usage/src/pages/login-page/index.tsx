@@ -43,8 +43,8 @@ const LoginPage: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const handleLogin: LoginFormikConfig['onSubmit'] = ({ email, password }) => {
-    const redirectLink = searchParams.get('redirect') ?? '/';
-    const loginAction = createLoginAction({ email, password });
+    const redirect = searchParams.get('redirect') ?? '/';
+    const loginAction = createLoginAction({ email, password }, redirect);
     dispatch(loginAction);
   };
 

@@ -46,6 +46,7 @@ const initialState: State = {
     error: null,
     loading: false,
   },
+  redirect: null,
 };
 
 const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
@@ -95,6 +96,7 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
           user: action.payload.user,
           loading: false,
         },
+        redirect: action.payload.redirect,
       };
     }
 
@@ -140,11 +142,17 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
       };
     }
 
+    case 'CLEAR_REDIRECT': {
+      return {
+        ...state,
+        redirect: null,
+      };
+    }
+
     default: return state;
   }
 };
 
 export default mainReducer;
 
-// Įgalinti navigavimą pagal 'next' savybę po prisijungimo/registracijos;
 // Įgalinti redux auth state išlaikymą perkraunant puslapį;
