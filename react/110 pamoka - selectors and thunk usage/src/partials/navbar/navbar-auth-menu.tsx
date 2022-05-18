@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Avatar,
   Popper,
@@ -10,13 +10,21 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../features/auth/auth-context';
+import { useRootSelector } from '../../store';
+import { selectUser } from '../../store/selectors';
+import { authLogoutAction } from '../../store/action-creators';
+import { useRootDispatch } from '../../store/hooks';
 
 const NavbarAuthMenu: React.FC = () => {
   const navigate = useNavigate();
-  const { logout, user } = useContext(AuthContext);
+  const user = useRootSelector(selectUser);
+  const dispatch = useRootDispatch();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const popperAnchorRef = useRef<HTMLDivElement>(null);
+
+  const logout = () => {
+    dispatch(authLogoutAction);
+  };
 
   const handleNavigate = (route: string) => {
     setMenuOpen(false);

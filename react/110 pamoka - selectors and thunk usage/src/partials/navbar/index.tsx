@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   AppBar,
   Box,
@@ -7,12 +7,13 @@ import {
 } from '@mui/material';
 
 import NavbarLink from './navbar-link';
-import AuthContext from '../../features/auth/auth-context';
 import NavbarAuthMenu from './navbar-auth-menu';
 import NavbarVisitorMenu from './navbar-visitor-menu';
+import { useRootSelector } from '../../store/hooks';
+import { selectLoggedIn } from '../../store/selectors';
 
 const Navbar: React.FC = () => {
-  const { loggedIn } = useContext(AuthContext);
+  const loggedIn = useRootSelector(selectLoggedIn);
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: 'grey.900' }}>

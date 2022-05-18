@@ -4,10 +4,11 @@ import {
   Box,
   Button,
 } from '@mui/material';
-import { useDispatch } from 'react-redux';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NumberField from '../../../components/number-field';
+import { useRootDispatch } from '../../../store/hooks';
+import { createAddToCartAction } from '../../../store/action-creators';
 
 type ShopPageCardActionsProps = {
   id: string,
@@ -20,14 +21,12 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   available,
   max,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useRootDispatch();
   const [amount, setAmount] = useState<number>(0);
 
   const addToCart = (): void => {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: { id, amount },
-    });
+    const addToCartAction = createAddToCartAction(id, amount);
+    dispatch(addToCartAction);
   };
 
   return (

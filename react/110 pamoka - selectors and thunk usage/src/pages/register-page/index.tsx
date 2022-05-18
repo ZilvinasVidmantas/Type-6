@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { TextField } from '@mui/material';
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 import validator from 'validator';
+import { useSearchParams } from 'react-router-dom';
+
 import AuthForm from '../../components/auth-form';
-import AuthContext from '../../features/auth/auth-context';
 import { UserRegistration } from '../../types';
 import AuthService from '../../features/auth/auth-service';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
+import { createRegisterAction } from '../../store/action-creators';
+import { selectAuthLoading } from '../../store/selectors';
 
 type RegisterConfig = FormikConfig<UserRegistration>;
 
@@ -49,10 +53,14 @@ const validationSchema = Yup.object({
 });
 
 const RegisterPage: React.FC = () => {
-  const { register } = useContext(AuthContext);
+  const [searchParams] = useSearchParams();
+  const loading = useRootSelector(selectAuthLoading);
+  const dispatch = useRootDispatch();
 
   const handleRegister: RegisterConfig['onSubmit'] = ({ email, password, repeatPassword }) => {
-    register({ email, password, repeatPassword });
+    const nextPage = searchParams.get('next') ?? '/';
+    const registerAction = createRegisterAction({ email, password, repeatPassword }, nextPage);
+    dispatch(registerAction);
   };
 
   const {
@@ -81,6 +89,7 @@ const RegisterPage: React.FC = () => {
         onBlur={handleBlur}
         error={touched.email && Boolean(errors.email)}
         helperText={touched.email && errors.email}
+        disabled={loading}
       />
       <TextField
         name="password"
@@ -92,6 +101,7 @@ const RegisterPage: React.FC = () => {
         onBlur={handleBlur}
         error={touched.password && Boolean(errors.password)}
         helperText={touched.password && errors.password}
+        disabled={loading}
       />
       <TextField
         name="repeatPassword"
@@ -103,6 +113,7 @@ const RegisterPage: React.FC = () => {
         onBlur={handleBlur}
         error={touched.repeatPassword && Boolean(errors.repeatPassword)}
         helperText={touched.repeatPassword && errors.repeatPassword}
+        disabled={loading}
       />
     </AuthForm>
   );

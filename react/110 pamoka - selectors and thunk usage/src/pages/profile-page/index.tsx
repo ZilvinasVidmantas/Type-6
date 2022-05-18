@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Typography, Container, Box } from '@mui/material';
-import AuthContext from '../../features/auth/auth-context';
 import Img from '../../components/img';
+import { useRootSelector } from '../../store/hooks';
+import { selectUser } from '../../store/selectors';
 
 const ProfilePage: React.FC = () => {
-  const { user } = useContext(AuthContext);
+  const user = useRootSelector(selectUser);
 
   const needsProfileUpdate = user && (!user.name || !user.surname || !user.img);
 

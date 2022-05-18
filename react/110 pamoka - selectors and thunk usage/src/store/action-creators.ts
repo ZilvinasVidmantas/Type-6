@@ -1,11 +1,13 @@
 import { Dispatch } from 'redux';
-import { User, Crudentials } from '../types';
+import { User, Crudentials, UserRegistration } from '../types';
 import AuthService from '../features/auth/auth-service';
 import {
   AddToCartAction,
   AuthSuccessAction,
   AuthFailureAction,
   AuthLoadingAction,
+  AuthLogoutAction,
+  AuthClearErrorAction,
   Action,
 } from './types';
 
@@ -13,11 +15,17 @@ export const authLoadingAction: AuthLoadingAction = {
   type: 'AUTH_LOADING',
 };
 
+export const authClearErrorAction: AuthClearErrorAction = {
+  type: 'AUTH_CLEAR_ERROR',
+};
+
+export const authLogoutAction: AuthLogoutAction = {
+  type: 'AUTH_LOGOUT',
+};
+
 export const createAddToCartAction = (id: string, amount: number): AddToCartAction => ({
   type: 'ADD_TO_CART',
-  payload: {
-    id, amount,
-  },
+  payload: { id, amount },
 });
 
 export const createAuthSuccessAction = (user: User, next?: string): AuthSuccessAction => ({
@@ -35,9 +43,28 @@ export const createLoginAction = (
   next?: string,
 ) => async (dispatch: Dispatch<Action>): Promise<void> => {
   // siunčiame Reducer'iui
-  dispatch(createAddToCartAction('asdasda', 55));
+  dispatch(authLoadingAction);
   try {
     const user = await AuthService.login(crudentials);
+    const authSuccessAction = createAuthSuccessAction(user, next);
+    // siunčiame Reducer'iui
+    dispatch(authSuccessAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const authFailureAction = createAuthFailureAction(errMsg);
+    // siunčiame Reducer'iui
+    dispatch(authFailureAction);
+  }
+};
+
+export const createRegisterAction = (
+  userRegistration: UserRegistration,
+  next: string,
+) => async (dispatch: Dispatch<Action>): Promise<void> => {
+  // siunčiame Reducer'iui
+  dispatch(authLoadingAction);
+  try {
+    const user = await AuthService.register(userRegistration);
     const authSuccessAction = createAuthSuccessAction(user, next);
     // siunčiame Reducer'iui
     dispatch(authSuccessAction);

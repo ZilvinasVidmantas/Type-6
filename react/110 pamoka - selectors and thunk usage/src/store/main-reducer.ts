@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
 import { v4 as createId } from 'uuid';
-import { User } from '../types';
 import { State, Action } from './types';
 
 const initialState: State = {
@@ -49,30 +48,9 @@ const initialState: State = {
   },
 };
 
-/*
-  clearError: VoidFunction,
-  login: (crudentials: Crudentials, next: string) => void,
-  register: (userRegistration: UserRegistration) => void,
-  logout: VoidFunction,
-
-  LOGIN - kviečiamas iš komponento
-  REGISTER - kviečiamas iš komponento
-  + AUTH_SUCCESS - AUTH action'o rezultatas
-  + AUTH_FAILURE - AUTH action'o rezultatas
-  + AUTH_LOADING - AUTH action'ų papildomas veiksmas
-*/
-
 const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      const userJSON = localStorage.getItem('user');
-      const user = userJSON ? JSON.parse(userJSON) as User : null;
-      if (user) {
-        console.log('siunčiami duomeny į serverį');
-      } else {
-        console.log('išsaugomi duomenys localStorage');
-      }
-
       const shopItem = state.cart.find((cartItem) => cartItem.itemId === action.payload.id);
       let cart: State['cart'];
       let items: State['items'];
@@ -110,15 +88,56 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
     }
 
     case 'AUTH_SUCCESS': {
-      return state;
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: action.payload.user,
+          loading: false,
+        },
+      };
     }
 
     case 'AUTH_FAILURE': {
-      return state;
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          error: action.payload.error,
+          loading: false,
+        },
+      };
+    }
+
+    case 'AUTH_LOGOUT': {
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: null,
+        },
+      };
+    }
+
+    case 'AUTH_CLEAR_ERROR': {
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          error: null,
+        },
+      };
     }
 
     case 'AUTH_LOADING': {
-      return state;
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          error: null,
+          loading: true,
+        },
+      };
     }
 
     default: return state;

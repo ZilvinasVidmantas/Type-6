@@ -12,47 +12,44 @@ import RegisterPage from './pages/register-page/index';
 import ProfilePage from './pages/profile-page';
 
 import VisitorLayout from './layouts/visitor-layout';
-import { AuthProvider } from './features/auth/auth-context';
 import RequireAuth from './routing/require-auth';
 import RequireVisitor from './routing/require-visitor';
 
 import store from './store';
 
 const App: React.FC = () => (
-  <AuthProvider>
-    <ReduxProvider store={store}>
-      <Routes>
-        <Route path="/" element={<VisitorLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route
-            path="auth/login"
-            element={(
-              <RequireVisitor>
-                <LoginPage />
-              </RequireVisitor>
-            )}
-          />
-          <Route
-            path="auth/register"
-            element={(
-              <RequireVisitor>
-                <RegisterPage />
-              </RequireVisitor>
-            )}
-          />
-          <Route
-            path="profile"
-            element={(
-              <RequireAuth>
-                <ProfilePage />
-              </RequireAuth>
-            )}
-          />
-        </Route>
-      </Routes>
-    </ReduxProvider>
-  </AuthProvider>
+  <ReduxProvider store={store}>
+    <Routes>
+      <Route path="/" element={<VisitorLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route
+          path="auth/login"
+          element={(
+            <RequireVisitor>
+              <LoginPage />
+            </RequireVisitor>
+          )}
+        />
+        <Route
+          path="auth/register"
+          element={(
+            <RequireVisitor>
+              <RegisterPage />
+            </RequireVisitor>
+          )}
+        />
+        <Route
+          path="profile"
+          element={(
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+          )}
+        />
+      </Route>
+    </Routes>
+  </ReduxProvider>
 );
 
 export default App;

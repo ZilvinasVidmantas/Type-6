@@ -1,3 +1,4 @@
+import { ThunkDispatch } from 'redux-thunk';
 import {
   Item,
   CartItem,
@@ -41,4 +42,14 @@ export type AuthLoadingAction = {
   type: 'AUTH_LOADING',
 };
 
-export type Action = AddToCartAction | AuthSuccessAction | AuthFailureAction | AuthLoadingAction;
+export type AuthLogoutAction = {
+  type: 'AUTH_LOGOUT',
+};
+
+export type AuthClearErrorAction = {
+  type: 'AUTH_CLEAR_ERROR',
+};
+
+export type Action = AddToCartAction | AuthSuccessAction | AuthFailureAction | AuthLoadingAction | AuthLogoutAction | AuthClearErrorAction;
+
+export type AppDispatch = ThunkDispatch<State, undefined, Action>;
