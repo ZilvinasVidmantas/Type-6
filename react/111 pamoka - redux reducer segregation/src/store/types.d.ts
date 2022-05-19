@@ -1,24 +1,16 @@
 import { ThunkDispatch } from 'redux-thunk';
-import { AuthAction } from './features/auth/types';
-import { NavigationAction } from './features/navigation/types';
-import { CartAction } from './features/cart/types';
-import {
-  Item,
-  CartItem,
-  User,
-} from '../types';
+import { AuthAction, AuthState } from './features/auth/types';
+import { NavigationAction, NavigationState } from './features/navigation/types';
+import { CartAction, CartState } from './features/cart/types';
+import { ShopState, ShopAction } from './features/shop/types';
 
-export type State = {
-  items: Item[],
-  cart: CartItem[],
-  auth: {
-    user: User | null,
-    error: string | null,
-    loading: boolean,
-  },
-  redirect: string | null,
+export type RootState = {
+  shop: ShopState,
+  cart: CartState,
+  auth: AuthState,
+  navigation: NavigationState,
 };
 
-export type Action = AuthAction | CartAction | NavigationAction;
+export type AppAction = AuthAction | CartAction | NavigationAction | ShopAction;
 
-export type AppDispatch = ThunkDispatch<State, undefined, Action>;
+export type AppDispatch = ThunkDispatch<RootState, undefined, AppAction>;

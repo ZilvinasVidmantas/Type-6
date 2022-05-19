@@ -1,8 +1,15 @@
+import { User } from '../../../types';
+
+export type AuthState = {
+  user: User | null,
+  error: string | null,
+  loading: boolean,
+};
+
 export type AuthSuccessAction = {
   type: 'AUTH_SUCCESS',
   payload: {
     user: User,
-    redirect: string,
   }
 };
 

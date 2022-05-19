@@ -8,16 +8,17 @@ import {
 
 import { useRootSelector } from '../../store';
 import ShopPageCard from './shop-page-card';
+import { selectCartItems, selectShopItems } from '../../store/selectors';
 
 const ShopPage: React.FC = () => {
-  const items = useRootSelector((state) => state.items);
-  const cart = useRootSelector((state) => state.cart);
+  const shopItems = useRootSelector(selectShopItems);
+  const cartItems = useRootSelector(selectCartItems);
 
   return (
     <Container>
       <Typography component="h1" variant="h2">Shop</Typography>
       <Grid container spacing={4}>
-        {items.map((item) => (
+        {shopItems.map((item) => (
           <Grid item key={item.id} xs={4}>
             <ShopPageCard {...item} />
           </Grid>
@@ -25,7 +26,7 @@ const ShopPage: React.FC = () => {
       </Grid>
       <Typography component="h2" variant="h2">Cart</Typography>
       <Box component="pre">
-        {JSON.stringify(cart, null, 2)}
+        {JSON.stringify(cartItems, null, 2)}
       </Box>
     </Container>
   );

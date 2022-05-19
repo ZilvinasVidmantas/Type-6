@@ -8,7 +8,7 @@ import {
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NumberField from '../../../components/number-field';
 import { useRootDispatch } from '../../../store/hooks';
-import { createAddToCartAction } from '../../../store/action-creators';
+import { createModifyCartItemAction } from '../../../store/action-creators';
 
 type ShopPageCardActionsProps = {
   id: string,
@@ -25,7 +25,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   const [amount, setAmount] = useState<number>(0);
 
   const addToCart = (): void => {
-    const addToCartAction = createAddToCartAction(id, amount);
+    const addToCartAction = createModifyCartItemAction(id, amount);
     dispatch(addToCartAction);
   };
 

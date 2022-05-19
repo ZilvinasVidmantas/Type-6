@@ -7,10 +7,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import AuthForm from '../../components/auth-form';
 import { UserRegistration } from '../../types';
-import AuthService from '../../features/auth/auth-service';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { createRegisterAction } from '../../store/action-creators';
 import { selectAuthLoading } from '../../store/selectors';
+import AuthService from '../../store/features/auth/auth-service';
 
 type RegisterConfig = FormikConfig<UserRegistration>;
 

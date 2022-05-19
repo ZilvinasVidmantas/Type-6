@@ -12,6 +12,7 @@ export { useRootSelector } from './hooks';
 const reduxMiddlewareEnhancer = applyMiddleware(thunk);
 const reduxDevToolsEnhancer = composeWithDevTools();
 const joinedEnhancer = compose(reduxMiddlewareEnhancer, reduxDevToolsEnhancer);
+
 const store = createStore(mainReducer, joinedEnhancer);
 
 export default store;
