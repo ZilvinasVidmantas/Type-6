@@ -157,5 +157,3 @@ const mainReducer: Reducer<State, Action> = (state = initialState, action) => {
 };
 
 export default mainReducer;
-
-// Įgalinti redux auth state išlaikymą perkraunant puslapį;
