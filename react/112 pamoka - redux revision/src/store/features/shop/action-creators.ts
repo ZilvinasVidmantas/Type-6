@@ -1,6 +1,12 @@
 /* eslint-disable import/prefer-default-export */
-import { ShopFetchItemsAction } from './types';
+import { Dispatch } from 'redux';
+import { AppAction } from '../../types';
+import {
+  ShoptFetchItemsLoadingAction,
+  ShoptFetchItemssSuccessAction,
+  ShoptFetchItemssFailureAction,
+} from './types';
 
-export const shopFetchItemsAction: ShopFetchItemsAction = {
-  type: 'SHOP_FETCH_ITEMS',
+export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
+  alert('Daromas Siuntimas ....');
 };
