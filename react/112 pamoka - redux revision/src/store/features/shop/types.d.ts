@@ -12,8 +12,8 @@ export type ShopChangeItemAmountAction = {
   },
 };
 
-export type ShopFetchItemsActions = {
+export type ShopFetchItemsAction = {
   type: 'SHOP_FETCH_ITEMS'
 };
 
-export type ShopAction = ShopChangeItemAmountAction | ShopFetchItemsActions;
+export type ShopAction = ShopChangeItemAmountAction | ShopFetchItemsAction;
