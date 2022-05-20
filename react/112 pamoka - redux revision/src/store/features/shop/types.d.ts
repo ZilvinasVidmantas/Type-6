@@ -4,7 +4,7 @@ export type ShopState = {
   items: Item[]
 };
 
-export type ShopChangeItemAmount = {
+export type ShopChangeItemAmountAction = {
   type: 'SHOP_CHANGE_ITEM_AMOUNT',
   payload: {
     id: string,
@@ -12,4 +12,8 @@ export type ShopChangeItemAmount = {
   },
 };
 
-export type ShopAction = ShopChangeItemAmount;
+export type ShopFetchItemsActions = {
+  type: 'SHOP_FETCH_ITEMS'
+};
+
+export type ShopAction = ShopChangeItemAmountAction | ShopFetchItemsActions;
