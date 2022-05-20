@@ -1,4 +1,3 @@
-export * from './programmer';
 export * from './crudentials';
 export * from './temporary-user';
 export * from './user';

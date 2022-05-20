@@ -29,48 +29,5 @@
       "password": "Vilnius123",
       "id": "kVtPtab"
     }
-  ],
-  "programmers": [
-    {
-      "id": "111",
-      "userId": "111",
-      "languages": [
-        "Java",
-        "JavaScript"
-      ],
-      "technologies": [
-        "Java Spring",
-        "React.js",
-        "Express.js"
-      ],
-      "yearsOfExperience": 3
-    },
-    {
-      "id": "112",
-      "userId": "112",
-      "languages": [
-        ".NET",
-        "JavaScript"
-      ],
-      "technologies": [
-        "AZURE services",
-        "Angular.js"
-      ],
-      "yearsOfExperience": 5
-    },
-    {
-      "id": "113",
-      "userId": "113",
-      "languages": [
-        "PHP",
-        "JavaScript"
-      ],
-      "technologies": [
-        "Wordpress",
-        "Laravel",
-        "Vue.js"
-      ],
-      "yearsOfExperience": 4
-    }
   ]
 }
