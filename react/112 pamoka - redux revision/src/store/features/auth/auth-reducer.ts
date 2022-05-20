@@ -4,8 +4,10 @@ import { AuthState, AuthAction } from './types';
 
 import { getLocalStorageItem, setLocalStoreageItem } from '../../../helpers/local-storage-helpers';
 
+const USER_KEY_IN_LOCAL_STORAGE = 'user';
+
 const initialState: AuthState = {
-  user: getLocalStorageItem('user'),
+  user: getLocalStorageItem(USER_KEY_IN_LOCAL_STORAGE),
   error: null,
   loading: false,
 };
@@ -13,7 +15,7 @@ const initialState: AuthState = {
 const authReducer: Reducer<AuthState, AuthAction> = (state = initialState, action) => {
   switch (action.type) {
     case 'AUTH_SUCCESS': {
-      setLocalStoreageItem('user', action.payload.user);
+      setLocalStoreageItem(USER_KEY_IN_LOCAL_STORAGE, action.payload.user);
       return {
         ...state,
         user: action.payload.user,
@@ -30,7 +32,7 @@ const authReducer: Reducer<AuthState, AuthAction> = (state = initialState, actio
     }
 
     case 'AUTH_LOGOUT': {
-      localStorage.removeItem('user');
+      localStorage.removeItem(USER_KEY_IN_LOCAL_STORAGE);
       return {
         ...state,
         user: null,
