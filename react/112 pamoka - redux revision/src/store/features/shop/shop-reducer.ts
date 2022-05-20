@@ -16,6 +16,14 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
+    case 'SHOP_FETCH_ITEMS_SUCCESS': {
+      return {
+        ...state,
+        loading: false,
+        items: action.payload.items,
+      };
+    }
+
     case 'SHOP_CHANGE_ITEM_AMOUNT': {
       return {
         ...state,
