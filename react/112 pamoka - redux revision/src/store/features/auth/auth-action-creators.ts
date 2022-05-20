@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import AuthService from './auth-service';
+import AuthService, { AuthPromise } from './auth-service';
 import { User, Crudentials, UserRegistration } from '../../../types';
 import {
   AuthSuccessAction,
@@ -36,16 +36,16 @@ export const createAuthFailureAction = (error: string): AuthFailureAction => ({
   payload: { error },
 });
 
-export const createLoginAction = (
-  crudentials: Crudentials,
+const authenticate = async (
+  dispatch: Dispatch<AppAction>,
+  authCallback: AuthPromise,
+  authCallbackArgs: Parameters<AuthPromise>,
   redirect: string,
-) => async (dispatch: Dispatch<AppAction>): Promise<void> => {
-  // siunčiame Reducer'iui
+) => {
   dispatch(authLoadingAction);
   try {
-    const user = await AuthService.login(crudentials);
+    const user = await authCallback(...authCallbackArgs);
     const authSuccessAction = createAuthSuccessAction(user);
-    // siunčiame Reducer'iui
     const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
     dispatch(navigationSetRedirectAction);
     dispatch(authSuccessAction);
@@ -53,28 +53,20 @@ export const createLoginAction = (
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const authFailureAction = createAuthFailureAction(errMsg);
-    // siunčiame Reducer'iui
     dispatch(authFailureAction);
   }
+};
+
+export const createLoginAction = (
+  crudentials: Crudentials,
+  redirect: string,
+) => async (dispatch: Dispatch<AppAction>): Promise<void> => {
+  await authenticate(dispatch, AuthService.login, [crudentials], redirect);
 };
 
 export const createRegisterAction = (
   userRegistration: UserRegistration,
   redirect: string,
 ) => async (dispatch: Dispatch<AppAction>): Promise<void> => {
-  // siunčiame Reducer'iui
-  dispatch(authLoadingAction);
-  try {
-    const user = await AuthService.register(userRegistration);
-    const authSuccessAction = createAuthSuccessAction(user);
-    const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
-    dispatch(navigationSetRedirectAction);
-    dispatch(authSuccessAction);
-    dispatch(navigationClearRedirectAction);
-  } catch (error) {
-    const errMsg = error instanceof Error ? error.message : String(error);
-    const authFailureAction = createAuthFailureAction(errMsg);
-    // siunčiame Reducer'iui
-    dispatch(authFailureAction);
-  }
+  await authenticate(dispatch, AuthService.register, [userRegistration], redirect);
 };

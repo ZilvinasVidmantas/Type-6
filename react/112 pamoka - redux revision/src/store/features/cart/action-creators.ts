@@ -7,8 +7,7 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
   dispatch: Dispatch<AppAction>,
   getState: () => RootState,
 ): void => {
-  const state = getState();
-  const { shop, cart } = state;
+  const { shop, cart } = getState();
 
   const existingCartItem = cart.items.find((x) => x.shopItemId === shopItemId);
   const shopItem = shop.items.find((x) => x.id === shopItemId) as Item;
