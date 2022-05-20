@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Typography,
   Container,
@@ -8,9 +8,16 @@ import {
 import { useRootSelector } from '../../store';
 import ShopPageCard from './shop-page-card';
 import { selectShopItems } from '../../store/selectors';
+import { useRootDispatch } from '../../store/hooks';
+import { shopFetchItemsAction } from '../../store/action-creators';
 
 const ShopPage: React.FC = () => {
   const shopItems = useRootSelector(selectShopItems);
+  const dispatch = useRootDispatch();
+
+  useEffect(() => {
+    dispatch(shopFetchItemsAction);
+  }, []);
 
   return (
     <Container>
