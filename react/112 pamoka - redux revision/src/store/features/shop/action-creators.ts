@@ -4,7 +4,7 @@ import { AppAction } from '../../types';
 import {
   ShopFetchItemsLoadingAction,
   ShopFetchItemssSuccessAction,
-  ShopFetchItemssFailureAction,
+  ShopFetchItemsFailureAction,
 } from './types';
 
 export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
