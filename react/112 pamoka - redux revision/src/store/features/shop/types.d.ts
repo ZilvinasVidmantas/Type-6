@@ -1,7 +1,8 @@
 import { Item } from '../../../types';
 
 export type ShopState = {
-  items: Item[]
+  items: Item[],
+  loading: boolean
 };
 
 export type ShopFetchItemsLoadingAction = {

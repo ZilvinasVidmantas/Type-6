@@ -4,10 +4,18 @@ import { ShopState, ShopAction } from './types';
 
 const initialState: ShopState = {
   items: [],
+  loading: false,
 };
 
 const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, action) => {
   switch (action.type) {
+    case 'SHOP_FETCH_ITEMS_LOADING': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
     case 'SHOP_CHANGE_ITEM_AMOUNT': {
       return {
         ...state,

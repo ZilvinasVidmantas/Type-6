@@ -3,10 +3,14 @@ import { Dispatch } from 'redux';
 import { AppAction } from '../../types';
 import {
   ShopFetchItemsLoadingAction,
-  ShopFetchItemssSuccessAction,
+  ShopFetchItemsSuccessAction,
   ShopFetchItemsFailureAction,
 } from './types';
 
-export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
+const shopFetchItemsLoadingAction: ShopFetchItemsLoadingAction = {
+  type: 'SHOP_FETCH_ITEMS_LOADING',
+};
 
+export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
+  dispatch(shopFetchItemsLoadingAction);
 };
