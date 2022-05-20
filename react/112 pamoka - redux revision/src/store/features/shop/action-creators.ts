@@ -2,11 +2,11 @@
 import { Dispatch } from 'redux';
 import { AppAction } from '../../types';
 import {
-  ShoptFetchItemsLoadingAction,
-  ShoptFetchItemssSuccessAction,
-  ShoptFetchItemssFailureAction,
+  ShopFetchItemsLoadingAction,
+  ShopFetchItemssSuccessAction,
+  ShopFetchItemssFailureAction,
 } from './types';
 
 export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
-  alert('Daromas Siuntimas ....');
+
 };
