@@ -5,17 +5,19 @@ import {
   Grid,
   CircularProgress,
   Box,
+  Alert,
 } from '@mui/material';
 
 import { useRootSelector } from '../../store';
 import ShopPageCard from './shop-page-card';
-import { selectShopItems, selectShopItemsLoading } from '../../store/selectors';
+import { selectShopError, selectShopItems, selectShopItemsLoading } from '../../store/selectors';
 import { useRootDispatch } from '../../store/hooks';
 import { shopFetchItemsAction } from '../../store/action-creators';
 
 const ShopPage: React.FC = () => {
   const items = useRootSelector(selectShopItems);
   const itemsLoading = useRootSelector(selectShopItemsLoading);
+  const error = useRootSelector(selectShopError);
   const dispatch = useRootDispatch();
 
   useEffect(() => {
@@ -43,6 +45,9 @@ const ShopPage: React.FC = () => {
   return (
     <Container>
       <Typography component="h1" variant="h2" sx={{ my: 3 }}>Shop</Typography>
+      {error && (
+        <Alert color="error" onClose={() => { console.log('Aš tave uždarysiu, ir ne pirtyje.'); }}>{error}</Alert>
+      )}
       {pageContent}
     </Container>
   );
