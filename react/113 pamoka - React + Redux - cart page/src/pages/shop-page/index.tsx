@@ -54,3 +54,12 @@ const ShopPage: React.FC = () => {
 };
 
 export default ShopPage;
+
+/*
+  Ant klaipos paspaudus 'X' ištrinkite klaidą išsaugota store.shop.error
+    * Sukurkite action tipą
+    * Sukurkite actions
+    * Aprašykite logiką shopReducer'yje kuri reaguotų į action'ą
+    * Išsiųskite(dispatch) action ShopPage
+
+*/
