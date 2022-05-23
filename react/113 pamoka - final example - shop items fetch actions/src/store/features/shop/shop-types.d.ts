@@ -10,6 +10,10 @@ export type ShopFetchItemsLoadingAction = {
   type: 'SHOP_FETCH_ITEMS_LOADING'
 };
 
+export type ShopClearErrorAction = {
+  type: 'SHOP_CLEAR_ERROR'
+};
+
 export type ShopFetchItemsSuccessAction = {
   type: 'SHOP_FETCH_ITEMS_SUCCESS',
   payload: {
@@ -30,10 +34,6 @@ export type ShopChangeItemAmountAction = {
     id: string,
     amount: number
   },
-};
-
-export type ShopClearErrorAction = {
-  type: 'SHOP_CLEAR_ERROR'
 };
 
 export type ShopAction = ShopFetchItemsLoadingAction | ShopFetchItemsSuccessAction | ShopFetchItemsFailureAction | ShopChangeItemAmountAction | ShopClearErrorAction;

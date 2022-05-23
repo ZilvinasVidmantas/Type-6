@@ -6,6 +6,18 @@ export type AuthState = {
   loading: boolean,
 };
 
+export type AuthLoadingAction = {
+  type: 'AUTH_LOADING',
+};
+
+export type AuthLogoutAction = {
+  type: 'AUTH_LOGOUT',
+};
+
+export type AuthClearErrorAction = {
+  type: 'AUTH_CLEAR_ERROR',
+};
+
 export type AuthSuccessAction = {
   type: 'AUTH_SUCCESS',
   payload: {
@@ -18,18 +30,6 @@ export type AuthFailureAction = {
   payload: {
     error: string,
   }
-};
-
-export type AuthLoadingAction = {
-  type: 'AUTH_LOADING',
-};
-
-export type AuthLogoutAction = {
-  type: 'AUTH_LOGOUT',
-};
-
-export type AuthClearErrorAction = {
-  type: 'AUTH_CLEAR_ERROR',
 };
 
 export type AuthAction = AuthSuccessAction | AuthFailureAction | AuthLoadingAction | AuthLogoutAction | AuthClearErrorAction;

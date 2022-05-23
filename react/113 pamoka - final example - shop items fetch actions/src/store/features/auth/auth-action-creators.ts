@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
-import AuthService, { AuthPromise } from './auth-service';
 import { User, Crudentials, UserRegistration } from '../../../types';
+import { AppAction } from '../../redux-types';
 import {
   AuthSuccessAction,
   AuthFailureAction,
@@ -8,13 +8,13 @@ import {
   AuthLogoutAction,
   AuthClearErrorAction,
 } from './auth-types';
+import AuthService, { AuthPromise } from './auth-service';
 import {
   createNavigationSetRedirectAction,
   navigationClearRedirectAction,
 } from '../navigation/navigation-action-creators';
-import { AppAction } from '../../redux-types';
 
-export const authLoadingAction: AuthLoadingAction = {
+const authLoadingAction: AuthLoadingAction = {
   type: 'AUTH_LOADING',
 };
 
@@ -26,12 +26,12 @@ export const authLogoutAction: AuthLogoutAction = {
   type: 'AUTH_LOGOUT',
 };
 
-export const createAuthSuccessAction = (user: User): AuthSuccessAction => ({
+const createAuthSuccessAction = (user: User): AuthSuccessAction => ({
   type: 'AUTH_SUCCESS',
   payload: { user },
 });
 
-export const createAuthFailureAction = (error: string): AuthFailureAction => ({
+const createAuthFailureAction = (error: string): AuthFailureAction => ({
   type: 'AUTH_FAILURE',
   payload: { error },
 });
