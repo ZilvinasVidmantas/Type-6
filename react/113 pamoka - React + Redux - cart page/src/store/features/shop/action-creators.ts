@@ -19,11 +19,22 @@ const createShopFecthItemsSuccessAction = (items: Item[]): ShopFetchItemsSuccess
   payload: { items },
 });
 
+const createShopFetchItemsFailureAction = (error: string): ShopFetchItemsFailureAction => ({
+  type: 'SHOP_FETCH_ITEMS_FAILURE',
+  payload: { error },
+});
+
 export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
   dispatch(shopFetchItemsLoadingAction);
 
-  const { data } = await axios.get<Item[]>('http://localhost:8000/shopItems');
-  await pause(2000);
-  const shopFecthItemsSuccessAction = createShopFecthItemsSuccessAction(data);
-  dispatch(shopFecthItemsSuccessAction);
+  try {
+    const { data } = await axios.get<Item[]>('http://localhost:8001/shopItems');
+    await pause(2000);
+    const shopFecthItemsSuccessAction = createShopFecthItemsSuccessAction(data);
+    dispatch(shopFecthItemsSuccessAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const shopFetchItemsFailureAction = createShopFetchItemsFailureAction(errMsg);
+    dispatch(shopFetchItemsFailureAction);
+  }
 };

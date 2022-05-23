@@ -5,6 +5,7 @@ import { ShopState, ShopAction } from './types';
 const initialState: ShopState = {
   items: [],
   loading: false,
+  error: null,
 };
 
 const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, action) => {
