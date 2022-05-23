@@ -14,6 +14,7 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       return {
         ...state,
         loading: true,
+        error: null,
       };
     }
 
