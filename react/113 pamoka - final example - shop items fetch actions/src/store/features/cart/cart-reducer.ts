@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
 import { v4 as createId } from 'uuid';
-import { CartAction, CartState } from './types';
+import { CartAction, CartState } from './cart-types';
 
 const initialState: CartState = {
   items: [],

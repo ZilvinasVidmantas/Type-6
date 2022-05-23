@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Dispatch } from 'redux';
 import { Item } from '../../../types';
-import { AppAction, RootState } from '../../types';
+import { AppAction, RootState } from '../../redux-types';
 
 export const createModifyCartItemAction = (shopItemId: string, newAmount: number) => (
   dispatch: Dispatch<AppAction>,

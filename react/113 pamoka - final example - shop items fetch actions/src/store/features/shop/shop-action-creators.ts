@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { Dispatch } from 'redux';
 import axios from 'axios';
-import { AppAction } from '../../types';
+import { AppAction } from '../../redux-types';
 import {
   ShopFetchItemsLoadingAction,
   ShopFetchItemsSuccessAction,
   ShopFetchItemsFailureAction,
   ShopClearErrorAction,
-} from './types';
+} from './shop-types';
 import { Item } from '../../../types';
 import pause from '../../../helpers/pause';
 

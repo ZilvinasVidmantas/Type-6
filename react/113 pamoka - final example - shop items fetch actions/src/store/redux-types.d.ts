@@ -1,8 +1,8 @@
 import { ThunkDispatch } from 'redux-thunk';
-import { AuthAction, AuthState } from './features/auth/types';
-import { NavigationAction, NavigationState } from './features/navigation/types';
-import { CartAction, CartState } from './features/cart/types';
-import { ShopState, ShopAction } from './features/shop/types';
+import { AuthAction, AuthState } from './features/auth/auth-types';
+import { NavigationAction, NavigationState } from './features/navigation/navigation-types';
+import { CartAction, CartState } from './features/cart/cart-types';
+import { ShopState, ShopAction } from './features/shop/shop-types';
 
 export type RootState = {
   shop: ShopState,

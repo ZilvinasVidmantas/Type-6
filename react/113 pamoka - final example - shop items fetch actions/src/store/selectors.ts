@@ -1,4 +1,4 @@
-import { RootState } from './types';
+import { RootState } from './redux-types';
 
 // auth selectors
 export const selectAuthLoading = (state: RootState) => state.auth.loading;

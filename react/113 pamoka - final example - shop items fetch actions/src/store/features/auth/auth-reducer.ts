@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
-import { AuthState, AuthAction } from './types';
+import { AuthState, AuthAction } from './auth-types';
 
 import { getLocalStorageItem, setLocalStoreageItem } from '../../../helpers/local-storage-helpers';
 
