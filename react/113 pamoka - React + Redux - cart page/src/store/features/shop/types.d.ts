@@ -32,4 +32,8 @@ export type ShopChangeItemAmountAction = {
   },
 };
 
-export type ShopAction = ShopFetchItemsLoadingAction | ShopFetchItemsSuccessAction | ShopFetchItemsFailureAction | ShopChangeItemAmountAction;
+export type ShopClearErrorAction = {
+  type: 'SHOP_CLEAR_ERROR'
+};
+
+export type ShopAction = ShopFetchItemsLoadingAction | ShopFetchItemsSuccessAction | ShopFetchItemsFailureAction | ShopChangeItemAmountAction | ShopClearErrorAction;

@@ -6,12 +6,17 @@ import {
   ShopFetchItemsLoadingAction,
   ShopFetchItemsSuccessAction,
   ShopFetchItemsFailureAction,
+  ShopClearErrorAction,
 } from './types';
 import { Item } from '../../../types';
 import pause from '../../../helpers/pause';
 
 const shopFetchItemsLoadingAction: ShopFetchItemsLoadingAction = {
   type: 'SHOP_FETCH_ITEMS_LOADING',
+};
+
+export const shopClearErrorAction: ShopClearErrorAction = {
+  type: 'SHOP_CLEAR_ERROR',
 };
 
 const createShopFecthItemsSuccessAction = (items: Item[]): ShopFetchItemsSuccessAction => ({

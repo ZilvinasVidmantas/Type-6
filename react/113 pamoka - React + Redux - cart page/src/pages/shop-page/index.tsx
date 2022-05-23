@@ -8,11 +8,10 @@ import {
   Alert,
 } from '@mui/material';
 
-import { useRootSelector } from '../../store';
-import ShopPageCard from './shop-page-card';
+import { useRootSelector, useRootDispatch } from '../../store/hooks';
 import { selectShopError, selectShopItems, selectShopItemsLoading } from '../../store/selectors';
-import { useRootDispatch } from '../../store/hooks';
-import { shopFetchItemsAction } from '../../store/action-creators';
+import { shopClearErrorAction, shopFetchItemsAction } from '../../store/action-creators';
+import ShopPageCard from './shop-page-card';
 
 const ShopPage: React.FC = () => {
   const items = useRootSelector(selectShopItems);
@@ -46,7 +45,7 @@ const ShopPage: React.FC = () => {
     <Container>
       <Typography component="h1" variant="h2" sx={{ my: 3 }}>Shop</Typography>
       {error && (
-        <Alert color="error" onClose={() => { console.log('Aš tave uždarysiu, ir ne pirtyje.'); }}>{error}</Alert>
+        <Alert color="error" onClose={() => dispatch(shopClearErrorAction)}>{error}</Alert>
       )}
       {pageContent}
     </Container>
@@ -54,12 +53,3 @@ const ShopPage: React.FC = () => {
 };
 
 export default ShopPage;
-
-/*
-  Ant klaipos paspaudus 'X' ištrinkite klaidą išsaugota store.shop.error
-    * Sukurkite action tipą
-    * Sukurkite actions
-    * Aprašykite logiką shopReducer'yje kuri reaguotų į action'ą
-    * Išsiųskite(dispatch) action ShopPage
-
-*/

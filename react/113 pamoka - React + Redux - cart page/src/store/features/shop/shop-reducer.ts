@@ -44,6 +44,13 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
+    case 'SHOP_CLEAR_ERROR': {
+      return {
+        ...state,
+        error: null,
+      };
+    }
+
     default: return state;
   }
 };
