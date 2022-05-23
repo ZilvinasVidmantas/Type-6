@@ -32,4 +32,4 @@ export type ShopChangeItemAmountAction = {
   },
 };
 
-export type ShopAction = ShopFetchItemsLoadingAction | ShopFetchItemssSuccessAction | ShopFetchItemsFailureAction | ShopChangeItemAmountAction;
+export type ShopAction = ShopFetchItemsLoadingAction | ShopFetchItemsSuccessAction | ShopFetchItemsFailureAction | ShopChangeItemAmountAction;

@@ -25,6 +25,14 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
+    case 'SHOP_FETCH_ITEMS_FAILURE': {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    }
+
     case 'SHOP_CHANGE_ITEM_AMOUNT': {
       return {
         ...state,
