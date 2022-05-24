@@ -17,7 +17,6 @@ import { selectCartItemsCount, selectLoggedIn } from '../../store/selectors';
 const Navbar: React.FC = () => {
   const loggedIn = useRootSelector(selectLoggedIn);
   const cartItemsCount = useRootSelector(selectCartItemsCount);
-  console.log(cartItemsCount);
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: 'grey.900' }}>
