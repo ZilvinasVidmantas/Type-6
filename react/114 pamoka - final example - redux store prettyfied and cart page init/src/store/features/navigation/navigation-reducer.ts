@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
-import { NavigationState, NavigationAction } from './navigation-types';
+import { NavigationState, NavigationAction, NavigationActionType } from './navigation-types';
 
 const initialState: NavigationState = {
   redirect: null,
@@ -8,14 +8,14 @@ const initialState: NavigationState = {
 
 const navigationReducer: Reducer<NavigationState, NavigationAction> = (state = initialState, action) => {
   switch (action.type) {
-    case 'NAVIGATION_CLEAR_REDIRECT': {
+    case NavigationActionType.NAVIGATION_CLEAR_REDIRECT: {
       return {
         ...state,
         redirect: null,
       };
     }
 
-    case 'NAVIGATION_SET_REDIRECT': {
+    case NavigationActionType.NAVIGATION_SET_REDIRECT: {
       return {
         ...state,
         redirect: action.payload.redirect,

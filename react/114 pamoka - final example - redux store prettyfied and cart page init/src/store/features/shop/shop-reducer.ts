@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
-import { ShopState, ShopAction } from './shop-types';
+import { ShopState, ShopAction, ShopActionType } from './shop-types';
 
 const initialState: ShopState = {
   items: [],
@@ -10,7 +10,7 @@ const initialState: ShopState = {
 
 const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, action) => {
   switch (action.type) {
-    case 'SHOP_FETCH_ITEMS_LOADING': {
+    case ShopActionType.SHOP_FETCH_ITEMS_LOADING: {
       return {
         ...state,
         loading: true,
@@ -18,7 +18,7 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
-    case 'SHOP_FETCH_ITEMS_SUCCESS': {
+    case ShopActionType.SHOP_FETCH_ITEMS_SUCCESS: {
       return {
         ...state,
         loading: false,
@@ -26,7 +26,7 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
-    case 'SHOP_FETCH_ITEMS_FAILURE': {
+    case ShopActionType.SHOP_FETCH_ITEMS_FAILURE: {
       return {
         ...state,
         loading: false,
@@ -34,7 +34,7 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
-    case 'SHOP_CHANGE_ITEM_AMOUNT': {
+    case ShopActionType.SHOP_CHANGE_ITEM_AMOUNT: {
       return {
         ...state,
         items: state.items.map((item) => (item.id === action.payload.id
@@ -44,7 +44,7 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
-    case 'SHOP_CLEAR_ERROR': {
+    case ShopActionType.SHOP_CLEAR_ERROR: {
       return {
         ...state,
         error: null,

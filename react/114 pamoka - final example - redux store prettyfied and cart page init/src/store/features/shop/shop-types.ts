@@ -6,30 +6,38 @@ export type ShopState = {
   error: string | null,
 };
 
+export enum ShopActionType {
+  SHOP_FETCH_ITEMS_LOADING = 'SHOP_FETCH_ITEMS_LOADING',
+  SHOP_CLEAR_ERROR = 'SHOP_CLEAR_ERROR',
+  SHOP_FETCH_ITEMS_SUCCESS = 'SHOP_FETCH_ITEMS_SUCCESS',
+  SHOP_FETCH_ITEMS_FAILURE = 'SHOP_FETCH_ITEMS_FAILURE',
+  SHOP_CHANGE_ITEM_AMOUNT = 'SHOP_CHANGE_ITEM_AMOUNT',
+}
+
 export type ShopFetchItemsLoadingAction = {
-  type: 'SHOP_FETCH_ITEMS_LOADING'
+  type: ShopActionType.SHOP_FETCH_ITEMS_LOADING
 };
 
 export type ShopClearErrorAction = {
-  type: 'SHOP_CLEAR_ERROR'
+  type: ShopActionType.SHOP_CLEAR_ERROR
 };
 
 export type ShopFetchItemsSuccessAction = {
-  type: 'SHOP_FETCH_ITEMS_SUCCESS',
+  type: ShopActionType.SHOP_FETCH_ITEMS_SUCCESS,
   payload: {
     items: Item[],
   }
 };
 
 export type ShopFetchItemsFailureAction = {
-  type: 'SHOP_FETCH_ITEMS_FAILURE',
+  type: ShopActionType.SHOP_FETCH_ITEMS_FAILURE,
   payload: {
     error: string,
   }
 };
 
 export type ShopChangeItemAmountAction = {
-  type: 'SHOP_CHANGE_ITEM_AMOUNT',
+  type: ShopActionType.SHOP_CHANGE_ITEM_AMOUNT,
   payload: {
     id: string,
     amount: number

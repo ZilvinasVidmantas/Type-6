@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Item } from '../../../types';
 import { AppAction } from '../../redux-types';
 import {
+  ShopActionType,
   ShopFetchItemsLoadingAction,
   ShopFetchItemsSuccessAction,
   ShopFetchItemsFailureAction,
@@ -11,25 +12,25 @@ import {
 } from './shop-types';
 
 const shopFetchItemsLoadingAction: ShopFetchItemsLoadingAction = {
-  type: 'SHOP_FETCH_ITEMS_LOADING',
+  type: ShopActionType.SHOP_FETCH_ITEMS_LOADING,
 };
 
 export const shopClearErrorAction: ShopClearErrorAction = {
-  type: 'SHOP_CLEAR_ERROR',
+  type: ShopActionType.SHOP_CLEAR_ERROR,
 };
 
 const createShopFecthItemsSuccessAction = (items: Item[]): ShopFetchItemsSuccessAction => ({
-  type: 'SHOP_FETCH_ITEMS_SUCCESS',
+  type: ShopActionType.SHOP_FETCH_ITEMS_SUCCESS,
   payload: { items },
 });
 
 const createShopFetchItemsFailureAction = (error: string): ShopFetchItemsFailureAction => ({
-  type: 'SHOP_FETCH_ITEMS_FAILURE',
+  type: ShopActionType.SHOP_FETCH_ITEMS_FAILURE,
   payload: { error },
 });
 
 export const createShopChangeItemAmountAction = (id: string, amount: number): ShopChangeItemAmountAction => ({
-  type: 'SHOP_CHANGE_ITEM_AMOUNT',
+  type: ShopActionType.SHOP_CHANGE_ITEM_AMOUNT,
   payload: { id, amount },
 });
 
