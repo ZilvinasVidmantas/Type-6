@@ -5,10 +5,9 @@ import { TextField } from '@mui/material';
 import * as Yup from 'yup';
 
 import AuthForm from '../../components/auth-form';
-import { useRootSelector } from '../../store';
 import { selectAuthLoading } from '../../store/selectors';
 import { createLoginAction } from '../../store/action-creators';
-import { useRootDispatch } from '../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
 
 type LoginValues = {
   email: string,

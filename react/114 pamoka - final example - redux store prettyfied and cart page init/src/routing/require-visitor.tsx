@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useRootSelector } from '../store';
+import { useRootSelector } from '../store/hooks';
 import { selectLoggedIn, selectRedirect } from '../store/selectors';
 
 const RequireVisitor = ({ children }: { children: JSX.Element }) => {

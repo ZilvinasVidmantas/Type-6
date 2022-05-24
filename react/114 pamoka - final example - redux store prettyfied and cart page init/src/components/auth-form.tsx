@@ -9,9 +9,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 import SecurityIcon from '@mui/icons-material/Security';
-import { useRootSelector } from '../store';
 import { selectAuthError, selectLoggedIn } from '../store/selectors';
-import { useRootDispatch } from '../store/hooks';
+import { useRootDispatch, useRootSelector } from '../store/hooks';
 import { authClearErrorAction } from '../store/action-creators';
 
 type AuthFormProps = {

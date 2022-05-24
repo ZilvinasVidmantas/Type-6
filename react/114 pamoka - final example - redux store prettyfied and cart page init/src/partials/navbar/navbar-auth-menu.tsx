@@ -10,10 +10,9 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useRootSelector } from '../../store';
 import { selectUser } from '../../store/selectors';
 import { authLogoutAction } from '../../store/action-creators';
-import { useRootDispatch } from '../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
 
 const NavbarAuthMenu: React.FC = () => {
   const navigate = useNavigate();
