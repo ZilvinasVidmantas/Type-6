@@ -4,7 +4,7 @@ import CartPageItemGridHeader from './cart-page-item-grid-header';
 import CartPageItemGridProduct from './cart-page-item-grid-product';
 
 const CartPageItemGrid: React.FC = () => (
-  <Box sx={{ display: 'flex', flexDirection: 'column', columnGap: 2 }}>
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
     <CartPageItemGridHeader />
     <CartPageItemGridProduct />
     <CartPageItemGridProduct />

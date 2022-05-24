@@ -4,12 +4,14 @@ import {
   TextField,
   TextFieldProps,
   Button,
+  SxProps,
 } from '@mui/material';
 
 export type NumberFieldProps = Omit<TextFieldProps, 'type' | 'value' | 'inputProps' | 'onChange' | 'onBlur'> & {
   min?: number,
   max?: number,
   value?: number,
+  buttonsSx?: SxProps,
   onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>, value: number) => void,
   onBlur?: (e: React.FocusEvent<HTMLInputElement>, value: number) => void,
 };
@@ -29,6 +31,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
   value,
   onChange,
   onBlur,
+  buttonsSx,
   ...props
 }) => {
   const [fieldValue, setFieldValue] = useState<number | string>(value ?? 0);
@@ -71,7 +74,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
   }, [value]);
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', alignItems: 'stretch' }}>
       <TextField
         type="number"
         inputProps={{
@@ -97,13 +100,13 @@ const NumberField: React.FC<NumberFieldProps> = ({
         {...props}
       />
       <Box sx={{
-        display: 'flex', flexDirection: 'column', height: '100%',
+        display: 'inline-flex', flexDirection: 'column', gap: 0.1,
       }}
       >
         <Button
           variant="contained"
           size="small"
-          sx={buttonSx}
+          sx={{ ...buttonSx, ...buttonsSx }}
           onClick={incAmount}
           disabled={disabled || Boolean(max !== undefined && fieldValue >= max)}
           disableElevation
@@ -113,7 +116,7 @@ const NumberField: React.FC<NumberFieldProps> = ({
         <Button
           variant="contained"
           size="small"
-          sx={buttonSx}
+          sx={{ ...buttonSx, ...buttonsSx }}
           onClick={decAmount}
           disabled={disabled || Boolean(min !== undefined && fieldValue <= min)}
           disableElevation
