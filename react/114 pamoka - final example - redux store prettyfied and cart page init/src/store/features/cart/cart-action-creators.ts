@@ -2,17 +2,17 @@
 import { Dispatch } from 'redux';
 import { Item } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
-import { CartAddItemAction, CartUpdateItemAction } from './cart-types';
+import { CartAddItemAction, CartUpdateItemAction, CartActionType } from './cart-types';
 import { createShopChangeItemAmountAction } from '../shop/shop-action-creators';
 
-const createCartUpdateItemAction = (cartItemId: string, amount: number): CartUpdateItemAction => ({
-  type: 'CART_UPDATE_ITEM',
-  payload: { cartItemId, amount },
+const createCartAddItemAction = (shopItemId: string, amount: number): CartAddItemAction => ({
+  type: CartActionType.CART_ADD_ITEM,
+  payload: { shopItemId, amount },
 });
 
-const createCartAddItemAction = (shopItemId: string, amount: number): CartAddItemAction => ({
-  type: 'CART_ADD_ITEM',
-  payload: { shopItemId, amount },
+const createCartUpdateItemAction = (cartItemId: string, amount: number): CartUpdateItemAction => ({
+  type: CartActionType.CART_UPDATE_ITEM,
+  payload: { cartItemId, amount },
 });
 
 export const createModifyCartItemAction = (shopItemId: string, newAmount: number) => (
