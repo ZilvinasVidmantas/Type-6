@@ -12,10 +12,12 @@ import NavbarLink from './navbar-link';
 import NavbarAuthMenu from './navbar-auth-menu';
 import NavbarVisitorMenu from './navbar-visitor-menu';
 import { useRootSelector } from '../../store/hooks';
-import { selectLoggedIn } from '../../store/selectors';
+import { selectCartItemsCount, selectLoggedIn } from '../../store/selectors';
 
 const Navbar: React.FC = () => {
   const loggedIn = useRootSelector(selectLoggedIn);
+  const cartItemsCount = useRootSelector(selectCartItemsCount);
+  console.log(cartItemsCount);
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: 'grey.900' }}>
@@ -31,7 +33,7 @@ const Navbar: React.FC = () => {
           </Box>
           <Box sx={{ display: 'flex' }}>
             <NavbarLink to="/cart" sx={{ display: 'inline-flex', gap: 1 }}>
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={cartItemsCount} color="primary">
                 <ShoppingCartIcon sx={{ fontSize: 28 }} />
               </Badge>
             </NavbarLink>
