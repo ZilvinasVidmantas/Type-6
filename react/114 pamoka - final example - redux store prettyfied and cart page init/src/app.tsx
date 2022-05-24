@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 // all
 import HomePage from './pages/home-page';
 import ShopPage from './pages/shop-page/index';
+import CartPage from './pages/cart-page';
 // visitor
 import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page/index';
@@ -23,6 +24,7 @@ const App: React.FC = () => (
       <Route path="/" element={<VisitorLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/shop" element={<ShopPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route
           path="auth/login"
           element={(

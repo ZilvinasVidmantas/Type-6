@@ -4,8 +4,10 @@ import {
   Box,
   Container,
   Toolbar,
+  Divider,
+  Badge,
 } from '@mui/material';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NavbarLink from './navbar-link';
 import NavbarAuthMenu from './navbar-auth-menu';
 import NavbarVisitorMenu from './navbar-visitor-menu';
@@ -27,7 +29,19 @@ const Navbar: React.FC = () => {
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/shop">Shop</NavbarLink>
           </Box>
-          <Box>
+          <Box sx={{ display: 'flex' }}>
+            <NavbarLink to="/cart" sx={{ display: 'inline-flex', gap: 1 }}>
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartIcon sx={{ fontSize: 28 }} />
+              </Badge>
+            </NavbarLink>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{
+                borderColor: 'primary.main', alignSelf: 'stretch', ml: 2, my: 2,
+              }}
+            />
             {loggedIn ? <NavbarAuthMenu /> : <NavbarVisitorMenu />}
           </Box>
         </Toolbar>
