@@ -6,10 +6,31 @@ import {
   Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CartItemJoined } from '../../../types';
 import Img from '../../../components/img';
 import NumberField from '../../../components/number-field';
 
-const CartPageItemGridProduct: React.FC = () => (
+/*
+Props:
+  * Cart Item ID
+  * Nuotrauka
+  * Aprašymas
+  * Kaina (suformatuota)
+  * Kiekis
+  * Kainos suma (suformatuota)
+  * Max
+
+ Redux Store:
+  * Funkcijos keisti kiekį
+    * Funkcijos didinti kiekiui +1
+    * Funkcijos mažinti kiekiui -1
+    * Funkcijos įvesti kiekį
+  * Funkcija ištrinti
+*/
+
+type CartPageItemGridProductProps = CartItemJoined;
+
+const CartPageItemGridProduct: React.FC<CartPageItemGridProductProps> = () => (
   <Grid container columnSpacing={5}>
     <Grid item xs={4} sx={{ display: 'flex', gap: 1 }}>
       <Img
