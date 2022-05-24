@@ -53,3 +53,9 @@ const App: React.FC = () => (
 );
 
 export default App;
+
+
+/*
+  Aprašykite enum formatu Redux navigation ir shop modulių action'ų tipus, pagal pavyzdį
+  auth ir cart Redux moduliuose
+*/
