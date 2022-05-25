@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -6,12 +6,18 @@ import {
   Button,
 } from '@mui/material';
 import CartPageItemGrid from './cart-page-item-grid';
-import { useRootSelector } from '../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectCartItemsCount } from '../../store/features/cart/cart-selectors';
+import { cartFetchItemsAction } from '../../store/action-creators';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useRootDispatch();
   const itemsCount = useRootSelector(selectCartItemsCount);
+
+  useEffect(() => {
+    dispatch(cartFetchItemsAction);
+  }, []);
 
   return (
     <Container>

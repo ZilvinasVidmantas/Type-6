@@ -1,14 +1,32 @@
 /* eslint-disable import/prefer-default-export */
 import { Dispatch } from 'redux';
-import { Item } from '../../../types';
+import { CartItemJoined, Item } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
 import {
+  CartFetchItemsLoadingAction,
+  CartFetchItemsSuccessAction,
+  CartFetchItemsFailureAction,
   CartAddItemAction,
   CartUpdateItemAction,
   CartDeleteItemAction,
   CartActionType,
 } from './cart-types';
 import { createShopChangeItemAmountAction } from '../shop/shop-action-creators';
+import ShopService from '../../../services/shop-service';
+
+const cartFetchItemsLoadingAction: CartFetchItemsLoadingAction = {
+  type: CartActionType.CART_FETCH_ITEMS_LOADING,
+};
+
+const createCartFetchItemsSuccessAction = (joinedItems: CartItemJoined[]): CartFetchItemsSuccessAction => ({
+  type: CartActionType.CART_FETCH_ITEMS_SUCCESS,
+  payload: { joinedItems },
+});
+
+const createCartFetchItemsFailureAction = (error: string): CartFetchItemsFailureAction => ({
+  type: CartActionType.CART_FETCH_ITEMS_FAILURE,
+  payload: { error },
+});
 
 const createCartAddItemAction = (shopItemId: string, amount: number): CartAddItemAction => ({
   type: CartActionType.CART_ADD_ITEM,
@@ -51,4 +69,27 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
 
   const shopChangeItemAmountAction = createShopChangeItemAmountAction(shopItemId, amountLeft);
   dispatch(shopChangeItemAmountAction);
+};
+
+export const cartFetchItemsAction = async (
+  dispatch: Dispatch<AppAction>,
+  getState: () => RootState,
+): Promise<void> => {
+  dispatch(cartFetchItemsLoadingAction);
+
+  try {
+    const cartItems = getState().cart.items;
+    const shopItemsIds = cartItems.map((cartItem) => cartItem.shopItemId);
+    const shopItems = await ShopService.fetchItemsByIds(shopItemsIds);
+
+    // TODO: ČIA YRA NESAMONĘ KURIAI REIKIA APRAŠYTI APJUNGIMĄ
+    const joinedCartItems: CartItemJoined[] = [];
+
+    const cartFetchItemsSuccessAction = createCartFetchItemsSuccessAction(joinedCartItems);
+    dispatch(cartFetchItemsSuccessAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const authFailureAction = createCartFetchItemsFailureAction(errMsg);
+    dispatch(authFailureAction);
+  }
 };
