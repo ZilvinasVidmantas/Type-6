@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
-import axios from 'axios';
+import ShopService from '../../../services/shop-service';
 import { Item } from '../../../types';
-import { AppAction } from '../../redux-types';
+import { AppAction, RootState } from '../../redux-types';
 import {
   ShopActionType,
   ShopFetchItemsLoadingAction,
@@ -34,11 +34,26 @@ export const createShopChangeItemAmountAction = (id: string, amount: number): Sh
   payload: { id, amount },
 });
 
-export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>): Promise<void> => {
+export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>, getState: () => RootState): Promise<void> => {
   dispatch(shopFetchItemsLoadingAction);
   try {
-    const { data } = await axios.get<Item[]>('http://localhost:8000/shopItems');
-    const shopFecthItemsSuccessAction = createShopFecthItemsSuccessAction(data);
+    const shopItems = await ShopService.fetchItems();
+    const { cart: { items: cartItems } } = getState();
+
+    // Tobulu atveju, visi skaičiavimai turėtų būti atliekami naudojant service'us arba helper'ius
+    const reducedShopItems = shopItems.map((shopItem) => {
+      const shopItemCartItem = cartItems.find((cartItem) => cartItem.shopItemId === shopItem.id);
+
+      if (shopItemCartItem) {
+        return {
+          ...shopItem,
+          amount: shopItem.amount - shopItemCartItem.amount,
+        };
+      }
+      return shopItem;
+    });
+
+    const shopFecthItemsSuccessAction = createShopFecthItemsSuccessAction(reducedShopItems);
     dispatch(shopFecthItemsSuccessAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
