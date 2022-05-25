@@ -13,18 +13,17 @@ import { selectCartItemAmountByShopItemId } from '../../../store/selectors';
 
 type ShopPageCardActionsProps = {
   id: string,
-  available: boolean,
   inStock: number,
 };
 
 const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   id,
-  available,
   inStock,
 }) => {
   const dispatch = useRootDispatch();
   const cartItemAmount = useRootSelector(selectCartItemAmountByShopItemId(id));
   const [amount, setAmount] = useState<number>(cartItemAmount);
+  const available = inStock > 0 || cartItemAmount > 0;
 
   const addToCart = (): void => {
     const addToCartAction = createModifyCartItemAction(id, amount);
