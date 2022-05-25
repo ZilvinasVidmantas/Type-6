@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Box,
@@ -30,6 +30,12 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
     dispatch(addToCartAction);
   };
 
+  useEffect(() => {
+    if (cartItemAmount !== amount) {
+      addToCart();
+    }
+  }, [amount]);
+
   return (
     <Box>
       {!available && (<Typography color="error">Currently not available</Typography>)}
@@ -48,15 +54,8 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
           value={amount}
           onChange={(_, newValue) => setAmount(newValue)}
           onBlur={(_, newValue) => setAmount(newValue)}
+          fullWidth
         />
-        <Button
-          variant="contained"
-          onClick={addToCart}
-          disabled={!available}
-        >
-          <Typography sx={{ pr: 1 }}>Pridėti</Typography>
-          <ShoppingCartIcon />
-        </Button>
       </Box>
     </Box>
   );

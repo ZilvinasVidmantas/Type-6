@@ -18,7 +18,7 @@ export type NumberFieldProps = Omit<TextFieldProps, 'type' | 'value' | 'inputPro
 
 const buttonSx = {
   p: 0,
-  minWidth: 20,
+  minWidth: 40,
   minHeight: 20,
   lineHeight: 'initial',
   flexGrow: 1,
@@ -74,7 +74,18 @@ const NumberField: React.FC<NumberFieldProps> = ({
   }, [value]);
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'stretch' }}>
+    <Box sx={{ display: 'flex', alignItems: 'stretch', width: '100%' }}>
+
+      <Button
+        variant="contained"
+        size="small"
+        sx={{ ...buttonSx, ...buttonsSx }}
+        onClick={decAmount}
+        disabled={disabled || Boolean(min !== undefined && fieldValue <= min)}
+        disableElevation
+      >
+        -
+      </Button>
       <TextField
         type="number"
         inputProps={{
@@ -99,31 +110,17 @@ const NumberField: React.FC<NumberFieldProps> = ({
         onBlur={handleTextFieldBlur}
         {...props}
       />
-      <Box sx={{
-        display: 'inline-flex', flexDirection: 'column', gap: 0.1,
-      }}
+
+      <Button
+        variant="contained"
+        size="small"
+        sx={{ ...buttonSx, ...buttonsSx }}
+        onClick={incAmount}
+        disabled={disabled || Boolean(max !== undefined && fieldValue >= max)}
+        disableElevation
       >
-        <Button
-          variant="contained"
-          size="small"
-          sx={{ ...buttonSx, ...buttonsSx }}
-          onClick={incAmount}
-          disabled={disabled || Boolean(max !== undefined && fieldValue >= max)}
-          disableElevation
-        >
-          +
-        </Button>
-        <Button
-          variant="contained"
-          size="small"
-          sx={{ ...buttonSx, ...buttonsSx }}
-          onClick={decAmount}
-          disabled={disabled || Boolean(min !== undefined && fieldValue <= min)}
-          disableElevation
-        >
-          -
-        </Button>
-      </Box>
+        +
+      </Button>
     </Box>
   );
 };
