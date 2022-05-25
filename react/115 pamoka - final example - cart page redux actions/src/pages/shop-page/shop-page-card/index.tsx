@@ -49,7 +49,7 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
         <ShopPageCardActions
           id={id}
           available={amount > 0}
-          max={amount}
+          inStock={amount}
         />
       </Box>
     </Paper>

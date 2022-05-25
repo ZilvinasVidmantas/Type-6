@@ -7,22 +7,24 @@ import {
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NumberField from '../../../components/number-field';
-import { useRootDispatch } from '../../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../../store/hooks';
 import { createModifyCartItemAction } from '../../../store/action-creators';
+import { selectCartItemAmountByShopItemId } from '../../../store/selectors';
 
 type ShopPageCardActionsProps = {
   id: string,
   available: boolean,
-  max: number,
+  inStock: number,
 };
 
 const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   id,
   available,
-  max,
+  inStock,
 }) => {
   const dispatch = useRootDispatch();
-  const [amount, setAmount] = useState<number>(0);
+  const cartItemAmount = useRootSelector(selectCartItemAmountByShopItemId(id));
+  const [amount, setAmount] = useState<number>(cartItemAmount);
 
   const addToCart = (): void => {
     const addToCartAction = createModifyCartItemAction(id, amount);
@@ -43,7 +45,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
           InputProps={{ sx: { height: '100%' } }}
           disabled={!available}
           min={0}
-          max={max}
+          max={inStock + cartItemAmount}
           value={amount}
           onChange={(_, newValue) => setAmount(newValue)}
           onBlur={(_, newValue) => setAmount(newValue)}
