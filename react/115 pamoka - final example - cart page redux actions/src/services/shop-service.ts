@@ -1,10 +1,8 @@
-import axios from 'axios';
 import { Item } from '../types';
-
-const API_SERVER = process.env.REACT_APP_API_SERVER;
+import ApiService from './api-service';
 
 const fetchItems = async () => {
-  const { data } = await axios.get<Item[]>(`${API_SERVER}/shopItems`);
+  const { data } = await ApiService.get<Item[]>('/shopItems');
   return data;
 };
 
