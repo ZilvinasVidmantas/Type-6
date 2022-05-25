@@ -31,6 +31,13 @@ const cartReducer: Reducer<CartState, CartAction> = (state = initialState, actio
       };
     }
 
+    case CartActionType.CART_DELETE_ITEM: {
+      return {
+        ...state,
+        items: state.items.filter((item) => item.id !== action.payload.cartItemId),
+      };
+    }
+
     default: return state;
   }
 };

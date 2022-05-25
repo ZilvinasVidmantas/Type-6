@@ -2,7 +2,12 @@
 import { Dispatch } from 'redux';
 import { Item } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
-import { CartAddItemAction, CartUpdateItemAction, CartActionType } from './cart-types';
+import {
+  CartAddItemAction,
+  CartUpdateItemAction,
+  CartDeleteItemAction,
+  CartActionType,
+} from './cart-types';
 import { createShopChangeItemAmountAction } from '../shop/shop-action-creators';
 
 const createCartAddItemAction = (shopItemId: string, amount: number): CartAddItemAction => ({
@@ -13,6 +18,11 @@ const createCartAddItemAction = (shopItemId: string, amount: number): CartAddIte
 const createCartUpdateItemAction = (cartItemId: string, amount: number): CartUpdateItemAction => ({
   type: CartActionType.CART_UPDATE_ITEM,
   payload: { cartItemId, amount },
+});
+
+const createCartDeleteItemAction = (cartItemId: string): CartDeleteItemAction => ({
+  type: CartActionType.CART_DELETE_ITEM,
+  payload: { cartItemId },
 });
 
 export const createModifyCartItemAction = (shopItemId: string, newAmount: number) => (
@@ -31,8 +41,8 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
       const cartUpdateItemAction = createCartUpdateItemAction(existingCartItem.id, newAmount);
       dispatch(cartUpdateItemAction);
     } else {
-      // @@@
-      // Siunčiamas pašalinimo veiksmas, nes kiekis === 0
+      const cartDeleteItemAction = createCartDeleteItemAction(existingCartItem.id);
+      dispatch(cartDeleteItemAction);
     }
   } else {
     const cartAddItemAction = createCartAddItemAction(shopItemId, newAmount);
@@ -42,16 +52,3 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
   const shopChangeItemAmountAction = createShopChangeItemAmountAction(shopItemId, amountLeft);
   dispatch(shopChangeItemAmountAction);
 };
-
-/*
-  @@@ Vietoje reikia išsiųsti cartReducer'iui žinutę, kad pašalinti krepšelio prekę, kurios kiekis yra 0
-    * Sukurkite ActionType tipą enum'e
-    * Sukurkite Action, kuris naudotų ActionType
-    * Sukurkite action'ą, pagal Action
-    * @@@ išsiųskite action'ą
-    * cartReducer'yje aprašykite logiką, kuri reaguodama į action'ą (atpažintą pagal ActionType) pašalintų prekę
-
-    Atlikimui iki 8:55,
-    Pertrauka
-    Tęsiame 9:05
-*/

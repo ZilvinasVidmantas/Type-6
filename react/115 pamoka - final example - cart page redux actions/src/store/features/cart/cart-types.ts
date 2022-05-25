@@ -7,6 +7,7 @@ export type CartState = {
 export enum CartActionType {
   CART_ADD_ITEM = 'CART_ADD_ITEM',
   CART_UPDATE_ITEM = 'CART_UPDATE_ITEM',
+  CART_DELETE_ITEM = 'CART_DELETE_ITEM',
 }
 
 export type CartAddItemAction = {
@@ -25,4 +26,11 @@ export type CartUpdateItemAction = {
   }
 };
 
-export type CartAction = CartAddItemAction | CartUpdateItemAction;
+export type CartDeleteItemAction = {
+  type: CartActionType.CART_DELETE_ITEM,
+  payload: {
+    cartItemId: string,
+  }
+};
+
+export type CartAction = CartAddItemAction | CartUpdateItemAction | CartDeleteItemAction;
