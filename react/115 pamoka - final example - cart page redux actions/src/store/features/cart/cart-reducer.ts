@@ -7,6 +7,7 @@ const initialState: CartState = {
   items: [],
   joinedItems: [],
   loading: false,
+  error: null,
 };
 
 const cartReducer: Reducer<CartState, CartAction> = (state = initialState, action) => {

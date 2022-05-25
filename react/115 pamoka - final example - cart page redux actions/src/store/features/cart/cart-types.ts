@@ -17,6 +17,24 @@ export enum CartActionType {
   CART_FETCH_ITEMS_FAILURE = 'CART_FETCH_ITEMS_FAILURE',
 }
 
+export type CartFetchItemsLoadingAction = {
+  type: CartActionType.CART_FETCH_ITEMS_LOADING,
+};
+
+export type CartFetchItemsSuccessAction = {
+  type: CartActionType.CART_FETCH_ITEMS_SUCCESS,
+  payload: {
+    joinedItems: CartItemJoined[],
+  }
+};
+
+export type CartFetchItemsFailureAction = {
+  type: CartActionType.CART_FETCH_ITEMS_FAILURE,
+  payload: {
+    error: string,
+  }
+};
+
 export type CartAddItemAction = {
   type: CartActionType.CART_ADD_ITEM,
   payload: {
@@ -40,22 +58,4 @@ export type CartDeleteItemAction = {
   }
 };
 
-export type CartFetchItemLoadingAction = {
-  type: CartActionType.CART_FETCH_ITEMS_LOADING,
-};
-
-export type CartFetchItemLoadingSuccess = {
-  type: CartActionType.CART_FETCH_ITEMS_SUCCESS,
-  payload: {
-    joinedItems: CartItemJoined[],
-  }
-};
-
-export type CartFetchItemLoadingFailure = {
-  type: CartActionType.CART_FETCH_ITEMS_FAILURE,
-  payload: {
-    error: string,
-  }
-};
-
-export type CartAction = CartAddItemAction | CartUpdateItemAction | CartDeleteItemAction | CartFetchItemLoadingAction | CartFetchItemLoadingSuccess | CartFetchItemLoadingFailure;
+export type CartAction = CartAddItemAction | CartUpdateItemAction | CartDeleteItemAction | CartFetchItemsLoadingAction | CartFetchItemsSuccessAction | CartFetchItemsFailureAction;
