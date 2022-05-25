@@ -14,7 +14,6 @@ const CartPageItemGrid: React.FC = () => {
       {cartItems.map((cartItem) => (
         <CartPageItemGridProduct key={cartItem.id} {...cartItem} />
       ))}
-
     </Box>
   );
 };

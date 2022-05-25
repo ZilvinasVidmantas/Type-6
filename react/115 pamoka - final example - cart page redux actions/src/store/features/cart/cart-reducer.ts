@@ -5,6 +5,8 @@ import { CartState, CartAction, CartActionType } from './cart-types';
 
 const initialState: CartState = {
   items: [],
+  joinedItems: [],
+  loading: false,
 };
 
 const cartReducer: Reducer<CartState, CartAction> = (state = initialState, action) => {

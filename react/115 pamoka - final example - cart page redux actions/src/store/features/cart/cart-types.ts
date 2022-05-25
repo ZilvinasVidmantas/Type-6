@@ -1,13 +1,20 @@
 import { CartItem } from '../../../types';
+import { CartItemJoined } from '../../../types/cart-item-joined';
 
 export type CartState = {
   items: CartItem[],
+  joinedItems: CartItemJoined[],
+  loading: boolean,
+  error: string | null,
 };
 
 export enum CartActionType {
   CART_ADD_ITEM = 'CART_ADD_ITEM',
   CART_UPDATE_ITEM = 'CART_UPDATE_ITEM',
   CART_DELETE_ITEM = 'CART_DELETE_ITEM',
+  CART_FETCH_ITEMS_LOADING = 'CART_FETCH_ITEMS_LOADING',
+  CART_FETCH_ITEMS_SUCCESS = 'CART_FETCH_ITEMS_SUCCESS',
+  CART_FETCH_ITEMS_FAILURE = 'CART_FETCH_ITEMS_FAILURE',
 }
 
 export type CartAddItemAction = {
@@ -33,4 +40,22 @@ export type CartDeleteItemAction = {
   }
 };
 
-export type CartAction = CartAddItemAction | CartUpdateItemAction | CartDeleteItemAction;
+export type CartFetchItemLoadingAction = {
+  type: CartActionType.CART_FETCH_ITEMS_LOADING,
+};
+
+export type CartFetchItemLoadingSuccess = {
+  type: CartActionType.CART_FETCH_ITEMS_SUCCESS,
+  payload: {
+    joinedItems: CartItemJoined[],
+  }
+};
+
+export type CartFetchItemLoadingFailure = {
+  type: CartActionType.CART_FETCH_ITEMS_FAILURE,
+  payload: {
+    error: string,
+  }
+};
+
+export type CartAction = CartAddItemAction | CartUpdateItemAction | CartDeleteItemAction | CartFetchItemLoadingAction | CartFetchItemLoadingSuccess | CartFetchItemLoadingFailure;
