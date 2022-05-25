@@ -27,8 +27,13 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
   const amountLeft = totalAmount - newAmount;
 
   if (existingCartItem) {
-    const cartUpdateItemAction = createCartUpdateItemAction(existingCartItem.id, newAmount);
-    dispatch(cartUpdateItemAction);
+    if (newAmount > 0) {
+      const cartUpdateItemAction = createCartUpdateItemAction(existingCartItem.id, newAmount);
+      dispatch(cartUpdateItemAction);
+    } else {
+      // @@@
+      // Siunčiamas pašalinimo veiksmas, nes kiekis === 0
+    }
   } else {
     const cartAddItemAction = createCartAddItemAction(shopItemId, newAmount);
     dispatch(cartAddItemAction);
@@ -37,3 +42,16 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
   const shopChangeItemAmountAction = createShopChangeItemAmountAction(shopItemId, amountLeft);
   dispatch(shopChangeItemAmountAction);
 };
+
+/*
+  @@@ Vietoje reikia išsiųsti cartReducer'iui žinutę, kad pašalinti krepšelio prekę, kurios kiekis yra 0
+    * Sukurkite ActionType tipą enum'e
+    * Sukurkite Action, kuris naudotų ActionType
+    * Sukurkite action'ą, pagal Action
+    * @@@ išsiųskite action'ą
+    * cartReducer'yje aprašykite logiką, kuri reaguodama į action'ą (atpažintą pagal ActionType) pašalintų prekę
+
+    Atlikimui iki 8:55,
+    Pertrauka
+    Tęsiame 9:05
+*/
