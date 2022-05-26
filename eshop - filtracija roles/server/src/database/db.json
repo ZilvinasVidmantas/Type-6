@@ -1,0 +1,573 @@
+{
+  "users": [
+    {
+      "id": "2",
+      "email": "admin@gmail.com",
+      "password": "Vilnius123",
+      "name": "Adminas",
+      "surname": "Gediminas",
+      "role": "ADMIN",
+      "imgSrc": "/images/img-1644867291375.png"
+    },
+    {
+      "id": "2ac817ad-f7b6-4d0e-a911-3f4f639c78f1",
+      "email": "user1@gmail.com",
+      "name": "Traktorius",
+      "surname": "Pilinskas",
+      "password": "Vilnius123",
+      "role": "USER",
+      "imgSrc": "/images/img-1644261573887.jpg"
+    },
+    {
+      "id": "fd8dc01a-d32d-4338-bc7a-74ccf3460815",
+      "email": "user2@gmail.com",
+      "name": "Kibiras",
+      "surname": "Gaida",
+      "password": "Vilnius123",
+      "role": "USER",
+      "imgSrc": "/images/img-1644261529335.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "price": 39.99,
+      "category": "1",
+      "brand": "1",
+      "type": "1",
+      "size": "1",
+      "images": [
+        "http://localhost:5000/images/s-l300.jpg"
+      ]
+    },
+    {
+      "id": "2",
+      "price": 149.99,
+      "category": "1",
+      "brand": "1",
+      "type": "1",
+      "size": "e0340cba-4cf5-46ff-a273-ab514241a2bb",
+      "images": [
+        "http://localhost:5000/images/MO029AO_241431.jpg",
+        "http://localhost:5000/images/asdasdasd.jpg",
+        "http://localhost:5000/images/asad.jpg"
+      ]
+    },
+    {
+      "id": "2s",
+      "price": 179.99,
+      "category": "1",
+      "brand": "2",
+      "type": "1",
+      "size": "e0340cba-4cf5-46ff-a273-ab514241a2bb",
+      "images": [
+        "http://localhost:5000/images/asdasdasd.jpg",
+        "http://localhost:5000/images/MO029AO_241431.jpg",
+        "http://localhost:5000/images/asad.jpg"
+      ]
+    },
+    {
+      "id": "3",
+      "price": 499.99,
+      "category": "1",
+      "brand": "1",
+      "type": "3",
+      "size": "9",
+      "images": [
+        "http://localhost:5000/images/sam-1.jpg",
+        "http://localhost:5000/images/sam-2.jpg",
+        "http://localhost:5000/images/sam-3.jpg"
+      ]
+    },
+    {
+      "id": "4",
+      "price": 1899.99,
+      "category": "2",
+      "images": [
+        "http://localhost:5000/images/nvd1.jpg",
+        "http://localhost:5000/images/nvd2.jpg",
+        "http://localhost:5000/images/nvd3.jpg",
+        "http://localhost:5000/images/nvd4.jpg",
+        "http://localhost:5000/images/nvd5.jpg"
+      ]
+    },
+    {
+      "id": "5",
+      "price": 1199.99,
+      "category": "2",
+      "images": [
+        "http://localhost:5000/images/nvd1.jpg",
+        "http://localhost:5000/images/nvd2.jpg",
+        "http://localhost:5000/images/nvd3.jpg",
+        "http://localhost:5000/images/nvd4.jpg",
+        "http://localhost:5000/images/nvd5.jpg"
+      ]
+    },
+    {
+      "id": "fc6d891e-6c02-4364-80c8-db38ca125aa1",
+      "images": [
+        "http://localhost:5000/images/images-1646757322166.jpg",
+        "http://localhost:5000/images/images-1646757322169.jpg"
+      ],
+      "category": "1",
+      "brand": "2",
+      "price": "55",
+      "type": "2",
+      "size": "5"
+    },
+    {
+      "id": "75ae7ccb-8a4a-4379-83f1-e62effa8619f",
+      "images": [
+        "http://localhost:5000/images/images-1646757410289.jpg",
+        "http://localhost:5000/images/images-1646757410292.jpg"
+      ],
+      "category": "1",
+      "brand": "2",
+      "price": "55",
+      "type": "2",
+      "size": "5"
+    },
+    {
+      "id": "9b4ee9ad-c0f3-4e22-978e-229bb958687c",
+      "images": [
+        "http://localhost:5000/images/images-1646757508966.jpg"
+      ],
+      "category": "1",
+      "brand": "1",
+      "price": "5000",
+      "type": "2",
+      "size": "5"
+    },
+    {
+      "id": "dcc80129-c724-49ab-98e8-15897a75d30d",
+      "images": [
+        "http://localhost:5000/images/images-1646757861694.jpg"
+      ],
+      "category": "1",
+      "brand": "4",
+      "price": "950",
+      "type": "2",
+      "size": "d8587bb7-a6bf-4684-8916-f4cb87839876"
+    },
+    {
+      "id": "517a4b97-9ee4-42dc-9ae3-400a8d867db9",
+      "images": [
+        "http://localhost:5000/images/images-1646757898059.jpg"
+      ],
+      "category": "1",
+      "brand": "4",
+      "price": "950",
+      "type": "2",
+      "size": "d8587bb7-a6bf-4684-8916-f4cb87839876"
+    },
+    {
+      "id": "55b01b81-e545-4a7d-bc3c-56fd57df9d41",
+      "images": [
+        "http://localhost:5000/images/images-1646757947104.jpg"
+      ],
+      "category": "2",
+      "price": "555"
+    },
+    {
+      "id": "035c2bad-5293-44d1-b934-ebc5925d93c9",
+      "images": [
+        "http://localhost:5000/images/images-1646757993086.jpg"
+      ],
+      "category": "2",
+      "price": "600"
+    },
+    {
+      "id": "655f4f40-0658-442c-9d9c-c1766512e049",
+      "images": [
+        "http://localhost:5000/images/images-1646758307331.jpg"
+      ],
+      "category": "2",
+      "price": "50"
+    },
+    {
+      "id": "8ce5573f-f4a8-4ab1-90e5-4f290ac4b299",
+      "images": [
+        "http://localhost:5000/images/images-1646758864483.jpg"
+      ],
+      "category": "2",
+      "price": "660"
+    },
+    {
+      "id": "8cd1e1ab-134b-40b4-9d81-f8c80cb2d6b6",
+      "images": [
+        "http://localhost:5000/images/images-1646758891888.jpg"
+      ],
+      "category": "2",
+      "price": "520"
+    },
+    {
+      "id": "6f56bed4-3c5b-4bb1-9fec-4015bcd75651",
+      "images": [
+        "http://localhost:5000/images/images-1646759043059.jpg"
+      ],
+      "category": "1",
+      "brand": "4a3fa06b-395c-4929-89dc-3e50fff3ab53",
+      "price": "200",
+      "type": "9134cab6-7239-43eb-b3bf-f3325174a070",
+      "size": "d8587bb7-a6bf-4684-8916-f4cb87839876"
+    },
+    {
+      "id": "46e08efb-8cc6-47a5-a6db-70640d366a2f",
+      "images": [
+        "http://localhost:5000/images/images-1646759133001.jpg"
+      ],
+      "category": "1",
+      "brand": "1",
+      "price": "520",
+      "type": "2",
+      "size": "9"
+    },
+    {
+      "id": "8cc95493-386c-45ff-a035-0cefb1b19407",
+      "images": [
+        "http://localhost:5000/images/images-1646759181467.jpg"
+      ],
+      "category": "1",
+      "brand": "1",
+      "price": "520",
+      "type": "2",
+      "size": "9"
+    },
+    {
+      "id": "415df27d-7028-47a5-b0fb-0756c1f0b457",
+      "images": [
+        "http://localhost:5000/images/images-1646759340938.jpg"
+      ],
+      "category": "2",
+      "price": "520"
+    },
+    {
+      "id": "ca9f1967-67f5-4eda-9cd5-2bd6c409fb84",
+      "images": [
+        "http://localhost:5000/images/images-1646760498254.jpg"
+      ],
+      "category": "2",
+      "price": "320.00"
+    },
+    {
+      "id": "fb2caa52-de02-4178-9c40-3091b8adb86f",
+      "images": [
+        "http://localhost:5000/images/images-1646760661976.jpg"
+      ],
+      "category": "2",
+      "price": "515"
+    },
+    {
+      "id": "6573ea16-52b8-4ec3-b9d2-c6ce209ca2ff",
+      "images": [
+        "http://localhost:5000/images/images-1646760721679.jpg"
+      ],
+      "category": "2",
+      "price": "524"
+    },
+    {
+      "id": "cec6e8f1-2873-44dd-a4ae-67d15c434905",
+      "images": [
+        "http://localhost:5000/images/images-1646760788998.jpg"
+      ],
+      "category": "2",
+      "price": "780"
+    },
+    {
+      "id": "944ba256-3f27-48c8-af55-1e7952142ec6",
+      "images": [
+        "http://localhost:5000/images/images-1646762640759.jpg"
+      ],
+      "category": "1",
+      "brand": "3",
+      "price": "560",
+      "type": "2",
+      "size": "9"
+    },
+    {
+      "id": "20b4b9ad-5cde-4fe5-923c-e9aa47572b4c",
+      "images": [
+        "http://localhost:5000/images/images-1646766598303.jpg"
+      ],
+      "category": "1",
+      "brand": "2",
+      "price": "520",
+      "type": "2",
+      "size": "9"
+    },
+    {
+      "id": "766c75fb-4945-49ec-a89c-dad13c82158a",
+      "images": [
+        "http://localhost:5000/images/images-1646849838912.jpg"
+      ],
+      "category": "7",
+      "price": "5",
+      "type": "1c51c114-e747-43ac-b6ea-e7f38e26216d",
+      "weight": "300"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "title": "Monitoriai",
+      "icon": "MonitorIcon",
+      "properties": [
+        {
+          "name": "brand",
+          "type": "autocomplete",
+          "collection": "monitorBrands"
+        },
+        {
+          "name": "price",
+          "type": "range"
+        },
+        {
+          "name": "type",
+          "type": "options",
+          "collection": "monitorScreenTypes"
+        },
+        {
+          "name": "size",
+          "type": "options",
+          "collection": "monitorScreenSizes"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Vaizdo Plokštės",
+      "icon": "DeveloperBoardIcon",
+      "properties": [
+        {
+          "name": "price",
+          "type": "range"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Motininės plokštės",
+      "icon": "DashboardIcon",
+      "properties": [
+        {
+          "name": "price",
+          "type": "range"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Laptopai",
+      "icon": "LaptopMacIcon",
+      "properties": [
+        {
+          "name": "price",
+          "type": "range"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Išoriniai įrenginiai",
+      "icon": "AccountTreeIcon",
+      "properties": [
+        {
+          "name": "price",
+          "type": "range"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Operatyvi atmintis (RAM)",
+      "icon": "MemoryIcon",
+      "properties": [
+        {
+          "name": "price",
+          "type": "range"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Diskai",
+      "icon": "StorageIcon",
+      "properties": [
+        {
+          "name": "price",
+          "type": "range"
+        },
+        {
+          "name": "type",
+          "type": "options",
+          "collection": "diskTypes"
+        },
+        {
+          "name": "weight",
+          "type": "range"
+        }
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "id": "1",
+      "title": "monitorBrands"
+    },
+    {
+      "id": "2",
+      "title": "monitorScreenTypes"
+    },
+    {
+      "id": "3",
+      "title": "monitorScreenSizes"
+    },
+    {
+      "id": "4bd11422-2359-48a6-adbd-8ba7063034ef",
+      "title": "diskTypes"
+    },
+    {
+      "id": "e7cdc881-fe66-45bf-a3bb-9332bc8c4177",
+      "title": "memorySizes"
+    },
+    {
+      "id": "1784aa4d-6888-4ad0-a4e5-6fe7dd1ef7c3",
+      "title": "baland"
+    }
+  ],
+  "monitorBrands": [
+    {
+      "id": "1",
+      "title": "LOC"
+    },
+    {
+      "id": "2",
+      "title": "Samsung"
+    },
+    {
+      "id": "3",
+      "title": "LG"
+    },
+    {
+      "id": "4",
+      "title": "Xiaomi"
+    },
+    {
+      "id": "4a3fa06b-395c-4929-89dc-3e50fff3ab53",
+      "title": "Apple"
+    },
+    {
+      "id": "0d32cda5-ae72-4638-95fe-9bc95c9c8aea",
+      "title": "sdfsdf"
+    }
+  ],
+  "monitorScreenTypes": [
+    {
+      "id": "1",
+      "title": "widescreen"
+    },
+    {
+      "id": "2",
+      "title": "super-widescreen"
+    },
+    {
+      "id": "3",
+      "title": "curved"
+    },
+    {
+      "id": "9134cab6-7239-43eb-b3bf-f3325174a070",
+      "title": "square"
+    }
+  ],
+  "monitorScreenSizes": [
+    {
+      "id": "1",
+      "title": "21"
+    },
+    {
+      "id": "5",
+      "title": "25"
+    },
+    {
+      "id": "9",
+      "title": "29"
+    },
+    {
+      "id": "d8587bb7-a6bf-4684-8916-f4cb87839876",
+      "title": "22"
+    },
+    {
+      "id": "a0f4244d-504a-4d1c-a7e6-b7e07f9cfecd",
+      "title": "23"
+    },
+    {
+      "id": "dbc15bf1-9861-471a-aaca-da66ecef2dab",
+      "title": "24"
+    },
+    {
+      "id": "e0340cba-4cf5-46ff-a273-ab514241a2bb",
+      "title": "26"
+    },
+    {
+      "id": "7f609c55-a960-4e5e-8ec0-8780ee310a49",
+      "title": "27"
+    },
+    {
+      "id": "77f26842-30a9-466f-b756-208f158ca15a",
+      "title": "28"
+    }
+  ],
+  "diskTypes": [
+    {
+      "id": "874f1f8b-7faf-402a-8724-332fb4afb1e6",
+      "title": "SSD"
+    },
+    {
+      "id": "1c51c114-e747-43ac-b6ea-e7f38e26216d",
+      "title": "HDD"
+    }
+  ],
+  "memorySizes": [
+    {
+      "id": "301f7929-3b5e-4a42-bc12-f155941f8acc",
+      "title": "4 GB"
+    },
+    {
+      "id": "6eaac0d5-31b9-4dd3-860e-cb7ff3399ed2",
+      "title": "8 GB"
+    },
+    {
+      "id": "ec35852c-41ee-4ceb-b86f-7c388bb06f99",
+      "title": "16 GB"
+    },
+    {
+      "id": "0aebb47b-114e-4abd-9583-c5155faa0110",
+      "title": "32 GB"
+    },
+    {
+      "id": "aa35850f-52dd-4997-ba26-cf012635a9cf",
+      "title": "64 GB"
+    },
+    {
+      "id": "2184095d-f04e-4c00-927c-c028548c0113",
+      "title": "128 GB"
+    },
+    {
+      "id": "56ba25bd-c739-4dc5-8ea1-cdac3dcc2744",
+      "title": "256 GB"
+    },
+    {
+      "id": "a61534a5-0f4c-4073-8428-9d2c74b1343d",
+      "title": "512 GB"
+    },
+    {
+      "id": "5fea32e1-4249-42d9-9149-02b94135f0f0",
+      "title": "1 TB"
+    },
+    {
+      "id": "f824ed0c-a12a-4a98-9d6a-00c1176131a6",
+      "title": "2 TB "
+    }
+  ],
+  "baland": []
+}
