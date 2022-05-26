@@ -57,29 +57,27 @@ Nefunkciniai reikalavimai:
 ---------------------------------------------------------------------------------------------
 
 Vertinimas:
-  1  Pasiekiama repozitorija su readme.md failu, kurioje aprašyta kaip pasileisti projektą. [1]
-  2  Veikiantys kliento pusės maršrutai [1]
-  3  Panaudota localStorage arba sessionStorage [1]
-  4  Panaudota globalios puslapio būsenos technologijos( react-context arba redux.js ) [1]
-  5  Prisitaikantis dizainas visiems puslapiams [1]
-  6  Autentifikacija ir Autorizacija [1-2]
-    6.1 viena rolė [1]
-    6.2 kelios rolės [1]
+  1  Pasiekiama repozitorija su readme.md failu, kurioje aprašyta kaip pasileisti projektą. [1] *
+  2  Veikiantys kliento pusės maršrutai [1] *
+  3  Panaudota localStorage arba sessionStorage [1] *
+  4  Panaudota globalios puslapio būsenos technologijos( react-context arba redux.js ) [1] *
+  5  Prisitaikantis dizainas visiems puslapiams [1] *
+  6  Autentifikacija ir Autorizacija [1] *
   7  Teisingais ryšiais sudaryta ir pakankamo struktūrinio turinio duomenų bazė [1]
   8  Duomenų filtracija (ir|arba) paieška [1]
-  9  Panaudota komponentų biblioteka su pritaikytais temos nustatymais [1]
+  9  Panaudota komponentų biblioteka su pritaikytais temos nustatymais [1] *
   10  Puslapiavimas (ir|arba) infinite* scroll [1]
-  11  FULLSTACK CRUD veiksmai [1-2] 
-    11.1 Vienos struktūros pilni CRUD veiksmai [1]
+  11  FULLSTACK CRUD veiksmai [1-2] *
+    11.1 Vienos struktūros pilni CRUD veiksmai [1] *
     11.2 Struktūros susijusios su kita struktūra CRUD veiksmai [1]
-  12  Formos validacija [1]
+  12  Formos validacija [1] *
 
   minimalus taškų skaičius išlaikymui: 5
-  maksimalus taškų skaičius: 14
+  maksimalus taškų skaičius: 13
 
   Surinkus 6 taškus - pažymys 6
   Surinkus 11 taškų - pažymys 10
-  Surinkus 14 taškų - pažymys 10
+  Surinkus 13 taškų - pažymys 10
 
   Taškų yra daugiau nei pažymių tam, kad galėtumėte laisviau
   išvystyti savo projekto idėją per daug neprisirišant prie vertinimo kriterijų.
@@ -88,4 +86,35 @@ Vertinimas:
       jums nereikalingos kelios rolės. 
     * Jeigu jūsų puslapio idėja išpildyta naudojant scroll'inant puslapį, jums
       nereikia router'io
-    
+
+Konsultacijų tvarkaraštis:
+  * Egidijus Petrauskas 8:20
+  * Artiom Rumiancev 8:30
+  * Andrius Pocius 8:40
+  * Augustinas Vagnoris 8:50
+
+  Pertrauka: 8:50 - 9:00
+
+  * Martynas Petrauskis 9:00
+  * Bogomil Zubrickij 9:10
+  * Edvinas Petrauskas 9:20
+  * Gerardas Anusevičius 9:30
+  * Gerardas Barštys 9:40
+  * Indrė Sliužinskaitė 9:50
+
+  Pertrauka 9:50 - 10:00
+
+  * Karolis Raubūnas 10:00
+  * Martynas Petrauskis 10:10
+  * Milda Beržanskaitė 10:20
+  * Milda Pauzaitė 10:30
+  * Mindaugas Greizė 10:40
+  * Rokas Jazbutis 10:50
+
+  Pertrauka 10:50 - 11:00
+
+  * Deimantė Brijūnienė 11:00
+  * Viktor Kruk 11:10
+
+  --------
+  Papildomos konsultacijos pagal poreikį ir pagal pakeltų rankų eiliškumą.
