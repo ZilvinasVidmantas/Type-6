@@ -86,18 +86,3 @@ Vertinimas:
       jums nereikalingos kelios rolės. 
     * Jeigu jūsų puslapio idėja išpildyta naudojant scroll'inant puslapį, jums
       nereikia router'io
-
-Konsultacijų tvarkaraštis:
-  * Gerardas Anusevičius
-  * Gerardas Barštys
-  * Indrė Sliužinskaitė
-  * Karolis Raubūnas
-  * Martynas Petrauskis
-  * Milda Beržanskaitė
-  * Milda Pauzaitė
-  * Andrius Pocius
-  * Rokas Jazbutis
-  * Deimantė Brijūnienė
-  * Viktor Kruk
-
-  --------
