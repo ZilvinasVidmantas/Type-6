@@ -3,6 +3,34 @@ import { Error } from 'mongoose';
 import ProductModel from "../models/product-model";
 
 
+type ErrorMessagesLT = {
+  price: string,
+  amount: string,
+  title: string,
+}
+
+const productValidationErrorMessagesLT: ErrorMessagesLT = {
+  price: 'Trūksta produkto kainos',
+  amount: 'Trūksta produkto kiekio',
+  title: 'Trūksta produkto pavadinimo',
+};
+
+const isErrorMessageLT = (property: string): property is keyof ErrorMessagesLT => {
+  return property in productValidationErrorMessagesLT;
+}
+
+const formatProductValidationError = (validationError: Error.ValidationError) => {
+  const errorArray = Object.entries(validationError.errors);
+  for (let i = 0; i < errorArray.length; i++) {
+    const [property] = errorArray[i];
+    if (isErrorMessageLT(property)) {
+      return productValidationErrorMessagesLT[property];
+    }
+  }
+
+  return 'Trūksta duomenų';
+}
+
 // Sukurkite funkcija 'formatProductValidationError', kuri suformuotų klaidą lietuviškai
 // ir panaudokite ją produkto kūrimo (klaidos) metu funkcijoje 'createProduct'
 
@@ -23,20 +51,10 @@ export const createProduct: RequestHandler = async (req, res) => {
     const createdProduct = await ProductModel.create(productProps);
     res.status(201).json(createdProduct);
   } catch (err) {
-    if (err instanceof Error.ValidationError) {
-      if ('price' in err.errors) {
-        const message = `Trūksta kainos`;
-        res.status(400).json({ error: message });
-      } else if ('amount' in err.errors) {
-        const message = `Trūksta kiekio`;
-        res.status(400).json({ error: message });
-      } else if ('title' in err.errors) {
-        const message = `Trūksta pavadinimo`;
-        res.status(400).json({ error: message });
-      }
-    } else {
-      res.status(400).json({ error: 'Neteisingi duomenys' });
-    }
+    const error = err instanceof Error.ValidationError
+      ? formatProductValidationError(err)
+      : 'Serverio klada';
+    res.status(400).json({ error });
   }
 }
 
