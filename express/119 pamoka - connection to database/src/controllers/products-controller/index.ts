@@ -34,6 +34,20 @@ export const createProduct: RequestHandler = async (req, res) => {
   }
 }
 
+export const updateProduct: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+  const productProps = req.body;
+
+  try {
+    const updatedProduct = await ProductModel.findByIdAndUpdate(id, productProps, { new: true });
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(404).json({
+      msg: error instanceof Error ? error.message : 'Blogi produkto duomenys',
+    });
+  }
+};
+
 export const deleteProduct: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
