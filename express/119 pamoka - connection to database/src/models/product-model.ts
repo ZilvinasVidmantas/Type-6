@@ -1,9 +1,18 @@
 import { Schema, model } from 'mongoose';
 
 const productSchema = new Schema({
-  title: String,
-  price: Number,
-  amount: Number,
+  title: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  }
 }, {
   timestamps: true,
 });

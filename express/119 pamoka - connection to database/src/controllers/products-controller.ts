@@ -1,4 +1,5 @@
-import { RequestHandler } from "express";
+import { RequestHandler } from 'express';
+import { Error } from 'mongoose';
 import ProductModel from "../models/product-model";
 
 const products = [
@@ -14,9 +15,25 @@ export const getProducts: RequestHandler = async (req, res) => {
 
 export const createProduct: RequestHandler = async (req, res) => {
   const productProps = req.body;
-  const createdProduct = await ProductModel.create(productProps);
-
-  res.status(200).json(createdProduct);
+  try {
+    const createdProduct = await ProductModel.create(productProps);
+    res.status(201).json(createdProduct);
+  } catch (err) {
+    if (err instanceof Error.ValidationError) {
+      if ('price' in err.errors) {
+        const message = `Trūksta kainos`;
+        res.status(400).json({ error: message });
+      } else if ('amount' in err.errors) {
+        const message = `Trūksta kiekio`;
+        res.status(400).json({ error: message });
+      } else if ('title' in err.errors) {
+        const message = `Trūksta pavadinimo`;
+        res.status(400).json({ error: message });
+      }
+    } else {
+      res.status(400).json({ error: 'Neteisingi duomenys' });
+    }
+  }
 }
 
 export const deleteProduct: RequestHandler = (req, res) => {
