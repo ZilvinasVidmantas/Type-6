@@ -1,38 +1,7 @@
 import { RequestHandler } from 'express';
 import { Error } from 'mongoose';
-import ProductModel from "../models/product-model";
-
-
-type ErrorMessagesLT = {
-  price: string,
-  amount: string,
-  title: string,
-}
-
-const productValidationErrorMessagesLT: ErrorMessagesLT = {
-  price: 'Trūksta produkto kainos',
-  amount: 'Trūksta produkto kiekio',
-  title: 'Trūksta produkto pavadinimo',
-};
-
-const isErrorMessageLT = (property: string): property is keyof ErrorMessagesLT => {
-  return property in productValidationErrorMessagesLT;
-}
-
-const formatProductValidationError = (validationError: Error.ValidationError) => {
-  const errorArray = Object.entries(validationError.errors);
-  for (let i = 0; i < errorArray.length; i++) {
-    const [property] = errorArray[i];
-    if (isErrorMessageLT(property)) {
-      return productValidationErrorMessagesLT[property];
-    }
-  }
-
-  return 'Trūksta duomenų';
-}
-
-// Sukurkite funkcija 'formatProductValidationError', kuri suformuotų klaidą lietuviškai
-// ir panaudokite ją produkto kūrimo (klaidos) metu funkcijoje 'createProduct'
+import ProductModel from "../../models/product-model";
+import { formatProductValidationError } from './products-error-formatters';
 
 const products = [
   { id: 'asdasdas', title: 'Milk', price: 0.89, amount: 2 },
