@@ -9,7 +9,7 @@ server.use(morgan(':method :url :status'));
 server.use(express.static('public'));
 server.use('/api/products', productsRouter);
 
-mongoose.createConnection(
+mongoose.connect(
   'mongodb+srv://admin:Vilnius123@database.mxlmbz9.mongodb.net',
   {
     retryWrites: true,
@@ -23,4 +23,4 @@ mongoose.createConnection(
     console.log('Successfully connected to MongoDB');
     server.listen(1337, () => console.log(`Appliaction server is running on: http://localhost:1337`));
   }
-)
+);

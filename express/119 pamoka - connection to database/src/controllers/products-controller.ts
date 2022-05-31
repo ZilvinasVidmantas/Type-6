@@ -1,11 +1,14 @@
 import { RequestHandler } from "express";
+import ProductModel from "../models/product-model";
 
 const products = [
   { id: 'asdasdas', title: 'Milk', price: 0.89, amount: 2 },
   { id: 'sdfsdfff', title: 'Bread', price: 1.19, amount: 1 },
 ];
 
-export const getProducts: RequestHandler = (req, res) => {
+export const getProducts: RequestHandler = async (req, res) => {
+  const products = await ProductModel.find();
+
   res.status(200).json(products);
 };
 
