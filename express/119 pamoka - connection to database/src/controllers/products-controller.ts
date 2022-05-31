@@ -3,8 +3,8 @@ import { Error } from 'mongoose';
 import ProductModel from "../models/product-model";
 
 
-// Sukurkite funkcija 'handleProductValidationError', kuri suformuotų klaidą lietuviškai
-// ir panaudokite ją produkto kūrimo metu funkcijoje 'createProduct'
+// Sukurkite funkcija 'formatProductValidationError', kuri suformuotų klaidą lietuviškai
+// ir panaudokite ją produkto kūrimo (klaidos) metu funkcijoje 'createProduct'
 
 const products = [
   { id: 'asdasdas', title: 'Milk', price: 0.89, amount: 2 },
