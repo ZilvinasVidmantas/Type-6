@@ -9,6 +9,18 @@ export const getProducts: RequestHandler = async (req, res) => {
   res.status(200).json(products);
 };
 
+export const getProduct: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await ProductModel.findById(id);
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(404).json({
+      msg: `Produktas su id '${id}' nerastas`,
+    });
+  }
+};
+
 export const createProduct: RequestHandler = async (req, res) => {
   const productProps = req.body;
   try {
