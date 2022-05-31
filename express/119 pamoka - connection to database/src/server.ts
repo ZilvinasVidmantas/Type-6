@@ -5,8 +5,10 @@ import productsRouter from './routers/products-router';
 
 const server = express();
 
+// Middlewares
 server.use(morgan(':method :url :status'));
 server.use(express.static('public'));
+server.use(express.json());
 server.use('/api/products', productsRouter);
 
 mongoose.connect(

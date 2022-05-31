@@ -12,6 +12,13 @@ export const getProducts: RequestHandler = async (req, res) => {
   res.status(200).json(products);
 };
 
+export const createProduct: RequestHandler = async (req, res) => {
+  const productProps = req.body;
+  const createdProduct = await ProductModel.create(productProps);
+
+  res.status(200).json(createdProduct);
+}
+
 export const deleteProduct: RequestHandler = (req, res) => {
   const { id } = req.params;
 
