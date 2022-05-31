@@ -3,11 +3,6 @@ import { Error } from 'mongoose';
 import ProductModel from "../../models/product-model";
 import { formatProductValidationError } from './products-error-formatters';
 
-const products = [
-  { id: 'asdasdas', title: 'Milk', price: 0.89, amount: 2 },
-  { id: 'sdfsdfff', title: 'Bread', price: 1.19, amount: 1 },
-];
-
 export const getProducts: RequestHandler = async (req, res) => {
   const products = await ProductModel.find();
 
@@ -27,19 +22,20 @@ export const createProduct: RequestHandler = async (req, res) => {
   }
 }
 
-export const deleteProduct: RequestHandler = (req, res) => {
+export const deleteProduct: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
-  const index = products.findIndex(x => x.id === id);
-
-  if (index >= 0) {
-    products.splice(index, 1);
+  try {
+    const deletedProduct = await ProductModel.findByIdAndDelete(id);
+    if (deletedProduct === null) throw new Error(`Produktas su id '${id}' nerastas`);
     res.status(200).json({
-      msg: `Produktas sėkmingai ištrintas: ${id}`,
+      msg: `Produktas sėkmingai ištrintas`,
+      product: deletedProduct
     });
-  } else {
+
+  } catch (error) {
     res.status(404).json({
-      msg: `Produktas su id '${id}' nerastas`,
+      msg: error instanceof Error ? error.message : error,
     });
   }
 }
