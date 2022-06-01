@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { Error } from 'mongoose';
 import ProductModel from "../../models/product-model";
+import CategoryModel from "../../models/category-model";
 import { formatProductValidationError } from './products-error-formatters';
 
 export const getProducts: RequestHandler = async (req, res) => {
@@ -39,6 +40,17 @@ export const updateProduct: RequestHandler = async (req, res) => {
   const productProps = req.body;
 
   try {
+    const { categories } = productProps;
+    if (categories.length > 0) {
+
+      const foundCategories = await CategoryModel.find({
+        // Ar yra tokių kategorių, kurių id yra viena iš <categories> masyve esančių reikšmių?
+        _id: { $in: categories },
+      });
+      if (categories.length !== foundCategories.length) {
+        throw new Error("Dalis kategorijų neegzistuoja");
+      }
+    }
     const updatedProduct = await ProductModel.findByIdAndUpdate(id, productProps, { new: true });
     res.status(200).json(updatedProduct);
   } catch (error) {
