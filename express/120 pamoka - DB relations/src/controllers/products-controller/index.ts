@@ -1,8 +1,11 @@
 import { RequestHandler } from 'express';
-import { Error } from 'mongoose';
+import { Error, QueryWithHelpers } from 'mongoose';
 import ProductModel from "../../models/product-model";
 import CategoryModel from "../../models/category-model";
 import { formatProductValidationError } from './products-error-formatters';
+
+type ProductModelQuery = QueryWithHelpers<any, {}, {}, {}>;
+type QueryParam = string | string[] | undefined;
 
 const validateCategoriesIds = async (categoriesIds: string[]) => {
   if (categoriesIds.length > 0) {
@@ -22,30 +25,39 @@ const validateCategoriesIds = async (categoriesIds: string[]) => {
   return [];
 }
 
-export const getProducts: RequestHandler = async (req, res) => {
-  const { populate } = req.query;
-
+const getProductsModelData = async (populate: QueryParam, productModelQuery: ProductModelQuery) => {
   let products;
   if (typeof populate === 'string' && populate === 'categories') {
-    products = await ProductModel.find().populate('categories');
+    products = await productModelQuery.populate('categories');
   } else {
-    products = await ProductModel.find();
+    products = await productModelQuery;
   }
+  return products;
+}
 
-  res.status(200).json(products);
-};
+export const getProducts: RequestHandler<unknown, unknown, unknown, { populate: QueryParam }> =
+  async (req, res) => {
+    const { populate } = req.query;
 
-export const getProduct: RequestHandler = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const product = await ProductModel.findById(id);
-    res.status(200).json(product);
-  } catch (error) {
-    res.status(404).json({
-      error: `Produktas su id '${id}' nerastas`,
-    });
-  }
-};
+    const products = await getProductsModelData(populate, ProductModel.find());
+
+    res.status(200).json(products);
+  };
+
+export const getProduct: RequestHandler<{ id: string }, unknown, unknown, { populate: QueryParam }> =
+  async (req, res) => {
+    const { id } = req.params;
+    const { populate } = req.query;
+
+    try {
+      const product = await getProductsModelData(populate, ProductModel.findById(id));
+      res.status(200).json(product);
+    } catch (error) {
+      res.status(404).json({
+        error: `Produktas su id '${id}' nerastas`,
+      });
+    }
+  };
 
 export const createProduct: RequestHandler = async (req, res) => {
   const productProps = req.body;
