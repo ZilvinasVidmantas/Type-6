@@ -16,7 +16,7 @@ export const getProduct: RequestHandler = async (req, res) => {
     res.status(200).json(product);
   } catch (error) {
     res.status(404).json({
-      msg: `Produktas su id '${id}' nerastas`,
+      error: `Produktas su id '${id}' nerastas`,
     });
   }
 };
@@ -43,7 +43,7 @@ export const updateProduct: RequestHandler = async (req, res) => {
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(404).json({
-      msg: error instanceof Error ? error.message : 'Blogi produkto duomenys',
+      error: error instanceof Error ? error.message : 'Blogi produkto duomenys',
     });
   }
 };
@@ -55,13 +55,12 @@ export const deleteProduct: RequestHandler = async (req, res) => {
     const deletedProduct = await ProductModel.findByIdAndDelete(id);
     if (deletedProduct === null) throw new Error(`Produktas su id '${id}' nerastas`);
     res.status(200).json({
-      msg: `Produktas sėkmingai ištrintas`,
       product: deletedProduct
     });
 
   } catch (error) {
     res.status(404).json({
-      msg: error instanceof Error ? error.message : error,
+      error: error instanceof Error ? error.message : error,
     });
   }
 }

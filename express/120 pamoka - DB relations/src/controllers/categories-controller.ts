@@ -14,7 +14,7 @@ export const getCategory: RequestHandler = async (req, res) => {
     res.status(200).json(category);
   } catch (error) {
     res.status(404).json({
-      msg: `Kategorija su id '${id}' nerasta`,
+      error: `Kategorija su id '${id}' nerasta`,
     });
   }
 };
@@ -38,7 +38,7 @@ export const updateCategory: RequestHandler = async (req, res) => {
     res.status(200).json(updatedCategory);
   } catch (error) {
     res.status(404).json({
-      msg: 'Serverio klaida atnaujinant kategoriją',
+      error: 'Serverio klaida atnaujinant kategoriją',
     });
   }
 };
@@ -50,13 +50,12 @@ export const deleteCategory: RequestHandler = async (req, res) => {
     const deletedCategory = await CategoryModel.findByIdAndDelete(id);
     if (deletedCategory === null) throw new Error(`Produktas su id '${id}' nerastas`);
     res.status(200).json({
-      msg: `Produktas sėkmingai ištrintas`,
       product: deletedCategory
     });
 
   } catch (error) {
     res.status(404).json({
-      msg: error instanceof Error ? error.message : 'Serverio klaida trinant kategoriją',
+      error: error instanceof Error ? error.message : 'Serverio klaida trinant kategoriją',
     });
   }
 }
