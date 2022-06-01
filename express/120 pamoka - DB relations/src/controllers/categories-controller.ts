@@ -29,4 +29,18 @@ export const createCategory: RequestHandler = async (req, res) => {
   }
 }
 
+export const updateCategory: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+  const categoryProps = req.body;
+
+  try {
+    const updatedCategory = await CategoryModel.findByIdAndUpdate(id, categoryProps, { new: true });
+    res.status(200).json(updatedCategory);
+  } catch (error) {
+    res.status(404).json({
+      msg: 'Serverio klaida atnaujinant kategoriją',
+    });
+  }
+};
+
 
