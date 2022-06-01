@@ -37,7 +37,7 @@ export const updateCategory: RequestHandler = async (req, res) => {
     const updatedCategory = await CategoryModel.findByIdAndUpdate(id, categoryProps, { new: true });
     res.status(200).json(updatedCategory);
   } catch (error) {
-    res.status(404).json({
+    res.status(400).json({
       error: 'Serverio klaida atnaujinant kategoriją',
     });
   }
@@ -54,7 +54,7 @@ export const deleteCategory: RequestHandler = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(404).json({
+    res.status(400).json({
       error: error instanceof Error ? error.message : 'Serverio klaida trinant kategoriją',
     });
   }
