@@ -23,7 +23,14 @@ const validateCategoriesIds = async (categoriesIds: string[]) => {
 }
 
 export const getProducts: RequestHandler = async (req, res) => {
-  const products = await ProductModel.find();
+  const { populate } = req.query;
+
+  let products;
+  if (typeof populate === 'string' && populate === 'categories') {
+    products = await ProductModel.find().populate('categories');
+  } else {
+    products = await ProductModel.find();
+  }
 
   res.status(200).json(products);
 };
