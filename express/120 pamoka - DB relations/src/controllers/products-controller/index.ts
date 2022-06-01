@@ -9,7 +9,7 @@ const validateCategoriesIds = async (categoriesIds: string[]) => {
 
     const uniqCategoryIds = [...new Set(categoriesIds)];
     const foundCategories = await CategoryModel.find({
-      // Ar yra tokių kategorių, kurių id yra viena iš <categories> masyve esančių reikšmių?
+      // Ar yra tokių kategorių, kurių id yra viena iš <uniqCategoryIds> masyve esančių reikšmių?
       _id: { $in: uniqCategoryIds },
     });
 
@@ -43,6 +43,8 @@ export const getProduct: RequestHandler = async (req, res) => {
 export const createProduct: RequestHandler = async (req, res) => {
   const productProps = req.body;
   try {
+    const uniqCategoriesIds = await validateCategoriesIds(productProps.categories);
+    productProps.categories = uniqCategoriesIds;
     const createdProduct = await ProductModel.create(productProps);
     res.status(201).json(createdProduct);
   } catch (err) {
