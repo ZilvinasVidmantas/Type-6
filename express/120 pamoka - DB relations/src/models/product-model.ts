@@ -12,6 +12,11 @@ const productSchema = new Schema({
   amount: {
     type: Number,
     required: true,
+  },
+  // 1:M - Produkas turi daug kategorijų
+  categories: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+    default: [],
   }
 }, {
   timestamps: true,
