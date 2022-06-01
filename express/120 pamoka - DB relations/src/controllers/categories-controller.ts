@@ -43,4 +43,22 @@ export const updateCategory: RequestHandler = async (req, res) => {
   }
 };
 
+export const deleteCategory: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedCategory = await CategoryModel.findByIdAndDelete(id);
+    if (deletedCategory === null) throw new Error(`Produktas su id '${id}' nerastas`);
+    res.status(200).json({
+      msg: `Produktas sėkmingai ištrintas`,
+      product: deletedCategory
+    });
+
+  } catch (error) {
+    res.status(404).json({
+      msg: error instanceof Error ? error.message : 'Serverio klaida trinant kategoriją',
+    });
+  }
+}
+
 
