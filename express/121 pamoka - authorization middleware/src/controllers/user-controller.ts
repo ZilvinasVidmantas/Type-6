@@ -1,3 +1,4 @@
+import { Error } from 'mongoose';
 import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user-model';
@@ -19,8 +20,19 @@ export const register: RequestHandler<unknown, unknown, RegisterBody> = async (r
       user: createdUser
     });
   } catch (error) {
+    let message;
+
+    if (error instanceof Error.ValidationError) {
+      if (error.errors.email) {
+        message = 'Toks paštas jau yra';
+      }
+    } else if (error instanceof Error) {
+      message = error.message;
+    } else {
+      message = 'Serverio klaida registruojantis';
+    }
     res.status(400).json({
-      error: error instanceof Error ? error.message : 'Serverio klaida registruojantis',
+      error: message,
     });
   }
 
