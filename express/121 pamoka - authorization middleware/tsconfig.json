@@ -6,7 +6,15 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "outDir": "build",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "node",
+      "express"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types",
+    ]
   },
   "include": [
     "src/**/*"

@@ -23,7 +23,8 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "types": [
-      "node"
+      "node",
+      "express",
     ],
     "typeRoots": [
       "../node_modules/@types",
