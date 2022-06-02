@@ -5,7 +5,7 @@ import CategoryModel from "../../models/category-model";
 import { formatProductValidationError } from './products-error-formatters';
 
 type ProductModelQuery = QueryWithHelpers<any, {}, {}, {}>;
-type QueryParam = string | string[] | undefined;
+type SearchParam = string | undefined;
 
 const validateCategoriesIds = async (categoriesIds: string[]) => {
   if (categoriesIds.length > 0) {
@@ -25,17 +25,13 @@ const validateCategoriesIds = async (categoriesIds: string[]) => {
   return [];
 }
 
-const getProductsModelData = async (populate: QueryParam, productModelQuery: ProductModelQuery) => {
-  let products;
-  if (typeof populate === 'string' && populate === 'categories') {
-    products = await productModelQuery.populate('categories');
-  } else {
-    products = await productModelQuery;
-  }
-  return products;
-}
+const getProductsModelData = async (populate: SearchParam, query: ProductModelQuery) =>
+  populate === 'categories'
+    ? await query.populate('categories')
+    : await query;
 
-export const getProducts: RequestHandler<unknown, unknown, unknown, { populate: QueryParam }> =
+//                                       params, res.body, req.body,        query 
+export const getProducts: RequestHandler<unknown, unknown, unknown, { populate: SearchParam }> =
   async (req, res) => {
     const { populate } = req.query;
 
@@ -44,7 +40,7 @@ export const getProducts: RequestHandler<unknown, unknown, unknown, { populate: 
     res.status(200).json(products);
   };
 
-export const getProduct: RequestHandler<{ id: string }, unknown, unknown, { populate: QueryParam }> =
+export const getProduct: RequestHandler<{ id: number }, unknown, unknown, { populate: SearchParam }> =
   async (req, res) => {
     const { id } = req.params;
     const { populate } = req.query;
