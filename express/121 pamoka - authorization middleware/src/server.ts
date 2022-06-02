@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import productsRouter from './routers/products-router';
 import categoriesRouter from './routers/categories-router';
+import userRouter from './routers/user-router';
 
 const server = express();
 
@@ -12,6 +13,7 @@ server.use(express.static('public'));
 server.use(express.json());
 server.use('/api/products', productsRouter);
 server.use('/api/categories', categoriesRouter);
+server.use('/api/users', userRouter);
 
 mongoose.connect(
   'mongodb+srv://admin:Vilnius123@database.mxlmbz9.mongodb.net',
