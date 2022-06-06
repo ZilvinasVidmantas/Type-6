@@ -2,6 +2,7 @@ import { Error } from 'mongoose';
 import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user-model';
+import jwt from 'jsonwebtoken';
 
 type AuthBody = { email?: string, password?: string };
 /*
@@ -29,10 +30,13 @@ export const login: RequestHandler<unknown, unknown, AuthBody> = async (req, res
     const passwordIsCorrect = bcrypt.compareSync(password, user.password);
 
     if (!passwordIsCorrect) throw new Error(`Slaptažodis neteisingas`);
+    if (process.env.TOKEN_SECRET === undefined) throw new Error('Set up TOKEN_SECRET environment variable!');
+
+    const token = jwt.sign({ email }, process.env.TOKEN_SECRET);
 
     res.status(200).json({
       user,
-      token: '----------------FAKE-TOKEN---------------'
+      token,
     })
 
   } catch (error) {
@@ -52,9 +56,13 @@ export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, 
     const hashedPassword = bcrypt.hashSync(password, 5);
     const createdUser = await UserModel.create({ email, password: hashedPassword });
 
+    if (process.env.TOKEN_SECRET === undefined) throw new Error('Set up TOKEN_SECRET environment variable!');
+
+    const token = jwt.sign({ email }, process.env.TOKEN_SECRET);
+
     res.status(201).json({
       user: createdUser,
-      token: '----------------FAKE-TOKEN---------------'
+      token,
     });
   } catch (error) {
     let message;

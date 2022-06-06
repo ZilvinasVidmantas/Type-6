@@ -10,7 +10,7 @@ dotenv.config();
 const server = express();
 
 const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
-if (DB_CONNECTION_URL === undefined) throw new Error('Set up environment variables!');
+if (DB_CONNECTION_URL === undefined) throw new Error('Set up DB_CONNECTION_URL environment variable!');
 
 // Middlewares
 server.use(morgan(':method :url :status'));
@@ -37,7 +37,7 @@ mongoose.connect(
 );
 
 /*
-  1. Prisijungus ar prisiregistravus, grąžinti vartotojui token'ą su jo užšifruota informacija
+  1. Prisijungus ar prisiregistravus, grąžinti vartotojui token'ą su jo užšifruota informacija - Done.
   2. Po Prisijungimo daryti užklausas siunčiant prisijungimo token'ą
   3. Parašyti AuthMiddleware, kuris tikrintų token'ą ir atmestų užklausas be token'o
   4. Pristaikyti AuthMiddleware užklausoms, kurios turėtų reikalauti prisijungimo
