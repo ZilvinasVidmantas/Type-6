@@ -44,7 +44,7 @@ mongoose.connect(
   10:00
   -
   -
-  4. Pristaikyti AuthMiddleware užklausoms, kurios turėtų reikalauti prisijungimo
+  4. Pritaikyti AuthMiddleware užklausoms, kurios turėtų reikalauti prisijungimo
   ---------------------------------
   išspręst problemą su tipų įtraukimu, kad compiler'is ir ts-server'is matytų ir nuadotų tuos pačius tipus
 */
