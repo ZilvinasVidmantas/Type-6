@@ -35,3 +35,10 @@ mongoose.connect(
     server.listen(1337, () => console.log(`Appliaction server is running on: http://localhost:1337`));
   }
 );
+
+/*
+  1. Prisijungus ar prisiregistravus, grąžinti vartotojui token'ą su jo užšifruota informacija
+  2. Po Prisijungimo daryti užklausas siunčiant prisijungimo token'ą
+  3. Parašyti AuthMiddleware, kuris tikrintų token'ą ir atmestų užklausas be token'o
+  4. Pristaikyti AuthMiddleware užklausoms, kurios turėtų reikalauti prisijungimo
+*/
