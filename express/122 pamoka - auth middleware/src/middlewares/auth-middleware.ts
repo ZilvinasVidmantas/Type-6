@@ -14,7 +14,7 @@ const authMiddleware: RequestHandler = (req, res, next) => {
 
     const decodedInfo = jwt.verify(token, config.token.secret) as DecodedInfo;
 
-    req.body.authUser = {
+    req.authUser = {
       email: decodedInfo.email,
       role: decodedInfo.role,
     };
