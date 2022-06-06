@@ -14,8 +14,8 @@ const config = {
     secret: TOKEN_SECRET,
   },
   db: {
-    connectionUrl: DB_CONNECTION_URL
-  }
+    connectionUrl: DB_CONNECTION_URL,
+  },
 };
 
 export default config;
