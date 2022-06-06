@@ -37,14 +37,5 @@ mongoose.connect(
 );
 
 /*
-  // 1. Prisijungus ar prisiregistravus, grąžinti vartotojui token'ą su jo užšifruota informacija - Done.
-  9:05
-  // 2. Po Prisijungimo daryti užklausas siunčiant prisijungimo token'ą - Done
-  // 3. Parašyti AuthMiddleware, kuris tikrintų token'ą ir atmestų užklausas be token'o
-  10:00
-  -
-  -
-  4. Pritaikyti AuthMiddleware užklausoms, kurios turėtų reikalauti prisijungimo
-  ---------------------------------
-  išspręst problemą su tipų įtraukimu, kad compiler'is ir ts-server'is matytų ir nuadotų tuos pačius tipus
+  TODO: išspręst problemą su tipų įtraukimu, kad compiler'is ir ts-server'is matytų ir nuadotų tuos pačius tipus
 */

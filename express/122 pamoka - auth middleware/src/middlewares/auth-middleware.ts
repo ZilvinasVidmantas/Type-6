@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 
-type DecodedInfo = { email: string, iat?: number };
+type DecodedInfo = { email: string, role: 'admin' | 'user', iat?: number };
 
 const authMiddleware: RequestHandler = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -20,7 +20,10 @@ const authMiddleware: RequestHandler = (req, res, next) => {
 
     const decodedInfo = jwt.verify(token, process.env.TOKEN_SECRET) as DecodedInfo;
 
-    req.body.authUserEmail = decodedInfo.email;
+    req.body.authUser = {
+      email: decodedInfo.email,
+      role: decodedInfo.role
+    };
 
     next();
   } catch (error) {

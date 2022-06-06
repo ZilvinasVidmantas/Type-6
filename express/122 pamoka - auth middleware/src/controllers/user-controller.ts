@@ -32,7 +32,7 @@ export const login: RequestHandler<unknown, unknown, AuthBody> = async (req, res
     if (!passwordIsCorrect) throw new Error(`Slaptažodis neteisingas`);
     if (process.env.TOKEN_SECRET === undefined) throw new Error('Set up TOKEN_SECRET environment variable!');
 
-    const token = jwt.sign({ email }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ email, role: user.role }, process.env.TOKEN_SECRET);
 
     res.status(200).json({
       user,
@@ -58,7 +58,7 @@ export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, 
 
     if (process.env.TOKEN_SECRET === undefined) throw new Error('Set up TOKEN_SECRET environment variable!');
 
-    const token = jwt.sign({ email }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ email, role: createdUser.role }, process.env.TOKEN_SECRET);
 
     res.status(201).json({
       user: createdUser,
@@ -81,5 +81,3 @@ export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, 
     });
   }
 }
-
-// 11:37
