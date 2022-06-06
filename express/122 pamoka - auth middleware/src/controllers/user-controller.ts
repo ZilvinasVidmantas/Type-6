@@ -1,8 +1,8 @@
 import { Error } from 'mongoose';
 import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
-import UserModel from '../models/user-model';
 import jwt from 'jsonwebtoken';
+import UserModel from '../models/user-model';
 import config from '../config';
 
 type AuthBody = { email?: string, password?: string };
@@ -12,9 +12,9 @@ type AuthBody = { email?: string, password?: string };
     * res.body - tai ką išsiunčiate(mūsų atveju tai ką siunčiate req.json(<TIPAS>))
     * req.body - tai ką gaunate į req.body savybę
     * req.query - tai ką perduodame url, pvz.: "/user?sort=name&page=2&limit=14"
-    
-  Jeigu norite perduoti 3 parametrą, bet nereikia perduoti 1 ir 2, tuomet galite naudoti tipą <unknown>
-  kad praleisti 1 ir 2 bendrinių parametrų nurodymus.
+
+  Jeigu norite perduoti 3 parametrą, bet nereikia perduoti 1 ir 2, tuomet galite naudoti tipą
+  <unknown>, kad praleisti 1 ir 2 bendrinių parametrų nurodymus.
 */
 
 export const login: RequestHandler<unknown, unknown, AuthBody> = async (req, res) => {
@@ -30,20 +30,19 @@ export const login: RequestHandler<unknown, unknown, AuthBody> = async (req, res
 
     const passwordIsCorrect = bcrypt.compareSync(password, user.password);
 
-    if (!passwordIsCorrect) throw new Error(`Slaptažodis neteisingas`);
+    if (!passwordIsCorrect) throw new Error('Slaptažodis neteisingas');
     const token = jwt.sign({ email, role: user.role }, config.token.secret);
 
     res.status(200).json({
       user,
       token,
-    })
-
+    });
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : 'Serverio klaida prisijungiant',
     });
   }
-}
+};
 
 export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, res) => {
   const { email, password } = req.body;
@@ -77,4 +76,4 @@ export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, 
       error: message,
     });
   }
-}
+};

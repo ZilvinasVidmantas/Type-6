@@ -17,7 +17,7 @@ const productSchema = new Schema({
   categories: {
     type: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
     default: [],
-  }
+  },
 }, {
   timestamps: true,
 });

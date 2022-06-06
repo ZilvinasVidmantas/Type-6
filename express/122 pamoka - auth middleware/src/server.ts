@@ -20,7 +20,7 @@ mongoose.connect(
   config.db.connectionUrl,
   {
     retryWrites: true,
-    w: 'majority'
+    w: 'majority',
   },
   (error) => {
     if (error) {
@@ -28,11 +28,12 @@ mongoose.connect(
       return;
     }
     console.log('Successfully connected to MongoDB');
-    server.listen(1337, () => console.log(`Appliaction server is running on: http://localhost:1337`));
-  }
+    server.listen(1337, () => console.log('Appliaction server is running on: http://localhost:1337'));
+  },
 );
 
 /*
 // 10:57
-  TODO: išspręst problemą su tipų įtraukimu, kad compiler'is ir ts-server'is matytų ir nuadotų tuos pačius tipus
+  TODO: išspręst problemą su tipų įtraukimu, kad ts-node compiler'is ir ts-server'is matytų
+  ir nuadotų tuos pačius tipus
 */
