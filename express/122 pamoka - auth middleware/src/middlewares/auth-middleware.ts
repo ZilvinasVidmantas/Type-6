@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
+import config from '../config';
 
 type DecodedInfo = { email: string, role: 'admin' | 'user', iat?: number };
 
@@ -13,12 +14,7 @@ const authMiddleware: RequestHandler = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     if (token === undefined) throw new Error('Klaidingi vartotojo atpažinimo duomenys');
 
-    if (process.env.TOKEN_SECRET === undefined) {
-      errStatus = 500;
-      throw new Error('Serverio klaida');
-    }
-
-    const decodedInfo = jwt.verify(token, process.env.TOKEN_SECRET) as DecodedInfo;
+    const decodedInfo = jwt.verify(token, config.token.secret) as DecodedInfo;
 
     req.body.authUser = {
       email: decodedInfo.email,

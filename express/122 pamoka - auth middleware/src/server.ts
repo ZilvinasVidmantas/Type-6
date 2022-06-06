@@ -4,13 +4,9 @@ import mongoose from 'mongoose';
 import productsRouter from './routers/products-router';
 import categoriesRouter from './routers/categories-router';
 import userRouter from './routers/user-router';
-import dotenv from 'dotenv';
+import config from './config';
 
-dotenv.config();
 const server = express();
-
-const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
-if (DB_CONNECTION_URL === undefined) throw new Error('Set up DB_CONNECTION_URL environment variable!');
 
 // Middlewares
 server.use(morgan(':method :url :status'));
@@ -21,7 +17,7 @@ server.use('/api/categories', categoriesRouter);
 server.use('/api/users', userRouter);
 
 mongoose.connect(
-  DB_CONNECTION_URL,
+  config.db.connectionUrl,
   {
     retryWrites: true,
     w: 'majority'
@@ -37,5 +33,6 @@ mongoose.connect(
 );
 
 /*
+// 10:57
   TODO: išspręst problemą su tipų įtraukimu, kad compiler'is ir ts-server'is matytų ir nuadotų tuos pačius tipus
 */
