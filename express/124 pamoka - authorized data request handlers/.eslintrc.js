@@ -20,5 +20,6 @@ module.exports = {
         'import/prefer-default-export': [0],
         'indent': [0],
         '@typescript-eslint/indent': [0],
+        'no-underscore-dangle': [0],
     }
 }

@@ -1,3 +1,5 @@
+import { UserDocument } from '../models/user-model';
+
 declare global {
   declare namespace Express {
     export interface Request {
@@ -5,7 +7,7 @@ declare global {
         email: string,
         role: string,
       },
-      authUser: any
+      authUser: UserDocument
     }
   }
 
