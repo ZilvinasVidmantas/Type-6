@@ -6,14 +6,14 @@ import {
   updateProduct,
   deleteProduct,
 } from '../controllers/products-controller';
-import { authMiddleware } from '../middlewares/auth-middlewares';
+import { adminMiddleware, authMiddleware } from '../middlewares/auth-middlewares';
 
 const productsRouter = Router();
 
 productsRouter.get('/', getProducts);
 productsRouter.get('/:id', getProduct);
-productsRouter.post('/', authMiddleware, createProduct);
-productsRouter.patch('/:id', authMiddleware, updateProduct);
-productsRouter.delete('/:id', authMiddleware, deleteProduct);
+productsRouter.post('/', authMiddleware, adminMiddleware, createProduct);
+productsRouter.patch('/:id', authMiddleware, adminMiddleware, updateProduct);
+productsRouter.delete('/:id', authMiddleware, adminMiddleware, deleteProduct);
 
 export default productsRouter;

@@ -48,3 +48,20 @@ export const userMiddleware: RequestHandler = async (req, res, next) => {
 
   next();
 };
+export const adminMiddleware: RequestHandler = async (req, res, next) => {
+  if (req.tokenData === undefined) {
+    res.status(401).json({
+      error: 'Reikalingas Prisijungimas',
+    });
+    return;
+  }
+
+  if (req.tokenData.role !== 'admin') {
+    res.status(401).json({
+      error: 'Veiksmas leidžiamas tik adminui',
+    });
+    return;
+  }
+
+  next();
+};
