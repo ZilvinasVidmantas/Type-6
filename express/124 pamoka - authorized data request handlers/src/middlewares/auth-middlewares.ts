@@ -1,10 +1,11 @@
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config';
+import UserModel from '../models/user-model';
 
 type DecodedInfo = { email: string, role: 'admin' | 'user', iat?: number };
 
-const authMiddleware: RequestHandler = (req, res, next) => {
+export const authMiddleware: RequestHandler = (req, res, next) => {
   const authHeader = req.headers.authorization;
   try {
     if (authHeader === undefined) throw new Error('Reikalingas prisijungimas');
@@ -14,8 +15,7 @@ const authMiddleware: RequestHandler = (req, res, next) => {
 
     const decodedInfo = jwt.verify(token, config.token.secret) as DecodedInfo;
 
-    // TODO: Profesionaliai, reikėtų tikrinti ar yra toks vartotojas duomenų bazėje
-    req.authUser = {
+    req.tokenData = {
       email: decodedInfo.email,
       role: decodedInfo.role,
     };
@@ -28,4 +28,23 @@ const authMiddleware: RequestHandler = (req, res, next) => {
   }
 };
 
-export default authMiddleware;
+export const userMiddleware: RequestHandler = async (req, res, next) => {
+  if (req.tokenData === undefined) {
+    res.status(401).json({
+      error: 'Reikalingas Prisijungimas',
+    });
+    return;
+  }
+  const authUser = await UserModel.findOne({ email: req.tokenData.email });
+
+  if (authUser === null) {
+    res.status(404).json({
+      error: 'Autentifikuojamas vartotojas nerastas',
+    });
+    return;
+  }
+
+  req.authUser = authUser;
+
+  next();
+};

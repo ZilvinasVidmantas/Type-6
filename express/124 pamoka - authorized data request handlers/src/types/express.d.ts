@@ -1,10 +1,11 @@
 declare global {
   declare namespace Express {
     export interface Request {
-      authUser?: {
+      tokenData?: {
         email: string,
         role: string,
-      }
+      },
+      authUser: any
     }
   }
 
