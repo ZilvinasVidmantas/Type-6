@@ -19,6 +19,19 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  cart: {
+    type: [{
+      productId: {
+        type: { type: Schema.Types.ObjectId, ref: 'Product' },
+        required: true,
+      },
+      amount: {
+        type: Number,
+        required: true,
+      },
+    }],
+    default: [],
+  },
 }, {
   timestamps: true,
 });
