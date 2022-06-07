@@ -53,7 +53,6 @@ const userSchema = new Schema<User, UserModelType>({
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
-        unique: true,
       },
       amount: {
         type: Number,

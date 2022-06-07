@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import UserModel from '../models/user-model';
 // import ProductModel from '../models/product-model';
 // import UserModel from '../models/user-model';
 
@@ -16,18 +15,21 @@ export const addItem: RequestHandler = async (req, res) => {
   const { authUser } = req;
 
   try {
-    const updatedUser = await UserModel.findByIdAndUpdate(authUser._id, {
-      cart: { $push: newCartItemData },
-    });
+    const productExistsInCart = authUser.cart.some(
+      (cartItem) => cartItem.productId.equals(newCartItemData.productId),
+    );
+    if (productExistsInCart) {
+      throw new Error('Toks daiktas jau yra krepšelyje');
+    }
+    authUser.cart.push(newCartItemData);
+    await authUser.save();
 
     res.status(200).json({
-      data: newCartItemData,
-      user: updatedUser,
+      cartItem: authUser.cart[authUser.cart.length - 1],
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({
-      error: 'Neteisingi pridedamo produkto duomenys',
+      error: error instanceof Error ? error.message : 'Neteisingi pridedamo produkto duomenys',
     });
   }
 };
@@ -47,6 +49,8 @@ export const deleteItem: RequestHandler = async (req, res) => {
       });
       return;
     }
+
+    user.cart = user.cart.filter((cartItem) => cartItem !== deletedItem);
     await user.save();
     res.status(200).json({ deletedItem });
   } catch (error) {
