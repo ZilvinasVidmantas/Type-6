@@ -35,7 +35,7 @@ export const login: RequestHandler<unknown, unknown, AuthBody> = async (req, res
 
     res.status(200).json({
       user,
-      token,
+      token: `Bearer ${token}`,
     });
   } catch (error) {
     res.status(400).json({
@@ -58,7 +58,7 @@ export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, 
 
     res.status(201).json({
       user: createdUser,
-      token,
+      token: `Bearer ${token}`,
     });
   } catch (error) {
     let message;
