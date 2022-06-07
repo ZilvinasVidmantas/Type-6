@@ -7,8 +7,8 @@ import { formatProductValidationError } from './products-error-formatters';
 type ProductModelQuery = QueryWithHelpers<any, unknown, unknown, unknown>;
 type SearchParam = string | undefined;
 
-const validateCategoriesIds = async (categoriesIds: string[]) => {
-  if (categoriesIds.length > 0) {
+const validateCategoriesIds = async (categoriesIds?: string[]) => {
+  if (categoriesIds !== undefined && categoriesIds.length > 0) {
     const uniqCategoryIds = [...new Set(categoriesIds)];
     const foundCategories = await CategoryModel.find({
       // Ar yra tokių kategorių, kurių id yra viena iš <uniqCategoryIds> masyve esančių reikšmių?
