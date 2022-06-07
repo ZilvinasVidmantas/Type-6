@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import productsRouter from './routers/products-router';
 import categoriesRouter from './routers/categories-router';
 import authRouther from './routers/auth-router';
+import cartRouter from './routers/cart-router';
 import config from './config';
 
 const server = express();
@@ -15,6 +16,7 @@ server.use(express.json());
 server.use('/api/products', productsRouter);
 server.use('/api/categories', categoriesRouter);
 server.use('/api/auth', authRouther);
+server.use('/api/cart', cartRouter);
 
 mongoose.connect(
   config.db.connectionUrl,

@@ -14,6 +14,7 @@ const authMiddleware: RequestHandler = (req, res, next) => {
 
     const decodedInfo = jwt.verify(token, config.token.secret) as DecodedInfo;
 
+    // TODO: Profesionaliai, reikėtų tikrinti ar yra toks vartotojas duomenų bazėje
     req.authUser = {
       email: decodedInfo.email,
       role: decodedInfo.role,
