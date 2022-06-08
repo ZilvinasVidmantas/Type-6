@@ -1,6 +1,25 @@
-import { Schema, model } from 'mongoose';
+import {
+  Schema,
+  Types,
+  Document,
+  Model,
+  model,
+} from 'mongoose';
 
-const productSchema = new Schema({
+type Product = {
+  title: string,
+  price: number,
+  amount: number,
+  categories: Types.ObjectId[],
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ProductDocument = Document<Types.ObjectId, unknown, Product> & Product & {
+  _id: Types.ObjectId;
+};
+
+const productSchema = new Schema<Product, Model<Product>>({
   title: {
     type: String,
     required: true,
@@ -13,7 +32,6 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
-  // 1:M - Produkas turi daug kategorijų
   categories: {
     type: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
     default: [],
@@ -22,7 +40,6 @@ const productSchema = new Schema({
   timestamps: true,
 });
 
-// collection name - "products"
 const ProductModel = model('Product', productSchema);
 
 export default ProductModel;

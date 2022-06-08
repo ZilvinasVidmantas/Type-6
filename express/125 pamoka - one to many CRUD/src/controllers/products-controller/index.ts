@@ -1,11 +1,9 @@
 import { RequestHandler } from 'express';
-import { Error, QueryWithHelpers } from 'mongoose';
+import { Error } from 'mongoose';
 import ProductModel from '../../models/product-model';
 import CategoryModel from '../../models/category-model';
 import { formatProductValidationError } from './products-error-formatters';
-
-type ProductModelQuery = QueryWithHelpers<any, unknown, unknown, unknown>;
-type SearchParam = string | undefined;
+import createProductViewModel, { ProductJoinedViewModel, ProductViewModel } from '../../view-model-creators/create-product-view-model';
 
 const validateCategoriesIds = async (categoriesIds?: string[]) => {
   if (categoriesIds !== undefined && categoriesIds.length > 0) {
@@ -24,28 +22,48 @@ const validateCategoriesIds = async (categoriesIds?: string[]) => {
   return [];
 };
 
-const getProductsModelData = async (populate: SearchParam, query: ProductModelQuery) => (
-  populate === 'categories'
-    ? query.populate('categories')
-    : query);
-
-type GetProducts = RequestHandler<unknown, unknown, unknown, { populate: SearchParam }>;
+type GetProducts = RequestHandler<
+  unknown,
+  { products: (ProductViewModel | ProductJoinedViewModel)[] },
+  unknown,
+  { populate?: string }
+>;
 export const getProducts: GetProducts = async (req, res) => {
   const { populate } = req.query;
 
-  const products = await getProductsModelData(populate, ProductModel.find());
+  const productDocs = await ProductModel.find();
 
-  res.status(200).json(products);
+  const shouldPopulateCategories = populate === 'categories';
+  const productViewModelPromises = productDocs.map(
+    async (productDoc) => createProductViewModel(productDoc, shouldPopulateCategories),
+  ) as (Promise<ProductViewModel | ProductJoinedViewModel>)[];
+
+  const productsViewModels = await Promise.all(productViewModelPromises);
+
+  res.status(200).json({
+    products: productsViewModels,
+  });
 };
 
-type GetProduct = RequestHandler<{ id: number }, unknown, unknown, { populate: SearchParam }>;
+type GetProduct = RequestHandler<
+  { id: string },
+  { product: ProductViewModel | ProductJoinedViewModel } | ErrorResponseBody,
+  unknown,
+  { populate?: string }
+>;
 export const getProduct: GetProduct = async (req, res) => {
   const { id } = req.params;
   const { populate } = req.query;
 
   try {
-    const product = await getProductsModelData(populate, ProductModel.findById(id));
-    res.status(200).json(product);
+    const product = await ProductModel.findById(id);
+    if (product === null) {
+      throw new Error(`Produktas su id '${id}' nerastas`);
+    }
+    const shouldPopulateCategories = populate === 'categories';
+    const productViewModel = await createProductViewModel(product, shouldPopulateCategories);
+
+    res.status(200).json({ product: productViewModel });
   } catch (error) {
     res.status(404).json({
       error: `Produktas su id '${id}' nerastas`,

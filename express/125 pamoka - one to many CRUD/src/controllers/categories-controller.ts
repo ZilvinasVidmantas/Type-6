@@ -39,7 +39,7 @@ export const getCategory: GetCategoryRequestHandler = async (req, res) => {
 };
 
 type CreateCategoryRequestHandler = RequestHandler<
-  undefined,
+  unknown,
   SingularCategoryRequestHandlerResponse,
   { title: string }
 >;
