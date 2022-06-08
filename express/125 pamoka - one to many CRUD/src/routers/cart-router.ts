@@ -13,7 +13,7 @@ cartRouter.use(authMiddleware, userMiddleware);
 
 cartRouter.get('/', getCart);
 cartRouter.post('/add-item', addItem);
-cartRouter.patch('/update-item', updateItem);
+cartRouter.patch('/update-item/:itemId', updateItem);
 cartRouter.delete('/delete-item/:itemId', deleteItem);
 
 export default cartRouter;

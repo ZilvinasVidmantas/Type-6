@@ -1,6 +1,4 @@
 import { RequestHandler } from 'express';
-// import ProductModel from '../models/product-model';
-// import UserModel from '../models/user-model';
 
 export const getCart: RequestHandler = async (req, res) => {
   const { authUser } = req;
@@ -24,8 +22,10 @@ export const addItem: RequestHandler = async (req, res) => {
     authUser.cart.push(newCartItemData);
     await authUser.save();
 
+    const addedCartItem = authUser.cart[authUser.cart.length - 1];
+
     res.status(200).json({
-      cartItem: authUser.cart[authUser.cart.length - 1],
+      cartItem: addedCartItem,
     });
   } catch (error) {
     res.status(400).json({
@@ -35,7 +35,29 @@ export const addItem: RequestHandler = async (req, res) => {
 };
 
 export const updateItem: RequestHandler = async (req, res) => {
-  res.status(200).send('updateItem');
+  const { itemId } = req.params;
+  const { authUser } = req;
+  const { amount } = req.body;
+
+  try {
+    const cartItemRef = authUser.cart.find((item) => item._id.equals(itemId));
+
+    if (cartItemRef === undefined) {
+      throw new Error(`Nerastas krepšelio daiktas su tokiu id: '${itemId}'`);
+    }
+
+    cartItemRef.amount = amount;
+
+    await authUser.save();
+
+    res.status(200).send({
+      cartItem: cartItemRef,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : 'Neteisingi atnaujinamo produkto duomenys',
+    });
+  }
 };
 
 export const deleteItem: RequestHandler = async (req, res) => {
@@ -52,10 +74,10 @@ export const deleteItem: RequestHandler = async (req, res) => {
 
     user.cart = user.cart.filter((cartItem) => cartItem !== deletedItem);
     await user.save();
-    res.status(200).json({ deletedItem });
+    res.status(200).json({ cartItem: deletedItem });
   } catch (error) {
     res.status(400).json({
-      error: 'Neteisingi pridedamo produkto duomenys',
+      error: 'Neteisingi trinamo produkto duomenys',
     });
   }
 };
