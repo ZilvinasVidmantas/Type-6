@@ -5,6 +5,7 @@ import {
   Model,
   model,
 } from 'mongoose';
+import { CategoryDocument } from './category-model';
 
 type Product = {
   title: string,
@@ -15,8 +16,16 @@ type Product = {
   updatedAt: string,
 };
 
-export type ProductDocument = Document<Types.ObjectId, unknown, Product> & Product & {
+export type ProductDocument = Document<
+  Types.ObjectId,
+  unknown,
+  Product
+> & Product & {
   _id: Types.ObjectId;
+};
+
+export type ProductPopulatedDocument = Omit<ProductDocument, 'categories'> & {
+  categories: CategoryDocument[]
 };
 
 const productSchema = new Schema<Product, Model<Product>>({

@@ -1,15 +1,15 @@
 import { RequestHandler } from 'express';
 import { Error } from 'mongoose';
-import ProductModel from '../../models/product-model';
-import CategoryModel from '../../models/category-model';
 import { formatProductValidationError } from './products-error-formatters';
-import createProductViewModel, { ProductJoinedViewModel, ProductViewModel } from '../../view-model-creators/create-product-view-model';
+import CategoryModel, { CategoryDocument } from '../../models/category-model';
+import ProductModel, { ProductPopulatedDocument, ProductDocument } from '../../models/product-model';
+import createProductViewModel, { ProductViewModel } from '../../view-model-creators/create-product-view-model';
+import createProductPopulatedViewModel, { ProductPopulatedViewModel } from '../../view-model-creators/create-product-populated-view-model';
 
 const validateCategoriesIds = async (categoriesIds?: string[]) => {
   if (categoriesIds !== undefined && categoriesIds.length > 0) {
     const uniqCategoryIds = [...new Set(categoriesIds)];
     const foundCategories = await CategoryModel.find({
-      // Ar yra tokių kategorių, kurių id yra viena iš <uniqCategoryIds> masyve esančių reikšmių?
       _id: { $in: uniqCategoryIds },
     });
 
@@ -24,21 +24,21 @@ const validateCategoriesIds = async (categoriesIds?: string[]) => {
 
 type GetProducts = RequestHandler<
   unknown,
-  { products: (ProductViewModel | ProductJoinedViewModel)[] },
+  { products: ProductViewModel[] | ProductPopulatedViewModel[] },
   unknown,
   { populate?: string }
 >;
 export const getProducts: GetProducts = async (req, res) => {
   const { populate } = req.query;
-
-  const productDocs = await ProductModel.find();
-
   const shouldPopulateCategories = populate === 'categories';
-  const productViewModelPromises = productDocs.map(
-    async (productDoc) => createProductViewModel(productDoc, shouldPopulateCategories),
-  ) as (Promise<ProductViewModel | ProductJoinedViewModel>)[];
 
-  const productsViewModels = await Promise.all(productViewModelPromises);
+  const productDocs = shouldPopulateCategories
+    ? await ProductModel.find().populate<{ categories: CategoryDocument[] }>('categories')
+    : await ProductModel.find();
+
+  const productsViewModels = shouldPopulateCategories
+    ? (productDocs as ProductPopulatedDocument[]).map(createProductPopulatedViewModel)
+    : (productDocs as ProductDocument[]).map(createProductViewModel);
 
   res.status(200).json({
     products: productsViewModels,
@@ -47,21 +47,26 @@ export const getProducts: GetProducts = async (req, res) => {
 
 type GetProduct = RequestHandler<
   { id: string },
-  { product: ProductViewModel | ProductJoinedViewModel } | ErrorResponseBody,
+  { product: ProductViewModel | ProductPopulatedViewModel } | ErrorResponseBody,
   unknown,
   { populate?: string }
 >;
 export const getProduct: GetProduct = async (req, res) => {
   const { id } = req.params;
   const { populate } = req.query;
+  const shouldPopulateCategories = populate === 'categories';
 
   try {
-    const product = await ProductModel.findById(id);
+    const product = shouldPopulateCategories
+      ? await ProductModel.findById(id).populate<{ categories: CategoryDocument[] }>('categories')
+      : await ProductModel.findById(id);
+
     if (product === null) {
       throw new Error(`Produktas su id '${id}' nerastas`);
     }
-    const shouldPopulateCategories = populate === 'categories';
-    const productViewModel = await createProductViewModel(product, shouldPopulateCategories);
+    const productViewModel = shouldPopulateCategories
+      ? createProductPopulatedViewModel(product as ProductPopulatedDocument)
+      : createProductViewModel(product as ProductDocument);
 
     res.status(200).json({ product: productViewModel });
   } catch (error) {
