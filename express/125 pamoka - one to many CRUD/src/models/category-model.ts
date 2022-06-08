@@ -1,6 +1,22 @@
-import { Schema, model } from 'mongoose';
+import {
+  Schema,
+  Model,
+  Document,
+  Types,
+  model,
+} from 'mongoose';
 
-const categorySchema = new Schema({
+type Category = {
+  title: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type CategoryDocument = Document<Types.ObjectId, unknown, Category> & Category & {
+  _id: Types.ObjectId;
+};
+
+const categorySchema = new Schema<Category, Model<Category>>({
   title: {
     type: String,
     required: true,
@@ -9,7 +25,6 @@ const categorySchema = new Schema({
   timestamps: true,
 });
 
-// collection name - "categories"
 const CategoryModel = model('Category', categorySchema);
 
 export default CategoryModel;

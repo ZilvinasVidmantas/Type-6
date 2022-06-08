@@ -61,6 +61,7 @@ export const register: RequestHandler<unknown, unknown, AuthBody> = async (req, 
       token: `Bearer ${token}`,
     });
   } catch (error) {
+    console.log(error);
     let message;
 
     if (error instanceof Error.ValidationError) {
