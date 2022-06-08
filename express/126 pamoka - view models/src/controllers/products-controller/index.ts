@@ -22,13 +22,12 @@ const validateCategoriesIds = async (categoriesIds?: string[]) => {
   return [];
 };
 
-type GetProducts = RequestHandler<
+export const getProducts: RequestHandler<
   unknown,
   { products: ProductViewModel[] | ProductPopulatedViewModel[] },
   unknown,
   { populate?: string }
->;
-export const getProducts: GetProducts = async (req, res) => {
+> = async (req, res) => {
   const { populate } = req.query;
   const shouldPopulateCategories = populate === 'categories';
 
@@ -45,13 +44,12 @@ export const getProducts: GetProducts = async (req, res) => {
   });
 };
 
-type GetProduct = RequestHandler<
+export const getProduct: RequestHandler<
   { id: string },
   { product: ProductViewModel | ProductPopulatedViewModel } | ErrorResponseBody,
   unknown,
   { populate?: string }
->;
-export const getProduct: GetProduct = async (req, res) => {
+> = async (req, res) => {
   const { id } = req.params;
   const { populate } = req.query;
   const shouldPopulateCategories = populate === 'categories';

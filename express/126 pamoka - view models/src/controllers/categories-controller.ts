@@ -3,11 +3,11 @@ import CategoryModel from '../models/category-model';
 import createCategoryViewModel, { CategoryViewModel } from '../view-model-creators/create-category-view-model';
 
 type SingularCategoryRequestHandlerResponse = { category: CategoryViewModel } | ErrorResponseBody;
-
 type GetCategoriesRequestHandler = RequestHandler<
-  undefined,
+  unknown,
   { categories: CategoryViewModel[] }
 >;
+
 export const getCategories: GetCategoriesRequestHandler = async (req, res) => {
   const categoryDocs = await CategoryModel.find();
 
@@ -16,11 +16,10 @@ export const getCategories: GetCategoriesRequestHandler = async (req, res) => {
   });
 };
 
-type GetCategoryRequestHandler = RequestHandler<
+export const getCategory: RequestHandler<
   { id: string },
   SingularCategoryRequestHandlerResponse
->;
-export const getCategory: GetCategoryRequestHandler = async (req, res) => {
+> = async (req, res) => {
   const { id } = req.params;
   try {
     const categoryDoc = await CategoryModel.findById(id);
@@ -38,12 +37,11 @@ export const getCategory: GetCategoryRequestHandler = async (req, res) => {
   }
 };
 
-type CreateCategoryRequestHandler = RequestHandler<
+export const createCategory: RequestHandler<
   unknown,
   SingularCategoryRequestHandlerResponse,
   { title: string }
->;
-export const createCategory: CreateCategoryRequestHandler = async (req, res) => {
+> = async (req, res) => {
   const categoryProps = req.body;
 
   try {
@@ -56,12 +54,11 @@ export const createCategory: CreateCategoryRequestHandler = async (req, res) => 
   }
 };
 
-type UpdateCategoryRequestHandler = RequestHandler<
+export const updateCategory: RequestHandler<
   { id: string },
   SingularCategoryRequestHandlerResponse,
   { title: string }
->;
-export const updateCategory: UpdateCategoryRequestHandler = async (req, res) => {
+> = async (req, res) => {
   const { id } = req.params;
   const categoryProps = req.body;
 
@@ -81,11 +78,10 @@ export const updateCategory: UpdateCategoryRequestHandler = async (req, res) => 
   }
 };
 
-type DeleteCategoryRequestHandler = RequestHandler<
+export const deleteCategory: RequestHandler<
   { id: string },
   SingularCategoryRequestHandlerResponse
->;
-export const deleteCategory: DeleteCategoryRequestHandler = async (req, res) => {
+> = async (req, res) => {
   const { id } = req.params;
 
   try {
