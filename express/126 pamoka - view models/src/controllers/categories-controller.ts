@@ -2,13 +2,12 @@ import { RequestHandler } from 'express';
 import CategoryModel from '../models/category-model';
 import createCategoryViewModel, { CategoryViewModel } from '../view-model-creators/create-category-view-model';
 
-type SingularCategoryRequestHandlerResponse = { category: CategoryViewModel } | ErrorResponseBody;
-type GetCategoriesRequestHandler = RequestHandler<
+type SingularCategoryResponse = { category: CategoryViewModel } | ErrorResponseBody;
+
+export const getCategories: RequestHandler<
   unknown,
   { categories: CategoryViewModel[] }
->;
-
-export const getCategories: GetCategoriesRequestHandler = async (req, res) => {
+> = async (req, res) => {
   const categoryDocs = await CategoryModel.find();
 
   res.status(200).json({
@@ -18,7 +17,7 @@ export const getCategories: GetCategoriesRequestHandler = async (req, res) => {
 
 export const getCategory: RequestHandler<
   { id: string },
-  SingularCategoryRequestHandlerResponse
+  SingularCategoryResponse
 > = async (req, res) => {
   const { id } = req.params;
   try {
@@ -39,7 +38,7 @@ export const getCategory: RequestHandler<
 
 export const createCategory: RequestHandler<
   unknown,
-  SingularCategoryRequestHandlerResponse,
+  SingularCategoryResponse,
   { title: string }
 > = async (req, res) => {
   const categoryProps = req.body;
@@ -56,7 +55,7 @@ export const createCategory: RequestHandler<
 
 export const updateCategory: RequestHandler<
   { id: string },
-  SingularCategoryRequestHandlerResponse,
+  SingularCategoryResponse,
   { title: string }
 > = async (req, res) => {
   const { id } = req.params;
@@ -80,7 +79,7 @@ export const updateCategory: RequestHandler<
 
 export const deleteCategory: RequestHandler<
   { id: string },
-  SingularCategoryRequestHandlerResponse
+  SingularCategoryResponse
 > = async (req, res) => {
   const { id } = req.params;
 
