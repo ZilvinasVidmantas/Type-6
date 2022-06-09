@@ -121,18 +121,22 @@ export const updateProduct: RequestHandler<
   }
 };
 
-export const deleteProduct: RequestHandler = async (req, res) => {
+export const deleteProduct: RequestHandler<
+  { id: string },
+  SingularProductResponse
+> = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedProduct = await ProductModel.findByIdAndDelete(id);
-    if (deletedProduct === null) throw new Error(`Produktas su id '${id}' nerastas`);
-    res.status(200).json({
-      product: deletedProduct,
-    });
+    const productDoc = await ProductModel.findByIdAndDelete(id);
+    if (productDoc === null) {
+      throw new Error(`Produktas su id '${id}' nerastas`);
+    }
+    const productViewModel = createProductViewModel(productDoc);
+    res.status(200).json({ product: productViewModel });
   } catch (error) {
     res.status(404).json({
-      error: error instanceof Error ? error.message : error,
+      error: error instanceof Error ? error.message : 'Klaida trinant produktą',
     });
   }
 };
