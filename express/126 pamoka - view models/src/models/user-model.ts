@@ -23,7 +23,7 @@ export type User = {
   img?: string,
 };
 
-export type UserDocument = (Document<unknown, any, User> & User & {
+export type UserDocument = (Document<Types.ObjectId, unknown, User> & User & {
   _id: Types.ObjectId;
 });
 
