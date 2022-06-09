@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { Error } from 'mongoose';
 import { formatProductValidationError } from './products-error-formatters';
 import CategoryModel, { CategoryDocument } from '../../models/category-model';
-import ProductModel, { ProductPopulatedDocument, ProductDocument, ProductUpdate } from '../../models/product-model';
+import ProductModel, { ProductPopulatedDocument, ProductDocument, ProductProps } from '../../models/product-model';
 import createProductViewModel, { ProductViewModel } from '../../view-model-creators/create-product-view-model';
 import createProductPopulatedViewModel, { ProductPopulatedViewModel } from '../../view-model-creators/create-product-populated-view-model';
 
@@ -80,7 +80,7 @@ export const getProduct: RequestHandler<
 export const createProduct: RequestHandler<
   unknown,
   SingularProductResponse,
-  Partial<ProductUpdate>
+  ProductProps
 > = async (req, res) => {
   const productProps = req.body;
   try {
@@ -97,15 +97,23 @@ export const createProduct: RequestHandler<
   }
 };
 
-export const updateProduct: RequestHandler = async (req, res) => {
+export const updateProduct: RequestHandler<
+  { id: string },
+  SingularProductResponse,
+  Partial<ProductProps>
+> = async (req, res) => {
   const { id } = req.params;
   const productProps = req.body;
 
   try {
     const uniqCategoriesIds = await validateCategoriesIds(productProps.categories);
     productProps.categories = uniqCategoriesIds;
-    const updatedProduct = await ProductModel.findByIdAndUpdate(id, productProps, { new: true });
-    res.status(200).json(updatedProduct);
+    const productDoc = await ProductModel.findByIdAndUpdate(id, productProps, { new: true });
+    if (productDoc === null) {
+      throw new Error(`Produktas su id '${id}' nerastas`);
+    }
+    const productViewModel = createProductViewModel(productDoc);
+    res.status(200).json({ product: productViewModel });
   } catch (error) {
     res.status(404).json({
       error: error instanceof Error ? error.message : 'Blogi produkto duomenys',

@@ -16,8 +16,8 @@ type Product = {
   updatedAt: string,
 };
 
-export type ProductUpdate = Omit<Product, 'createdAt' | 'updatedAt' | 'categories'> & {
-  categories: string[]
+export type ProductProps = Omit<Product, 'createdAt' | 'updatedAt' | 'categories'> & {
+  categories: string[],
 };
 
 export type ProductDocument = Document<
