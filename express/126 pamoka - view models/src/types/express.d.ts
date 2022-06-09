@@ -7,7 +7,7 @@ declare global {
         email: string,
         role: string,
       },
-      authUser: UserDocument
+      authUserDoc?: UserDocument
     }
   }
 

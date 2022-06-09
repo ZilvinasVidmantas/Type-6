@@ -1,31 +1,57 @@
 import { RequestHandler } from 'express';
+import { CartItem, CartItemProps } from '../models/user-model';
+import createCartItemViewModel, { CartItemViewModel } from '../view-model-creators/create-cart-item-view-model';
 
-export const getCart: RequestHandler = async (req, res) => {
-  const { authUser } = req;
+type CartItemResponse = { cartItem: CartItemViewModel } | ErrorResponseBody;
 
-  res.status(200).send({
-    cart: authUser.cart,
-  });
-};
-
-export const addItem: RequestHandler = async (req, res) => {
-  const newCartItemData = req.body;
-  const { authUser } = req;
+export const getCart: RequestHandler<
+  unknown,
+  { cartItems: CartItemViewModel[] } | ErrorResponseBody
+> = async (req, res) => {
+  const { authUserDoc } = req;
 
   try {
-    const productExistsInCart = authUser.cart.some(
+    if (authUserDoc === undefined) {
+      throw new Error('Reikalingas prisijungimas');
+    }
+
+    res.status(200).send({
+      cartItems: authUserDoc.cartItems.map(createCartItemViewModel),
+    });
+  } catch (error) {
+    res.status(200).send({
+      error: error instanceof Error ? error.message : 'Klaida siunčiant krepšelį',
+    });
+  }
+};
+
+export const addItem: RequestHandler<
+  unknown,
+  CartItemResponse,
+  CartItemProps
+> = async (req, res) => {
+  const newCartItemData = req.body;
+  const { authUserDoc } = req;
+
+  try {
+    if (authUserDoc === undefined) {
+      throw new Error('Reikalingas prisijungimas');
+    }
+
+    const productExistsInCart = authUserDoc.cartItems.some(
       (cartItem) => cartItem.productId.equals(newCartItemData.productId),
     );
+
     if (productExistsInCart) {
       throw new Error('Toks daiktas jau yra krepšelyje');
     }
-    authUser.cart.push(newCartItemData);
-    await authUser.save();
+    authUserDoc.cartItems.push(newCartItemData as CartItem);
+    await authUserDoc.save();
 
-    const addedCartItem = authUser.cart[authUser.cart.length - 1];
+    const cartItem = authUserDoc.cartItems[authUserDoc.cartItems.length - 1];
 
     res.status(200).json({
-      cartItem: addedCartItem,
+      cartItem: createCartItemViewModel(cartItem),
     });
   } catch (error) {
     res.status(400).json({
@@ -34,24 +60,33 @@ export const addItem: RequestHandler = async (req, res) => {
   }
 };
 
-export const updateItem: RequestHandler = async (req, res) => {
+export const updateItem: RequestHandler<
+  { itemId: string },
+  CartItemResponse,
+  Partial<CartItemProps>
+> = async (req, res) => {
   const { itemId } = req.params;
-  const { authUser } = req;
+  const { authUserDoc } = req;
   const { amount } = req.body;
 
   try {
-    const cartItemRef = authUser.cart.find((item) => item._id.equals(itemId));
+    if (authUserDoc === undefined) {
+      throw new Error('Reikalingas prisijungimas');
+    }
+
+    const cartItemRef = authUserDoc.cartItems.find((cartItem) => cartItem._id.equals(itemId));
 
     if (cartItemRef === undefined) {
       throw new Error(`Nerastas krepšelio daiktas su tokiu id: '${itemId}'`);
     }
 
-    cartItemRef.amount = amount;
-
-    await authUser.save();
+    if (amount) {
+      cartItemRef.amount = amount;
+      await authUserDoc.save();
+    }
 
     res.status(200).send({
-      cartItem: cartItemRef,
+      cartItem: createCartItemViewModel(cartItemRef),
     });
   } catch (error) {
     res.status(400).json({
@@ -60,24 +95,29 @@ export const updateItem: RequestHandler = async (req, res) => {
   }
 };
 
-export const deleteItem: RequestHandler = async (req, res) => {
+export const deleteItem: RequestHandler<
+  { itemId: string },
+  CartItemResponse
+> = async (req, res) => {
   const { itemId } = req.params;
-  const user = req.authUser;
+  const { authUserDoc } = req;
   try {
-    const deletedItem = user.cart.find((cartItem) => cartItem._id.equals(itemId));
-    if (deletedItem === undefined) {
-      res.status(400).json({
-        error: 'Nerastas pirkinių krepšelio daiktas',
-      });
-      return;
+    if (authUserDoc === undefined) {
+      throw new Error('Reikalingas prisijungimas');
     }
 
-    user.cart = user.cart.filter((cartItem) => cartItem !== deletedItem);
-    await user.save();
-    res.status(200).json({ cartItem: deletedItem });
+    const deletedItem = authUserDoc.cartItems.find((cartItem) => cartItem._id.equals(itemId));
+    if (deletedItem === undefined) {
+      throw new Error('Nerastas pirkinių krepšelio daiktas');
+    }
+
+    authUserDoc.cartItems = authUserDoc.cartItems.filter((cartItem) => cartItem !== deletedItem);
+    await authUserDoc.save();
+
+    res.status(200).json({ cartItem: createCartItemViewModel(deletedItem) });
   } catch (error) {
     res.status(400).json({
-      error: 'Neteisingi trinamo produkto duomenys',
+      error: error instanceof Error ? error.message : 'Neteisingi trinamo produkto duomenys',
     });
   }
 };

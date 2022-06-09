@@ -35,16 +35,16 @@ export const userMiddleware: RequestHandler = async (req, res, next) => {
     });
     return;
   }
-  const authUser = await UserModel.findOne({ email: req.tokenData.email });
+  const authUserDoc = await UserModel.findOne({ email: req.tokenData.email });
 
-  if (authUser === null) {
+  if (authUserDoc === null) {
     res.status(404).json({
       error: 'Autentifikuojamas vartotojas nerastas',
     });
     return;
   }
 
-  req.authUser = authUser;
+  req.authUserDoc = authUserDoc;
 
   next();
 };

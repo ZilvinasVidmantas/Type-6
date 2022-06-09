@@ -6,10 +6,10 @@ export type CartItemViewModel = {
   amount: number,
 };
 
-const createCartItemViewModel = ({ _id, productId, ...props }: CartItem): CartItemViewModel => ({
-  id: _id.toString(),
-  productId: productId.toString(),
-  ...props,
+const createCartItemViewModel = (cartItem: CartItem): CartItemViewModel => ({
+  id: cartItem._id.toString(),
+  productId: cartItem.productId.toString(),
+  amount: cartItem.amount,
 });
 
 export default createCartItemViewModel;
