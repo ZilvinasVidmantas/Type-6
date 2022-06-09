@@ -21,11 +21,17 @@ export type User = {
   name?: string,
   surname?: string,
   img?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
-export type UserDocument = (Document<Types.ObjectId, unknown, User> & User & {
+export type UserProps = Omit<User, 'createdAt' | 'updatedAt' | 'role' | 'cart'> & {
+  cart?: CartItem[]
+};
+
+export type UserDocument = Document<Types.ObjectId, unknown, User> & User & {
   _id: Types.ObjectId;
-});
+};
 
 type UserModelType = Model<User>;
 
