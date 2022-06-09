@@ -2,9 +2,11 @@ import { RequestHandler } from 'express';
 import { Error } from 'mongoose';
 import { formatProductValidationError } from './products-error-formatters';
 import CategoryModel, { CategoryDocument } from '../../models/category-model';
-import ProductModel, { ProductPopulatedDocument, ProductDocument } from '../../models/product-model';
+import ProductModel, { ProductPopulatedDocument, ProductDocument, ProductUpdate } from '../../models/product-model';
 import createProductViewModel, { ProductViewModel } from '../../view-model-creators/create-product-view-model';
 import createProductPopulatedViewModel, { ProductPopulatedViewModel } from '../../view-model-creators/create-product-populated-view-model';
+
+type SingularProductResponse = { product: ProductViewModel } | ErrorResponseBody;
 
 const validateCategoriesIds = async (categoriesIds?: string[]) => {
   if (categoriesIds !== undefined && categoriesIds.length > 0) {
@@ -75,13 +77,18 @@ export const getProduct: RequestHandler<
   }
 };
 
-export const createProduct: RequestHandler = async (req, res) => {
+export const createProduct: RequestHandler<
+  unknown,
+  SingularProductResponse,
+  Partial<ProductUpdate>
+> = async (req, res) => {
   const productProps = req.body;
   try {
     const uniqCategoriesIds = await validateCategoriesIds(productProps.categories);
     productProps.categories = uniqCategoriesIds;
-    const createdProduct = await ProductModel.create(productProps);
-    res.status(201).json(createdProduct);
+    const productDoc = await ProductModel.create(productProps);
+    const productViewModel = createProductViewModel(productDoc);
+    res.status(201).json({ product: productViewModel });
   } catch (err) {
     const error = err instanceof Error.ValidationError
       ? formatProductValidationError(err)
