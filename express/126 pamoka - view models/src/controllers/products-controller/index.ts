@@ -31,17 +31,18 @@ export const getProducts: RequestHandler<
   const { populate } = req.query;
   const shouldPopulateCategories = populate === 'categories';
 
-  const productDocs = shouldPopulateCategories
-    ? await ProductModel.find().populate<{ categories: CategoryDocument[] }>('categories')
-    : await ProductModel.find();
+  let products: ProductViewModel[] | ProductPopulatedViewModel[];
+  if (shouldPopulateCategories) {
+    const productPopulatedDocs = await ProductModel
+      .find()
+      .populate<{ categories: CategoryDocument[] }>('categories');
+    products = productPopulatedDocs.map(createProductPopulatedViewModel);
+  } else {
+    const productDocs = await ProductModel.find();
+    products = productDocs.map(createProductViewModel);
+  }
 
-  const productsViewModels = shouldPopulateCategories
-    ? (productDocs as ProductPopulatedDocument[]).map(createProductPopulatedViewModel)
-    : (productDocs as ProductDocument[]).map(createProductViewModel);
-
-  res.status(200).json({
-    products: productsViewModels,
-  });
+  res.status(200).json({ products });
 };
 
 export const getProduct: RequestHandler<
@@ -55,18 +56,18 @@ export const getProduct: RequestHandler<
   const shouldPopulateCategories = populate === 'categories';
 
   try {
-    const product = shouldPopulateCategories
+    const productDoc = shouldPopulateCategories
       ? await ProductModel.findById(id).populate<{ categories: CategoryDocument[] }>('categories')
       : await ProductModel.findById(id);
 
-    if (product === null) {
+    if (productDoc === null) {
       throw new Error(`Produktas su id '${id}' nerastas`);
     }
-    const productViewModel = shouldPopulateCategories
-      ? createProductPopulatedViewModel(product as ProductPopulatedDocument)
-      : createProductViewModel(product as ProductDocument);
+    const product = shouldPopulateCategories
+      ? createProductPopulatedViewModel(productDoc as ProductPopulatedDocument)
+      : createProductViewModel(productDoc as ProductDocument);
 
-    res.status(200).json({ product: productViewModel });
+    res.status(200).json({ product });
   } catch (error) {
     res.status(404).json({
       error: `Produktas su id '${id}' nerastas`,
