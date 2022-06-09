@@ -6,16 +6,6 @@ import UserModel from '../models/user-model';
 import config from '../config';
 
 type AuthBody = { email?: string, password?: string };
-/*
-  RequestHandler
-    * params - tai ką nurodote route'e, pvz.: '/:id'
-    * res.body - tai ką išsiunčiate(mūsų atveju tai ką siunčiate req.json(<TIPAS>))
-    * req.body - tai ką gaunate į req.body savybę
-    * req.query - tai ką perduodame url, pvz.: "/user?sort=name&page=2&limit=14"
-
-  Jeigu norite perduoti 3 parametrą, bet nereikia perduoti 1 ir 2, tuomet galite naudoti tipą
-  <unknown>, kad praleisti 1 ir 2 bendrinių parametrų nurodymus.
-*/
 
 export const login: RequestHandler<unknown, unknown, AuthBody> = async (req, res) => {
   const { email, password } = req.body;
