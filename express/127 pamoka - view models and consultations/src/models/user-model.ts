@@ -6,20 +6,45 @@ import {
   model,
 } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import { ProductPopulatedDocument } from './product-model';
 
 export type CartItem = {
   _id: Types.ObjectId,
-  productId: Types.ObjectId,
+  product: Types.ObjectId,
   amount: number
+  createdAt: string,
+  updatedAt: string,
 };
 
-export type CartItemProps = Omit<CartItem, '_id'>;
+export type CartItemProps = Omit<CartItem, '_id' | 'product' | 'createdAt' | 'updatedAt'> & {
+  productId: string
+};
+
+export type CartItemDocument = Types.Subdocument<Types.ObjectId> & CartItem;
+
+export type CartItemPopulatedDocument = Omit<CartItemDocument, 'product'> & {
+  product: ProductPopulatedDocument
+};
+
+const cartItemSchema = new Schema<CartItem>({
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+}, {
+  timestamps: true,
+});
 
 export type User = {
   email: string,
   password: string,
   role: 'user' | 'admin',
-  cartItems: CartItem[]
+  cartItems: CartItem[],
   name?: string,
   surname?: string,
   img?: string,
@@ -31,11 +56,17 @@ export type UserProps = Omit<User, 'createdAt' | 'updatedAt' | 'role' | 'cartIte
   cartItems?: CartItem[]
 };
 
-export type UserDocument = Document<Types.ObjectId, unknown, User> & User & {
-  _id: Types.ObjectId;
+type UserDocumentProps = {
+  cartItems: Types.DocumentArray<CartItem>;
 };
 
-const userSchema = new Schema<User, Model<User>>({
+type UserModelType = Model<User, unknown, UserDocumentProps>;
+
+export type UserDocument = Document<Types.ObjectId, unknown, User> & User & {
+  _id: Types.ObjectId;
+} & UserDocumentProps;
+
+const userSchema = new Schema<User, UserModelType>({
   email: {
     type: String,
     required: true,
@@ -54,17 +85,7 @@ const userSchema = new Schema<User, Model<User>>({
     default: 'user',
   },
   cartItems: {
-    type: [{
-      productId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true,
-      },
-      amount: {
-        type: Number,
-        required: true,
-      },
-    }],
+    type: [cartItemSchema],
     default: [],
   },
 }, {
@@ -73,6 +94,6 @@ const userSchema = new Schema<User, Model<User>>({
 
 userSchema.plugin(uniqueValidator);
 
-const UserModel = model('User', userSchema);
+const UserModel = model<User, UserModelType>('User', userSchema);
 
 export default UserModel;

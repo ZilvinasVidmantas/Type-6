@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { CartItem, CartItemProps } from '../models/user-model';
+import { CartItemProps } from '../models/user-model';
 import createCartItemViewModel, { CartItemViewModel } from '../view-model-creators/create-cart-item-view-model';
 
 type CartItemResponse = { cartItem: CartItemViewModel } | ErrorResponseBody;
@@ -30,7 +30,7 @@ export const addItem: RequestHandler<
   CartItemResponse,
   CartItemProps
 > = async (req, res) => {
-  const newCartItemData = req.body;
+  const { productId, ...cartItemProps } = req.body;
   const { authUserDoc } = req;
 
   try {
@@ -39,13 +39,16 @@ export const addItem: RequestHandler<
     }
 
     const productExistsInCart = authUserDoc.cartItems.some(
-      (cartItem) => cartItem.productId.equals(newCartItemData.productId),
+      (cartItem) => cartItem.product.equals(productId),
     );
 
     if (productExistsInCart) {
       throw new Error('Toks daiktas jau yra krepšelyje');
     }
-    authUserDoc.cartItems.push(newCartItemData as CartItem);
+    authUserDoc.cartItems.push({
+      product: productId,
+      ...cartItemProps,
+    });
     await authUserDoc.save();
 
     const cartItem = authUserDoc.cartItems[authUserDoc.cartItems.length - 1];
@@ -74,7 +77,9 @@ export const updateItem: RequestHandler<
       throw new Error('Reikalingas prisijungimas');
     }
 
-    const cartItemRef = authUserDoc.cartItems.find((cartItem) => cartItem._id.equals(itemId));
+    const cartItemRef = authUserDoc.cartItems.find(
+      (cartItem) => cartItem._id.equals(itemId),
+    );
 
     if (cartItemRef === undefined) {
       throw new Error(`Nerastas krepšelio daiktas su tokiu id: '${itemId}'`);
@@ -106,15 +111,19 @@ export const deleteItem: RequestHandler<
       throw new Error('Reikalingas prisijungimas');
     }
 
-    const deletedItem = authUserDoc.cartItems.find((cartItem) => cartItem._id.equals(itemId));
-    if (deletedItem === undefined) {
+    const deletedItemDocIndex = authUserDoc.cartItems.findIndex(
+      (cartItem) => cartItem._id.equals(itemId),
+    );
+    if (deletedItemDocIndex === -1) {
       throw new Error('Nerastas pirkinių krepšelio daiktas');
     }
 
-    authUserDoc.cartItems = authUserDoc.cartItems.filter((cartItem) => cartItem !== deletedItem);
+    const deletedItemDoc = authUserDoc.cartItems[deletedItemDocIndex];
+    authUserDoc.cartItems.splice(deletedItemDocIndex, 1);
+
     await authUserDoc.save();
 
-    res.status(200).json({ cartItem: createCartItemViewModel(deletedItem) });
+    res.status(200).json({ cartItem: createCartItemViewModel(deletedItemDoc) });
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : 'Neteisingi trinamo produkto duomenys',
