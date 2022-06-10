@@ -1,12 +1,13 @@
 import { RequestHandler } from 'express';
-import { CartItemProps } from '../models/user-model';
+import { CartItemPopulatedDocument, CartItemProps } from '../models/user-model';
+import createCartItemPopulatedViewModel, { CartItemPopulatedViewModel } from '../view-model-creators/create-cart-item-populated-view-model';
 import createCartItemViewModel, { CartItemViewModel } from '../view-model-creators/create-cart-item-view-model';
 
 type CartItemResponse = { cartItem: CartItemViewModel } | ErrorResponseBody;
 
 export const getCart: RequestHandler<
   unknown,
-  { cartItems: CartItemViewModel[] } | ErrorResponseBody
+  { cartItems: CartItemPopulatedViewModel[] } | ErrorResponseBody
 > = async (req, res) => {
   const { authUserDoc } = req;
 
@@ -15,8 +16,11 @@ export const getCart: RequestHandler<
       throw new Error('Reikalingas prisijungimas');
     }
 
+    const authUserPopulatedDoc = await authUserDoc
+      .populate<{ cartItems: CartItemPopulatedDocument[] }>('cartItems.product');
+
     res.status(200).send({
-      cartItems: authUserDoc.cartItems.map(createCartItemViewModel),
+      cartItems: authUserPopulatedDoc.cartItems.map(createCartItemPopulatedViewModel),
     });
   } catch (error) {
     res.status(200).send({
