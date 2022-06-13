@@ -1,20 +1,18 @@
 import ApiService, { isResponseError } from './api-service';
 import { Crudentials, User } from '../types';
 
-type AuthResponseBody = {
+export type AuthResponseBody = {
   user: User,
   token: string,
 };
 
-export type AuthPromise = (crudential: Crudentials) => Promise<User>;
+export type AuthPromise = (crudential: Crudentials) => Promise<AuthResponseBody>;
 
 export const login: AuthPromise = async (crudentials: Crudentials) => {
   try {
     const response = await ApiService.post<AuthResponseBody>('/api/auth/login', crudentials);
 
-    console.log(response.data);
-
-    return response.data.user;
+    return response.data;
   } catch (err) {
     if (isResponseError(err)) {
       throw new Error(err.response.data.error);

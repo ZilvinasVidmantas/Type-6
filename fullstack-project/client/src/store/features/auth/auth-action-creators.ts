@@ -9,7 +9,7 @@ import {
   AuthClearErrorAction,
   AuthActionType,
 } from './auth-types';
-import AuthService, { AuthPromise } from '../../../services/auth-service';
+import AuthService, { AuthPromise, AuthResponseBody } from '../../../services/auth-service';
 import {
   createNavigationSetRedirectAction,
   navigationClearRedirectAction,
@@ -27,9 +27,9 @@ export const authLogoutAction: AuthLogoutAction = {
   type: AuthActionType.AUTH_LOGOUT,
 };
 
-const createAuthSuccessAction = (user: User): AuthSuccessAction => ({
+const createAuthSuccessAction = (authReponseBody: AuthResponseBody): AuthSuccessAction => ({
   type: AuthActionType.AUTH_SUCCESS,
-  payload: { user },
+  payload: authReponseBody,
 });
 
 const createAuthFailureAction = (error: string): AuthFailureAction => ({
@@ -45,8 +45,8 @@ const authenticate = async (
 ) => {
   dispatch(authLoadingAction);
   try {
-    const user = await authCallback(...authCallbackArgs);
-    const authSuccessAction = createAuthSuccessAction(user);
+    const authResponseBody = await authCallback(...authCallbackArgs);
+    const authSuccessAction = createAuthSuccessAction(authResponseBody);
     const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
     dispatch(navigationSetRedirectAction);
     dispatch(authSuccessAction);
