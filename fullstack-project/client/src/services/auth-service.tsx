@@ -1,0 +1,41 @@
+import ApiService, { isResponseError } from './api-service';
+import { Crudentials, User } from '../types';
+
+type AuthResponseBody = {
+  user: User,
+  token: string,
+};
+
+export type AuthPromise = (crudential: Crudentials) => Promise<User>;
+
+export const login: AuthPromise = async (crudentials: Crudentials) => {
+  try {
+    const response = await ApiService.post<AuthResponseBody>('/api/auth/login', crudentials);
+
+    console.log(response.data);
+
+    return response.data.user;
+  } catch (err) {
+    if (isResponseError(err)) {
+      throw new Error(err.response.data.error);
+    }
+    console.log('Neprognozuota klaida');
+    throw (err);
+  }
+};
+
+export const register: AuthPromise = async ({ email, password }: Crudentials) => {
+  throw new Error('Testuojames, neskubam.');
+};
+
+export const checkEmailAvailability = async (email: string): Promise<boolean> => {
+  throw new Error('Testuojames, neskubam.');
+};
+
+const AuthService = {
+  login,
+  register,
+  checkEmailAvailability,
+};
+
+export default AuthService;
