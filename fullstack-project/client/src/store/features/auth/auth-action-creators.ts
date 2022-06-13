@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { User, Crudentials, UserRegistration } from '../../../types';
+import { Crudentials } from '../../../types';
 import { AppAction } from '../../redux-types';
 import {
   AuthSuccessAction,
@@ -9,11 +9,12 @@ import {
   AuthClearErrorAction,
   AuthActionType,
 } from './auth-types';
-import AuthService, { AuthPromise, AuthResponseBody } from '../../../services/auth-service';
+import AuthService, { AuthResponseBody } from '../../../services/auth-service';
 import {
   createNavigationSetRedirectAction,
   navigationClearRedirectAction,
 } from '../navigation/navigation-action-creators';
+import pause from '../../../helpers/pause';
 
 const authLoadingAction: AuthLoadingAction = {
   type: AuthActionType.AUTH_LOADING,
@@ -39,16 +40,17 @@ const createAuthFailureAction = (error: string): AuthFailureAction => ({
 
 const authenticate = async (
   dispatch: Dispatch<AppAction>,
-  authCallback: AuthPromise,
-  authCallbackArgs: Parameters<AuthPromise>,
-  redirect: string,
+  authCallback: () => Promise<AuthResponseBody>,
+  redirect?: string,
 ) => {
   dispatch(authLoadingAction);
   try {
-    const authResponseBody = await authCallback(...authCallbackArgs);
+    const authResponseBody = await authCallback();
     const authSuccessAction = createAuthSuccessAction(authResponseBody);
-    const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
-    dispatch(navigationSetRedirectAction);
+    if (redirect) {
+      const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
+      dispatch(navigationSetRedirectAction);
+    }
     dispatch(authSuccessAction);
     dispatch(navigationClearRedirectAction);
   } catch (error) {
@@ -58,16 +60,23 @@ const authenticate = async (
   }
 };
 
-export const createLoginAction = (
+export const createAuthenticateActionThunk = (token: string) => async (
+  dispatch: Dispatch<AppAction>,
+): Promise<void> => {
+  await pause(2000);
+  await authenticate(dispatch, async () => AuthService.authenticate(token));
+};
+
+export const createLoginActionThunk = (
   crudentials: Crudentials,
   redirect: string,
 ) => async (dispatch: Dispatch<AppAction>): Promise<void> => {
-  await authenticate(dispatch, AuthService.login, [crudentials], redirect);
+  await authenticate(dispatch, async () => AuthService.login(crudentials), redirect);
 };
 
-export const createRegisterAction = (
-  userRegistration: UserRegistration,
+export const createRegisterActionThunk = (
+  crudentials: Crudentials,
   redirect: string,
 ) => async (dispatch: Dispatch<AppAction>): Promise<void> => {
-  await authenticate(dispatch, AuthService.register, [userRegistration], redirect);
+  await authenticate(dispatch, async () => AuthService.register(crudentials), redirect);
 };

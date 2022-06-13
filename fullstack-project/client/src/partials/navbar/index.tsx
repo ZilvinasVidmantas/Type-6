@@ -9,10 +9,10 @@ import NavbarLink from './navbar-link';
 import NavbarAuthMenu from './navbar-auth-menu';
 import NavbarVisitorMenu from './navbar-visitor-menu';
 import { useRootSelector } from '../../store/hooks';
-import { selectLoggedIn } from '../../store/selectors';
+import { selectAuthLoggedIn } from '../../store/selectors';
 
 const Navbar: React.FC = () => {
-  const loggedIn = useRootSelector(selectLoggedIn);
+  const loggedIn = useRootSelector(selectAuthLoggedIn);
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: 'grey.900' }}>

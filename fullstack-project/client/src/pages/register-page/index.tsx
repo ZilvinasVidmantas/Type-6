@@ -8,7 +8,7 @@ import { useSearchParams } from 'react-router-dom';
 import AuthForm from '../../components/auth-form';
 import { UserRegistration } from '../../types';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createRegisterAction } from '../../store/action-creators';
+import { createRegisterActionThunk } from '../../store/action-creators';
 import { selectAuthLoading } from '../../store/selectors';
 import AuthService from '../../services/auth-service';
 
@@ -57,9 +57,9 @@ const RegisterPage: React.FC = () => {
   const loading = useRootSelector(selectAuthLoading);
   const dispatch = useRootDispatch();
 
-  const handleRegister: RegisterConfig['onSubmit'] = ({ email, password, repeatPassword }) => {
+  const handleRegister: RegisterConfig['onSubmit'] = ({ email, password }) => {
     const redirect = searchParams.get('redirect') ?? '/';
-    const registerAction = createRegisterAction({ email, password, repeatPassword }, redirect);
+    const registerAction = createRegisterActionThunk({ email, password }, redirect);
     dispatch(registerAction);
   };
 

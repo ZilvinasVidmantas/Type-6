@@ -1,6 +1,8 @@
 import React from 'react';
-import { Provider as ReduxProvider } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+
+import { useRootSelector, useRootDispatch } from './store/hooks';
+import { selectAuthLoggedIn, selectAuthToken } from './store/selectors';
 
 import HomePage from './pages/home-page';
 import LoginPage from './pages/login-page';
@@ -10,11 +12,19 @@ import ProfilePage from './pages/profile-page';
 import VisitorLayout from './layouts/visitor-layout';
 import RequireAuth from './routing/require-auth';
 import RequireVisitor from './routing/require-visitor';
+import { createAuthenticateActionThunk } from './store/action-creators';
 
-import store from './store';
+const App: React.FC = () => {
+  const token = useRootSelector(selectAuthToken);
+  const loggedIn = useRootSelector(selectAuthLoggedIn);
+  const dispatch = useRootDispatch();
 
-const App: React.FC = () => (
-  <ReduxProvider store={store}>
+  if (!loggedIn && token) {
+    dispatch(createAuthenticateActionThunk(token));
+    return <div>Autentifikuojama...</div>;
+  }
+
+  return (
     <Routes>
       <Route path="/" element={<VisitorLayout />}>
         <Route index element={<HomePage />} />
@@ -44,7 +54,7 @@ const App: React.FC = () => (
         />
       </Route>
     </Routes>
-  </ReduxProvider>
-);
+  );
+};
 
 export default App;
