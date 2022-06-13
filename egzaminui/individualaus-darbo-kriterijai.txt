@@ -31,7 +31,7 @@ Funkciniai reikalavimai:
         * komentuoti ( blog'as / naujienraštis )
         * ir t.t.
   
-  * Duomenų bazė su bent 5 struktūromis. Bent 3 ryšiai tarp struktūrų.
+  * Duomenų bazė su bent 3 struktūromis. Bent 2 ryšiai tarp struktūrų.
     * Teisingai sudaryta duomenų bazės ryšių schema.
 
   * Sąsaja su node.js + Express.js serverio API .
@@ -62,7 +62,9 @@ Vertinimas:
   3  Panaudota localStorage arba sessionStorage [1] *
   4  Panaudota globalios puslapio būsenos technologijos( react-context arba redux.js ) [1] *
   5  Prisitaikantis dizainas visiems puslapiams [1] *
-  6  Autentifikacija ir Autorizacija [1] *
+  6  Autentifikacija ir Autorizacija [1-2] *
+    6.1 1 rolė [1]
+    6.2 2 rolės [1]
   7  Teisingais ryšiais sudaryta ir pakankamo struktūrinio turinio duomenų bazė [1]
   8  Duomenų filtracija (ir|arba) paieška [1]
   9  Panaudota komponentų biblioteka su pritaikytais temos nustatymais [1] *
@@ -70,10 +72,12 @@ Vertinimas:
   11  FULLSTACK CRUD veiksmai [1-2] *
     11.1 Vienos struktūros pilni CRUD veiksmai [1] *
     11.2 Struktūros susijusios su kita struktūra CRUD veiksmai [1]
-  12  Formos validacija [1] *
+  12 Formos validacija [1] *
+  13 Serverio kode tipais aprašyti Model'iai [1] *
+  14 Serverio kode tipais aprašyti visi route'ai [1] *
 
   minimalus taškų skaičius išlaikymui: 5
-  maksimalus taškų skaičius: 13
+  maksimalus taškų skaičius: 16
 
   Surinkus 6 taškus - pažymys 6
   Surinkus 11 taškų - pažymys 10
