@@ -29,15 +29,14 @@ const validationSchema = Yup.object({
       async (email, context) => {
         if (!email) return false;
         if (!validator.isEmail(email)) return false;
-
-        const emailIsAvailable = await AuthService.checkEmailAvailability(email);
-        if (!emailIsAvailable) {
+        try {
+          const emailIsAvailable = await AuthService.checkEmailAvailability(email);
+          return emailIsAvailable;
+        } catch (error) {
           throw context.createError({
-            message: 'Email is taken',
+            message: error instanceof Error ? error.message : error as string,
           });
         }
-
-        return true;
       },
     ),
   password: Yup.string()

@@ -52,6 +52,7 @@ const authReducer: Reducer<AuthState, AuthAction> = (state = initialState, actio
       return {
         ...state,
         user: null,
+        token: null,
       };
     }
 
