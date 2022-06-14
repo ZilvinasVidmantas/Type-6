@@ -52,4 +52,3 @@ const AuthService = {
 };
 
 export default AuthService;
-// 9:05
