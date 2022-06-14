@@ -1,34 +1,30 @@
 import React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
-import { useRootSelector, useRootDispatch } from './store/hooks';
-import { selectAuthLoading, selectAuthLoggedIn, selectAuthToken } from './store/selectors';
-
+// all
 import HomePage from './pages/home-page';
+import ShopPage from './pages/shop-page/index';
+import CartPage from './pages/cart-page';
+// visitor
 import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page/index';
+// auth
 import ProfilePage from './pages/profile-page';
 
 import VisitorLayout from './layouts/visitor-layout';
 import RequireAuth from './routing/require-auth';
 import RequireVisitor from './routing/require-visitor';
-import { createAuthenticateActionThunk } from './store/action-creators';
 
-const App: React.FC = () => {
-  const token = useRootSelector(selectAuthToken);
-  const loggedIn = useRootSelector(selectAuthLoggedIn);
-  const loading = useRootSelector(selectAuthLoading);
-  const dispatch = useRootDispatch();
+import store from './store';
 
-  if (!loggedIn && token && !loading) {
-    dispatch(createAuthenticateActionThunk(token));
-    return <div />;
-  }
-
-  return (
+const App: React.FC = () => (
+  <ReduxProvider store={store}>
     <Routes>
       <Route path="/" element={<VisitorLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route
           path="auth/login"
           element={(
@@ -55,7 +51,7 @@ const App: React.FC = () => {
         />
       </Route>
     </Routes>
-  );
-};
+  </ReduxProvider>
+);
 
 export default App;

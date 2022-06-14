@@ -10,13 +10,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { selectAuthUser } from '../../store/selectors';
+import { selectUser } from '../../store/selectors';
 import { authLogoutAction } from '../../store/action-creators';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 
 const NavbarAuthMenu: React.FC = () => {
   const navigate = useNavigate();
-  const user = useRootSelector(selectAuthUser);
+  const user = useRootSelector(selectUser);
   const dispatch = useRootDispatch();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const popperAnchorRef = useRef<HTMLDivElement>(null);

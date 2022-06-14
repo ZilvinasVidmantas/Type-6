@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import SecurityIcon from '@mui/icons-material/Security';
-import { selectAuthError, selectAuthLoggedIn } from '../store/selectors';
+import { selectAuthError, selectLoggedIn } from '../store/selectors';
 import { useRootDispatch, useRootSelector } from '../store/hooks';
 import { authClearErrorAction } from '../store/action-creators';
 
@@ -30,7 +30,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
   children,
 }) => {
   const dispatch = useRootDispatch();
-  const loading = useRootSelector(selectAuthLoggedIn);
+  const loading = useRootSelector(selectLoggedIn);
   const error = useRootSelector(selectAuthError);
 
   const clearError = () => {

@@ -8,9 +8,9 @@ import { useSearchParams } from 'react-router-dom';
 import AuthForm from '../../components/auth-form';
 import { UserRegistration } from '../../types';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createRegisterActionThunk } from '../../store/action-creators';
+import { createRegisterAction } from '../../store/action-creators';
 import { selectAuthLoading } from '../../store/selectors';
-import AuthService from '../../services/auth-service';
+import AuthService from '../../store/features/auth/auth-service';
 
 type RegisterConfig = FormikConfig<UserRegistration>;
 
@@ -29,14 +29,15 @@ const validationSchema = Yup.object({
       async (email, context) => {
         if (!email) return false;
         if (!validator.isEmail(email)) return false;
-        try {
-          const emailIsAvailable = await AuthService.checkEmailAvailability(email);
-          return emailIsAvailable;
-        } catch (error) {
+
+        const emailIsAvailable = await AuthService.checkEmailAvailability(email);
+        if (!emailIsAvailable) {
           throw context.createError({
-            message: error instanceof Error ? error.message : error as string,
+            message: 'Email is taken',
           });
         }
+
+        return true;
       },
     ),
   password: Yup.string()
@@ -56,9 +57,9 @@ const RegisterPage: React.FC = () => {
   const loading = useRootSelector(selectAuthLoading);
   const dispatch = useRootDispatch();
 
-  const handleRegister: RegisterConfig['onSubmit'] = ({ email, password }) => {
+  const handleRegister: RegisterConfig['onSubmit'] = ({ email, password, repeatPassword }) => {
     const redirect = searchParams.get('redirect') ?? '/';
-    const registerAction = createRegisterActionThunk({ email, password }, redirect);
+    const registerAction = createRegisterAction({ email, password, repeatPassword }, redirect);
     dispatch(registerAction);
   };
 
