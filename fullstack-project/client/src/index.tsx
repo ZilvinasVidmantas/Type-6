@@ -14,7 +14,6 @@ ReactDOM.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
         <ReduxProvider store={store}>
           <App />
         </ReduxProvider>
