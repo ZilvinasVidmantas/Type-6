@@ -1,5 +1,5 @@
-import ApiService from '../../../services/api-service';
-import { Crudentials, TemporaryUser, User } from '../../../types';
+import ApiService from './api-service';
+import { Crudentials, TemporaryUser, User } from '../types';
 
 export type AuthPromise = (crudential: Crudentials) => Promise<User>;
 

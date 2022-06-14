@@ -10,7 +10,7 @@ import { UserRegistration } from '../../types';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { createRegisterAction } from '../../store/action-creators';
 import { selectAuthLoading } from '../../store/selectors';
-import AuthService from '../../store/features/auth/auth-service';
+import AuthService from '../../services/auth-service';
 
 type RegisterConfig = FormikConfig<UserRegistration>;
 

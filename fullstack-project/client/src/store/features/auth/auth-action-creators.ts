@@ -9,7 +9,7 @@ import {
   AuthClearErrorAction,
   AuthActionType,
 } from './auth-types';
-import AuthService, { AuthPromise } from './auth-service';
+import AuthService, { AuthPromise } from '../../../services/auth-service';
 import {
   createNavigationSetRedirectAction,
   navigationClearRedirectAction,
