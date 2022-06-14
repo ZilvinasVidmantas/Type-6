@@ -12,10 +12,10 @@ import NavbarLink from './navbar-link';
 import NavbarAuthMenu from './navbar-auth-menu';
 import NavbarVisitorMenu from './navbar-visitor-menu';
 import { useRootSelector } from '../../store/hooks';
-import { selectCartItemsCount, selectLoggedIn } from '../../store/selectors';
+import { selectCartItemsCount, selectAuthLoggedIn } from '../../store/selectors';
 
 const Navbar: React.FC = () => {
-  const loggedIn = useRootSelector(selectLoggedIn);
+  const loggedIn = useRootSelector(selectAuthLoggedIn);
   const cartItemsCount = useRootSelector(selectCartItemsCount);
 
   return (

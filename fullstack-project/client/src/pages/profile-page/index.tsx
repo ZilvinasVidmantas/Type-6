@@ -2,10 +2,10 @@ import React from 'react';
 import { Typography, Container, Box } from '@mui/material';
 import Img from '../../components/img';
 import { useRootSelector } from '../../store/hooks';
-import { selectUser } from '../../store/selectors';
+import { selectAuthUser } from '../../store/selectors';
 
 const ProfilePage: React.FC = () => {
-  const user = useRootSelector(selectUser);
+  const user = useRootSelector(selectAuthUser);
 
   const needsProfileUpdate = user && (!user.name || !user.surname || !user.img);
 

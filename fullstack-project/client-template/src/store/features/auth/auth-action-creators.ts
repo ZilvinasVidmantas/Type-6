@@ -40,16 +40,15 @@ const createAuthFailureAction = (error: string): AuthFailureAction => ({
 const authenticate = async (
   dispatch: Dispatch<AppAction>,
   authCallback: () => Promise<AuthResponseBody>,
-  redirect?: string,
+  redirect: string,
 ) => {
   dispatch(authLoadingAction);
   try {
     const authResponseBody = await authCallback();
     const authSuccessAction = createAuthSuccessAction(authResponseBody);
-    if (redirect) {
-      const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
-      dispatch(navigationSetRedirectAction);
-    }
+    const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
+
+    dispatch(navigationSetRedirectAction);
     dispatch(authSuccessAction);
     dispatch(navigationClearRedirectAction);
   } catch (error) {
@@ -59,10 +58,10 @@ const authenticate = async (
   }
 };
 
-export const createAuthenticateActionThunk = (token: string) => async (
+export const createAuthenticateActionThunk = (token: string, redirect: string) => async (
   dispatch: Dispatch<AppAction>,
 ): Promise<void> => {
-  await authenticate(dispatch, async () => AuthService.authenticate(token));
+  await authenticate(dispatch, async () => AuthService.authenticate(token), redirect);
 };
 
 export const createLoginActionThunk = (

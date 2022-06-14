@@ -1,60 +1,59 @@
-import ApiService from './api-service';
-import { Crudentials, TemporaryUser, User } from '../types';
+import ApiService, { formatError } from './api-service-new';
+import { Crudentials, User } from '../types';
 
-export type AuthPromise = (crudential: Crudentials) => Promise<User>;
-
-export const login: AuthPromise = async ({ email, password }: Crudentials) => {
-  // TODO: rewrite auth logic, when server is implemented
-  // ↓↓↓ Daromas patikrinimas, kurs ateityje bus daromas serveryje ↓↓↓
-  const { data: tempUsers } = await ApiService.get<TemporaryUser[]>(`/users?email=${email}`);
-  if (tempUsers.length === 0) {
-    throw new Error('User with such email was not found');
-  }
-
-  const [tempUser] = tempUsers;
-
-  if (tempUser.password !== password) {
-    throw new Error('Passwords do not match');
-  }
-  // ↑↑↑ Daromas patikrinimas, kurs ateityje bus daromas serveryje ↑↑↑
-
-  return {
-    id: tempUser.id,
-    name: tempUser.name,
-    surname: tempUser.surname,
-    email: tempUser.email,
-    img: tempUser.img,
-  };
+export type AuthResponseBody = {
+  user: User,
+  token: string,
 };
 
-export const register: AuthPromise = async ({ email, password }: Crudentials) => {
-  const { data: tempUsers } = await ApiService.get<TemporaryUser[]>('/users');
+export const login = async (crudentials: Crudentials): Promise<AuthResponseBody> => {
+  try {
+    const response = await ApiService.post<AuthResponseBody>('/api/auth/login', crudentials);
 
-  const userExists = tempUsers.map((x) => x.email).includes(email);
-  if (userExists) {
-    throw new Error('Toks vartotojas jau egzistuoja. Pasirinkite kitą el. paštą');
+    return response.data;
+  } catch (err) {
+    throw new Error(formatError(err));
   }
+};
 
-  const { data: createdTempUser } = await ApiService.post('/users', { email, password });
+export const register = async (crudentials: Crudentials): Promise<AuthResponseBody> => {
+  try {
+    const response = await ApiService.post<AuthResponseBody>('/api/auth/register', crudentials);
 
-  const createdUser: User = {
-    id: createdTempUser.id,
-    email: createdTempUser.email,
-  };
+    return response.data;
+  } catch (err) {
+    throw new Error(formatError(err));
+  }
+};
 
-  return createdUser;
+export const authenticate = async (token: string): Promise<AuthResponseBody> => {
+  try {
+    const response = await ApiService.post<AuthResponseBody>('/api/auth/authenticate', {}, {
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    return response.data;
+  } catch (err) {
+    throw new Error(formatError(err));
+  }
 };
 
 export const checkEmailAvailability = async (email: string): Promise<boolean> => {
-  const { data: tempUsers } = await ApiService.get<TemporaryUser[]>('/users');
-  const emails = tempUsers.map((x) => x.email);
+  try {
+    const response = await ApiService.get<{ valid: boolean }>(`/api/auth/check-email?email=${email}`);
 
-  return !emails.includes(email);
+    return response.data.valid;
+  } catch (err) {
+    throw new Error(formatError(err));
+  }
 };
 
 const AuthService = {
   login,
   register,
+  authenticate,
   checkEmailAvailability,
 };
 

@@ -23,7 +23,6 @@ const authReducer: Reducer<AuthState, AuthAction> = (state = initialState, actio
         ...state,
         error: null,
         loading: true,
-        token: null,
       };
     }
     case AuthActionType.AUTH_SUCCESS: {
