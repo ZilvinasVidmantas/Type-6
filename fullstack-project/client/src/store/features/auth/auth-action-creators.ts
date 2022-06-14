@@ -14,7 +14,6 @@ import {
   createNavigationSetRedirectAction,
   navigationClearRedirectAction,
 } from '../navigation/navigation-action-creators';
-import pause from '../../../helpers/pause';
 
 const authLoadingAction: AuthLoadingAction = {
   type: AuthActionType.AUTH_LOADING,
@@ -63,7 +62,6 @@ const authenticate = async (
 export const createAuthenticateActionThunk = (token: string) => async (
   dispatch: Dispatch<AppAction>,
 ): Promise<void> => {
-  await pause(2000);
   await authenticate(dispatch, async () => AuthService.authenticate(token));
 };
 

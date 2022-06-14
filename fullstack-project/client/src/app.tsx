@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { useRootSelector, useRootDispatch } from './store/hooks';
-import { selectAuthLoggedIn, selectAuthToken } from './store/selectors';
+import { selectAuthLoading, selectAuthLoggedIn, selectAuthToken } from './store/selectors';
 
 import HomePage from './pages/home-page';
 import LoginPage from './pages/login-page';
@@ -17,11 +17,12 @@ import { createAuthenticateActionThunk } from './store/action-creators';
 const App: React.FC = () => {
   const token = useRootSelector(selectAuthToken);
   const loggedIn = useRootSelector(selectAuthLoggedIn);
+  const loading = useRootSelector(selectAuthLoading);
   const dispatch = useRootDispatch();
 
-  if (!loggedIn && token) {
+  if (!loggedIn && token && !loading) {
     dispatch(createAuthenticateActionThunk(token));
-    return <div>Autentifikuojama...</div>;
+    return <div />;
   }
 
   return (
