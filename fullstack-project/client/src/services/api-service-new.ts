@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_SERVER = process.env.REACT_APP_API_SERVER;
+const API_SERVER = process.env.REACT_APP_API_SERVER_NEW;
 if (API_SERVER === undefined) throw new Error('Please declare variables in /.env.local');
 
-const ApiService = axios.create({
+const ApiServiceNew = axios.create({
   baseURL: API_SERVER,
   headers: {
     'Content-Type': 'application/json',
@@ -11,4 +11,4 @@ const ApiService = axios.create({
   timeout: 5000,
 });
 
-export default ApiService;
+export default ApiServiceNew;
