@@ -3,14 +3,14 @@ import { Reducer } from 'redux';
 import { ShopState, ShopAction, ShopActionType } from './shop-types';
 
 const initialState: ShopState = {
-  items: [],
+  products: [],
   loading: false,
   error: null,
 };
 
 const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, action) => {
   switch (action.type) {
-    case ShopActionType.SHOP_FETCH_ITEMS_LOADING: {
+    case ShopActionType.SHOP_FETCH_PRODUCTS_LOADING: {
       return {
         ...state,
         loading: true,
@@ -18,29 +18,19 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
-    case ShopActionType.SHOP_FETCH_ITEMS_SUCCESS: {
+    case ShopActionType.SHOP_FETCH_PRODUCTS_SUCCESS: {
       return {
         ...state,
         loading: false,
-        items: action.payload.items,
+        products: action.payload.products,
       };
     }
 
-    case ShopActionType.SHOP_FETCH_ITEMS_FAILURE: {
+    case ShopActionType.SHOP_FETCH_PRODUCTS_FAILURE: {
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-      };
-    }
-
-    case ShopActionType.SHOP_CHANGE_ITEM_AMOUNT: {
-      return {
-        ...state,
-        items: state.items.map((item) => (item.id === action.payload.id
-          ? { ...item, amount: action.payload.amount }
-          : item
-        )),
       };
     }
 

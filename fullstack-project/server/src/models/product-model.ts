@@ -10,8 +10,8 @@ import { CategoryDocument } from './category-model';
 type Product = {
   title: string,
   price: number,
-  amount: number,
   categories: Types.ObjectId[],
+  images: string[],
   createdAt: string,
   updatedAt: string,
 };
@@ -41,9 +41,9 @@ const productSchema = new Schema<Product, Model<Product>>({
     type: Number,
     required: true,
   },
-  amount: {
-    type: Number,
-    required: true,
+  images: {
+    type: [String],
+    default: [],
   },
   categories: {
     type: [{ type: Schema.Types.ObjectId, ref: 'Category' }],

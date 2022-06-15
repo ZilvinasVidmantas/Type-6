@@ -1,4 +1,4 @@
-import ApiService, { formatError } from './api-service-new';
+import ApiService, { formatError } from './api-service';
 import { Crudentials, User } from '../types';
 
 export type AuthResponseBody = {

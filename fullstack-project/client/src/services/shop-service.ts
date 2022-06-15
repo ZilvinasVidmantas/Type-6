@@ -1,27 +1,17 @@
-import { AxiosError } from 'axios';
-import { Item } from '../types';
-import ApiService from './api-service';
+import { Product } from '../types';
+import ApiService, { formatError } from './api-service';
 
-const fetchItems = async (): Promise<Item[]> => {
-  const { data } = await ApiService.get<Item[]>('/shopItems');
-  return data;
-};
-
-const fetchItemById = async (id: string): Promise<Item> => {
+const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const { data } = await ApiService.get<Item>(`/shopItems/${id}`);
-    return data;
-  } catch (error) {
-    throw new Error((error as AxiosError).message);
+    const { data } = await ApiService.get<{ products: Product[] }>('/api/products?populate=categories');
+    return data.products;
+  } catch (err) {
+    throw new Error(formatError(err));
   }
 };
 
-const fetchItemsByIds = async (ids: string[]): Promise<Item[]> => Promise.all(ids.map(fetchItemById));
-
 const ShopService = {
-  fetchItems,
-  fetchItemById,
-  fetchItemsByIds,
+  fetchProducts,
 };
 
 export default ShopService;

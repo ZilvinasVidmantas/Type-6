@@ -1,63 +1,42 @@
 import { Dispatch } from 'redux';
 import ShopService from '../../../services/shop-service';
-import { Item } from '../../../types';
-import { AppAction, RootState } from '../../redux-types';
+import { Product } from '../../../types';
+import { AppAction } from '../../redux-types';
 import {
   ShopActionType,
-  ShopFetchItemsLoadingAction,
-  ShopFetchItemsSuccessAction,
-  ShopFetchItemsFailureAction,
+  ShopFetchProductsLoadingAction,
+  ShopFetchProductsSuccessAction,
+  ShopFetchProductsFailureAction,
   ShopClearErrorAction,
-  ShopChangeItemAmountAction,
 } from './shop-types';
 
-const shopFetchItemsLoadingAction: ShopFetchItemsLoadingAction = {
-  type: ShopActionType.SHOP_FETCH_ITEMS_LOADING,
+const shopFetchProductsLoadingAction: ShopFetchProductsLoadingAction = {
+  type: ShopActionType.SHOP_FETCH_PRODUCTS_LOADING,
 };
 
 export const shopClearErrorAction: ShopClearErrorAction = {
   type: ShopActionType.SHOP_CLEAR_ERROR,
 };
 
-const createShopFecthItemsSuccessAction = (items: Item[]): ShopFetchItemsSuccessAction => ({
-  type: ShopActionType.SHOP_FETCH_ITEMS_SUCCESS,
-  payload: { items },
+const createShopFecthProductsSuccessAction = (products: Product[]): ShopFetchProductsSuccessAction => ({
+  type: ShopActionType.SHOP_FETCH_PRODUCTS_SUCCESS,
+  payload: { products },
 });
 
-const createShopFetchItemsFailureAction = (error: string): ShopFetchItemsFailureAction => ({
-  type: ShopActionType.SHOP_FETCH_ITEMS_FAILURE,
+const createShopFetchProductsFailureAction = (error: string): ShopFetchProductsFailureAction => ({
+  type: ShopActionType.SHOP_FETCH_PRODUCTS_FAILURE,
   payload: { error },
 });
 
-export const createShopChangeItemAmountAction = (id: string, amount: number): ShopChangeItemAmountAction => ({
-  type: ShopActionType.SHOP_CHANGE_ITEM_AMOUNT,
-  payload: { id, amount },
-});
-
-export const shopFetchItemsAction = async (dispatch: Dispatch<AppAction>, getState: () => RootState): Promise<void> => {
-  dispatch(shopFetchItemsLoadingAction);
+export const shopFetchProductsActionThunk = async (dispatch: Dispatch<AppAction>): Promise<void> => {
+  dispatch(shopFetchProductsLoadingAction);
   try {
-    const shopItems = await ShopService.fetchItems();
-    const { cart: { items: cartItems } } = getState();
-
-    // Tobulu atveju, visi skaičiavimai turėtų būti atliekami naudojant service'us arba helper'ius
-    const reducedShopItems = shopItems.map((shopItem) => {
-      const shopItemCartItem = cartItems.find((cartItem) => cartItem.shopItemId === shopItem.id);
-
-      if (shopItemCartItem) {
-        return {
-          ...shopItem,
-          amount: shopItem.amount - shopItemCartItem.amount,
-        };
-      }
-      return shopItem;
-    });
-
-    const shopFecthItemsSuccessAction = createShopFecthItemsSuccessAction(reducedShopItems);
-    dispatch(shopFecthItemsSuccessAction);
+    const products = await ShopService.fetchProducts();
+    const shopFecthProductsSuccessAction = createShopFecthProductsSuccessAction(products);
+    dispatch(shopFecthProductsSuccessAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    const shopFetchItemsFailureAction = createShopFetchItemsFailureAction(errMsg);
-    dispatch(shopFetchItemsFailureAction);
+    const shopFetchProductsFailureAction = createShopFetchProductsFailureAction(errMsg);
+    dispatch(shopFetchProductsFailureAction);
   }
 };

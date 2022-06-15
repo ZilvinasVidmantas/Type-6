@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Dispatch } from 'redux';
-import { CartItemJoined, Item } from '../../../types';
+import { CartItemJoined } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
 import {
   CartFetchItemsLoadingAction,
@@ -11,8 +11,6 @@ import {
   CartDeleteItemAction,
   CartActionType,
 } from './cart-types';
-import { createShopChangeItemAmountAction } from '../shop/shop-action-creators';
-import ShopService from '../../../services/shop-service';
 
 const cartFetchItemsLoadingAction: CartFetchItemsLoadingAction = {
   type: CartActionType.CART_FETCH_ITEMS_LOADING,
@@ -47,12 +45,8 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
   dispatch: Dispatch<AppAction>,
   getState: () => RootState,
 ): void => {
-  const { shop, cart } = getState();
+  const { cart } = getState();
   const existingCartItem = cart.items.find((x) => x.shopItemId === shopItemId);
-  const shopItem = shop.items.find((x) => x.id === shopItemId) as Item;
-
-  const totalAmount = existingCartItem ? existingCartItem.amount + shopItem.amount : shopItem.amount;
-  const amountLeft = totalAmount - newAmount;
 
   if (existingCartItem) {
     if (newAmount > 0) {
@@ -66,9 +60,6 @@ export const createModifyCartItemAction = (shopItemId: string, newAmount: number
     const cartAddItemAction = createCartAddItemAction(shopItemId, newAmount);
     dispatch(cartAddItemAction);
   }
-
-  const shopChangeItemAmountAction = createShopChangeItemAmountAction(shopItemId, amountLeft);
-  dispatch(shopChangeItemAmountAction);
 };
 
 export const cartFetchItemsAction = async (
@@ -80,7 +71,6 @@ export const cartFetchItemsAction = async (
   try {
     const cartItems = getState().cart.items;
     const shopItemsIds = cartItems.map((cartItem) => cartItem.shopItemId);
-    const shopItems = await ShopService.fetchItemsByIds(shopItemsIds);
 
     // TODO: ČIA YRA NESAMONĘ KURIAI REIKIA APRAŠYTI APJUNGIMĄ
     const joinedCartItems: CartItemJoined[] = [];

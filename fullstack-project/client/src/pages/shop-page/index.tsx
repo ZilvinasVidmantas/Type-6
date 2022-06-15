@@ -9,18 +9,18 @@ import {
 } from '@mui/material';
 
 import { useRootSelector, useRootDispatch } from '../../store/hooks';
-import { selectShopError, selectShopItems, selectShopItemsLoading } from '../../store/selectors';
-import { shopClearErrorAction, shopFetchItemsAction } from '../../store/action-creators';
+import { selectShopError, selectShopProducts, selectShopLoading } from '../../store/selectors';
+import { shopClearErrorAction, shopFetchProductsActionThunk } from '../../store/action-creators';
 import ShopPageCard from './shop-page-card';
 
 const ShopPage: React.FC = () => {
-  const items = useRootSelector(selectShopItems);
-  const itemsLoading = useRootSelector(selectShopItemsLoading);
+  const items = useRootSelector(selectShopProducts);
+  const itemsLoading = useRootSelector(selectShopLoading);
   const error = useRootSelector(selectShopError);
   const dispatch = useRootDispatch();
 
   useEffect(() => {
-    dispatch(shopFetchItemsAction);
+    dispatch(shopFetchProductsActionThunk);
   }, []);
 
   let pageContent = (

@@ -4,30 +4,24 @@ import {
   Paper,
 } from '@mui/material';
 
-import { Item } from '../../../types';
+import { Product } from '../../../types';
 import Img from '../../../components/img';
 import ShopPageCardProperties from './shop-page-card-properties';
 import ShopPageCardActions from './shop-page-card-actions';
-import toReadCase from '../../../helpers/to-read-case';
 
-type ShopPageCardProps = Item;
+type ShopPageCardProps = Product;
 
 const ShopPageCard: React.FC<ShopPageCardProps> = ({
   id,
+  title,
   images,
   price,
   categories,
-  amount,
-  additionalProps = {},
 }) => {
   const itemProperties = [
-    { name: 'Price', value: `${price}€` },
-    { name: 'Categories', value: categories.join(', ') },
-    { name: 'Amount', value: String(amount) },
-    ...Object.entries(additionalProps).map(([name, value]) => ({
-      name: toReadCase(name),
-      value,
-    })),
+    { name: 'Pavadinimas', value: title },
+    { name: 'Kaina', value: `${price}€` },
+    { name: 'Kategorijos', value: categories.join(', ') },
   ];
 
   return (
@@ -46,10 +40,7 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
       }}
       >
         <ShopPageCardProperties properties={itemProperties} />
-        <ShopPageCardActions
-          id={id}
-          inStock={amount}
-        />
+        <ShopPageCardActions id={id} />
       </Box>
     </Paper>
   );
