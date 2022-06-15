@@ -23,7 +23,7 @@ export const getCart: RequestHandler<
       cartItems: authUserPopulatedDoc.cartItems.map(createCartItemPopulatedViewModel),
     });
   } catch (error) {
-    res.status(200).send({
+    res.status(400).send({
       error: error instanceof Error ? error.message : 'Klaida siunčiant krepšelį',
     });
   }

@@ -1,9 +1,9 @@
 import { CartItemPopulatedDocument } from '../models/user-model';
-import createProductPopulatedViewModel, { ProductPopulatedViewModel } from './create-product-populated-view-model';
+import createProductViewModel, { ProductViewModel } from './create-product-view-model';
 
 export type CartItemPopulatedViewModel = {
   id: string,
-  product: ProductPopulatedViewModel
+  product: ProductViewModel
   amount: number,
   createdAt: string,
   updatedAt: string,
@@ -12,7 +12,7 @@ export type CartItemPopulatedViewModel = {
 const createCartItemPopulatedViewModel = (cartItemPopulatedDoc: CartItemPopulatedDocument):
   CartItemPopulatedViewModel => ({
     id: cartItemPopulatedDoc._id.toString(),
-    product: createProductPopulatedViewModel(cartItemPopulatedDoc.product),
+    product: createProductViewModel(cartItemPopulatedDoc.product),
     amount: cartItemPopulatedDoc.amount,
     createdAt: cartItemPopulatedDoc.createdAt,
     updatedAt: cartItemPopulatedDoc.updatedAt,

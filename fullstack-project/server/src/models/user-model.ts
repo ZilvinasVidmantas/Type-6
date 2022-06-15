@@ -6,7 +6,7 @@ import {
   model,
 } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
-import { ProductPopulatedDocument } from './product-model';
+import { ProductDocument } from './product-model';
 
 export type CartItem = {
   _id: Types.ObjectId,
@@ -23,7 +23,7 @@ export type CartItemProps = Omit<CartItem, '_id' | 'product' | 'createdAt' | 'up
 export type CartItemDocument = Types.Subdocument<Types.ObjectId> & CartItem;
 
 export type CartItemPopulatedDocument = Omit<CartItemDocument, 'product'> & {
-  product: ProductPopulatedDocument
+  product: ProductDocument
 };
 
 const cartItemSchema = new Schema<CartItem>({
