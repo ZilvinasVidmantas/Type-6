@@ -8,11 +8,14 @@ import {
   MenuItem,
   Divider,
   Typography,
+  Badge,
 } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
-import { selectAuthUser } from '../../store/selectors';
+import { selectAuthUser, selectCartItemsCount } from '../../store/selectors';
 import { authLogoutAction } from '../../store/action-creators';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
+import NavbarLink from './navbar-link';
 
 const NavbarAuthMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +23,7 @@ const NavbarAuthMenu: React.FC = () => {
   const dispatch = useRootDispatch();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const popperAnchorRef = useRef<HTMLDivElement>(null);
+  const cartItemsCount = useRootSelector(selectCartItemsCount);
 
   const logout = () => {
     dispatch(authLogoutAction);
@@ -43,6 +47,11 @@ const NavbarAuthMenu: React.FC = () => {
       ref={popperAnchorRef}
       sx={{ display: 'inline-flex', alignItems: 'center', height: 64 }}
     >
+      <NavbarLink to="/cart" sx={{ display: 'inline-flex', gap: 1 }}>
+        <Badge badgeContent={cartItemsCount} color="primary">
+          <ShoppingCartIcon sx={{ fontSize: 28 }} />
+        </Badge>
+      </NavbarLink>
       <Box
         sx={{
           display: 'flex',

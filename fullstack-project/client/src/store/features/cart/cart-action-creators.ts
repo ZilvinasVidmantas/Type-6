@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Dispatch } from 'redux';
+import CartService from '../../../services/cart-service';
 import { CartItemPopulated } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
 import {
@@ -47,14 +48,18 @@ export const createModifyCartItemActionThunk = (productId: string, newAmount: nu
   // }
 };
 
-export const cartFetchItemsAction = async (
+export const cartFetchItemsActionThunk = async (
   dispatch: Dispatch<AppAction>,
+  getState: () => RootState,
 ): Promise<void> => {
-  dispatch(cartFetchItemsLoadingAction);
-
+  const { token } = getState().auth;
   try {
+    if (token === null) {
+      throw new Error('Prašome prisijungti');
+    }
+    dispatch(cartFetchItemsLoadingAction);
     // Siunčiama užklausa į serverį, kad parsiųsti visus CartItem'us
-    const cartItems: CartItemPopulated[] = [];
+    const cartItems: CartItemPopulated[] = await CartService.fetchCartItems(token);
 
     const cartFetchItemsSuccessAction = createCartFetchItemsSuccessAction(cartItems);
     dispatch(cartFetchItemsSuccessAction);

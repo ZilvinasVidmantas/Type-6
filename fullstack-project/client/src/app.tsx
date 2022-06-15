@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import { useRootSelector, useRootDispatch } from './store/hooks';
 import { selectAuthLoading, selectAuthLoggedIn, selectAuthToken } from './store/selectors';
-import { createAuthenticateActionThunk } from './store/action-creators';
+import { cartFetchItemsActionThunk, createAuthenticateActionThunk } from './store/action-creators';
 
 // all
 import HomePage from './pages/home-page';
@@ -25,6 +25,12 @@ const App: React.FC = () => {
   const loggedIn = useRootSelector(selectAuthLoggedIn);
   const loading = useRootSelector(selectAuthLoading);
   const dispatch = useRootDispatch();
+
+  useEffect(() => {
+    if (loggedIn) {
+      dispatch(cartFetchItemsActionThunk);
+    }
+  }, [loggedIn]);
 
   if (!loggedIn && token) {
     if (!loading) {

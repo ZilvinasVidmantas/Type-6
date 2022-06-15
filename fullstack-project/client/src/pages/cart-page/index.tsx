@@ -8,7 +8,7 @@ import {
 import CartPageItemGrid from './cart-page-item-grid';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectCartItemsCount } from '../../store/features/cart/cart-selectors';
-import { cartFetchItemsAction } from '../../store/action-creators';
+import { cartFetchItemsActionThunk } from '../../store/action-creators';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const CartPage: React.FC = () => {
   const itemsCount = useRootSelector(selectCartItemsCount);
 
   useEffect(() => {
-    dispatch(cartFetchItemsAction);
+    dispatch(cartFetchItemsActionThunk);
   }, []);
 
   return (

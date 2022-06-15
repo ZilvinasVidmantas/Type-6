@@ -8,6 +8,8 @@ import { ProductPopulated } from '../../../types';
 import Img from '../../../components/img';
 import ShopPageCardProperties from './shop-page-card-properties';
 import ShopPageCardActions from './shop-page-card-actions';
+import { useRootSelector } from '../../../store/hooks';
+import { selectAuthLoggedIn } from '../../../store/features/auth/auth-selectors';
 
 type ShopPageCardProps = ProductPopulated;
 
@@ -18,6 +20,8 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
   price,
   categories,
 }) => {
+  const loggedIn = useRootSelector(selectAuthLoggedIn);
+
   const itemProperties = [
     { name: 'Pavadinimas', value: title },
     { name: 'Kaina', value: `${price}€` },
@@ -40,7 +44,7 @@ const ShopPageCard: React.FC<ShopPageCardProps> = ({
       }}
       >
         <ShopPageCardProperties properties={itemProperties} />
-        <ShopPageCardActions id={id} />
+        {loggedIn && <ShopPageCardActions id={id} />}
       </Box>
     </Paper>
   );
