@@ -9,6 +9,5 @@ export type CartItemPopulated = {
     images: string[],
   },
   amount: number,
-  createdAt: string,
   updatedAt: string,
 };

@@ -5,7 +5,6 @@ export type CartItemPopulatedViewModel = {
   id: string,
   product: ProductViewModel
   amount: number,
-  createdAt: string,
   updatedAt: string,
 };
 
@@ -14,7 +13,6 @@ const createCartItemPopulatedViewModel = (cartItemPopulatedDoc: CartItemPopulate
     id: cartItemPopulatedDoc._id.toString(),
     product: createProductViewModel(cartItemPopulatedDoc.product),
     amount: cartItemPopulatedDoc.amount,
-    createdAt: cartItemPopulatedDoc.createdAt,
     updatedAt: cartItemPopulatedDoc.updatedAt,
   });
 
