@@ -6,7 +6,7 @@ import {
   Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CartItemJoined } from '../../../types';
+import { CartItemPopulated } from '../../../types';
 import Img from '../../../components/img';
 import NumberField from '../../../components/number-field';
 
@@ -28,7 +28,7 @@ Props:
   * Funkcija ištrinti
 */
 
-type CartPageItemGridProductProps = CartItemJoined;
+type CartPageItemGridProductProps = CartItemPopulated;
 
 const CartPageItemGridProduct: React.FC<CartPageItemGridProductProps> = (props) => {
   console.log(props);

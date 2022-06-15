@@ -1,7 +1,7 @@
-import { Product } from '../../../types';
+import { ProductPopulated } from '../../../types';
 
 export type ShopState = {
-  products: Product[],
+  products: ProductPopulated[],
   loading: boolean,
   error: string | null,
 };
@@ -24,7 +24,7 @@ export type ShopClearErrorAction = {
 export type ShopFetchProductsSuccessAction = {
   type: ShopActionType.SHOP_FETCH_PRODUCTS_SUCCESS,
   payload: {
-    products: Product[],
+    products: ProductPopulated[],
   }
 };
 

@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import ShopService from '../../../services/shop-service';
-import { Product } from '../../../types';
+import { ProductPopulated } from '../../../types';
 import { AppAction } from '../../redux-types';
 import {
   ShopActionType,
@@ -18,7 +18,7 @@ export const shopClearErrorAction: ShopClearErrorAction = {
   type: ShopActionType.SHOP_CLEAR_ERROR,
 };
 
-const createShopFecthProductsSuccessAction = (products: Product[]): ShopFetchProductsSuccessAction => ({
+const createShopFecthProductsSuccessAction = (products: ProductPopulated[]): ShopFetchProductsSuccessAction => ({
   type: ShopActionType.SHOP_FETCH_PRODUCTS_SUCCESS,
   payload: { products },
 });

@@ -1,14 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 import { Dispatch } from 'redux';
-import { CartItemJoined } from '../../../types';
+import { CartItemPopulated } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
 import {
   CartFetchItemsLoadingAction,
   CartFetchItemsSuccessAction,
   CartFetchItemsFailureAction,
-  CartAddItemAction,
-  CartUpdateItemAction,
-  CartDeleteItemAction,
   CartActionType,
 } from './cart-types';
 
@@ -16,9 +13,9 @@ const cartFetchItemsLoadingAction: CartFetchItemsLoadingAction = {
   type: CartActionType.CART_FETCH_ITEMS_LOADING,
 };
 
-const createCartFetchItemsSuccessAction = (joinedItems: CartItemJoined[]): CartFetchItemsSuccessAction => ({
+const createCartFetchItemsSuccessAction = (cartItems: CartItemPopulated[]): CartFetchItemsSuccessAction => ({
   type: CartActionType.CART_FETCH_ITEMS_SUCCESS,
-  payload: { joinedItems },
+  payload: { items: cartItems },
 });
 
 const createCartFetchItemsFailureAction = (error: string): CartFetchItemsFailureAction => ({
@@ -26,56 +23,40 @@ const createCartFetchItemsFailureAction = (error: string): CartFetchItemsFailure
   payload: { error },
 });
 
-const createCartAddItemAction = (shopItemId: string, amount: number): CartAddItemAction => ({
-  type: CartActionType.CART_ADD_ITEM,
-  payload: { shopItemId, amount },
-});
-
-const createCartUpdateItemAction = (cartItemId: string, amount: number): CartUpdateItemAction => ({
-  type: CartActionType.CART_UPDATE_ITEM,
-  payload: { cartItemId, amount },
-});
-
-const createCartDeleteItemAction = (cartItemId: string): CartDeleteItemAction => ({
-  type: CartActionType.CART_DELETE_ITEM,
-  payload: { cartItemId },
-});
-
-export const createModifyCartItemAction = (shopItemId: string, newAmount: number) => (
+export const createModifyCartItemActionThunk = (productId: string, newAmount: number) => (
   dispatch: Dispatch<AppAction>,
   getState: () => RootState,
 ): void => {
   const { cart } = getState();
-  const existingCartItem = cart.items.find((x) => x.shopItemId === shopItemId);
+  const existingCartItem = cart.items.find((x) => x.product.id === productId);
 
-  if (existingCartItem) {
-    if (newAmount > 0) {
-      const cartUpdateItemAction = createCartUpdateItemAction(existingCartItem.id, newAmount);
-      dispatch(cartUpdateItemAction);
-    } else {
-      const cartDeleteItemAction = createCartDeleteItemAction(existingCartItem.id);
-      dispatch(cartDeleteItemAction);
-    }
-  } else {
-    const cartAddItemAction = createCartAddItemAction(shopItemId, newAmount);
-    dispatch(cartAddItemAction);
-  }
+  // if (existingCartItem) {
+  //   if (newAmount > 0) {
+  //     // Siunčiama užklausa į serverį, kad atnaujinti egzistuojantį CartItem
+  //     const cartUpdateItemAction = createCartUpdateItemAction(existingCartItem.id, newAmount);
+  //     dispatch(cartUpdateItemAction);
+  //   } else {
+  //     // Siunčiama užklausa į serverį, kad ištrinti egzistuojantį CartItem
+  //     const cartDeleteItemAction = createCartDeleteItemAction(existingCartItem.id);
+  //     dispatch(cartDeleteItemAction);
+  //   }
+  // } else {
+  //   // Siunčiama užklausa į serverį, kad sukurti CartItem
+  //   const cartAddItemAction = createCartAddItemAction(productId, newAmount);
+  //   dispatch(cartAddItemAction);
+  // }
 };
 
 export const cartFetchItemsAction = async (
   dispatch: Dispatch<AppAction>,
-  getState: () => RootState,
 ): Promise<void> => {
   dispatch(cartFetchItemsLoadingAction);
 
   try {
-    const cartItems = getState().cart.items;
-    const shopItemsIds = cartItems.map((cartItem) => cartItem.shopItemId);
+    // Siunčiama užklausa į serverį, kad parsiųsti visus CartItem'us
+    const cartItems: CartItemPopulated[] = [];
 
-    // TODO: ČIA YRA NESAMONĘ KURIAI REIKIA APRAŠYTI APJUNGIMĄ
-    const joinedCartItems: CartItemJoined[] = [];
-
-    const cartFetchItemsSuccessAction = createCartFetchItemsSuccessAction(joinedCartItems);
+    const cartFetchItemsSuccessAction = createCartFetchItemsSuccessAction(cartItems);
     dispatch(cartFetchItemsSuccessAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);

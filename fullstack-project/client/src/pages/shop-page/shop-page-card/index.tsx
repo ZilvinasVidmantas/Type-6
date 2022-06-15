@@ -4,12 +4,12 @@ import {
   Paper,
 } from '@mui/material';
 
-import { Product } from '../../../types';
+import { ProductPopulated } from '../../../types';
 import Img from '../../../components/img';
 import ShopPageCardProperties from './shop-page-card-properties';
 import ShopPageCardActions from './shop-page-card-actions';
 
-type ShopPageCardProps = Product;
+type ShopPageCardProps = ProductPopulated;
 
 const ShopPageCard: React.FC<ShopPageCardProps> = ({
   id,

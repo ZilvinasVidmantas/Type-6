@@ -3,8 +3,8 @@ import { Box } from '@mui/material';
 
 import NumberField from '../../../components/number-field';
 import { useRootDispatch, useRootSelector } from '../../../store/hooks';
-import { createModifyCartItemAction } from '../../../store/action-creators';
-import { selectCartItemAmountByShopItemId } from '../../../store/selectors';
+import { createModifyCartItemActionThunk } from '../../../store/action-creators';
+import { selectCartItemAmountByProductId } from '../../../store/selectors';
 
 type ShopPageCardActionsProps = {
   id: string,
@@ -14,11 +14,11 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   id,
 }) => {
   const dispatch = useRootDispatch();
-  const cartItemAmount = useRootSelector(selectCartItemAmountByShopItemId(id));
+  const cartItemAmount = useRootSelector(selectCartItemAmountByProductId(id));
   const [amount, setAmount] = useState<number>(cartItemAmount);
 
   const addToCart = (): void => {
-    const addToCartAction = createModifyCartItemAction(id, amount);
+    const addToCartAction = createModifyCartItemActionThunk(id, amount);
     dispatch(addToCartAction);
   };
 
