@@ -3,6 +3,7 @@ import { Reducer } from 'redux';
 import { ShopState, ShopAction, ShopActionType } from './shop-types';
 
 const initialState: ShopState = {
+  categories: [],
   products: [],
   loading: false,
   error: null,
@@ -10,7 +11,8 @@ const initialState: ShopState = {
 
 const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, action) => {
   switch (action.type) {
-    case ShopActionType.SHOP_FETCH_PRODUCTS_LOADING: {
+    case ShopActionType.SHOP_FETCH_PRODUCTS_LOADING:
+    case ShopActionType.SHOP_FETCH_CATEGORIES_LOADING: {
       return {
         ...state,
         loading: true,
@@ -26,7 +28,16 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
       };
     }
 
-    case ShopActionType.SHOP_FETCH_PRODUCTS_FAILURE: {
+    case ShopActionType.SHOP_FETCH_CATEGORIES_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        categories: action.payload.categories,
+      };
+    }
+
+    case ShopActionType.SHOP_FETCH_PRODUCTS_FAILURE:
+    case ShopActionType.SHOP_FETCH_CATEGORIES_FAILURE: {
       return {
         ...state,
         loading: false,
