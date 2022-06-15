@@ -1,5 +1,6 @@
 import ApiService, { formatError } from './api-service';
 import { CartItemPopulated } from '../types/cart-item-populated';
+import { CartItem, CartItemProps } from '../types';
 
 const fetchCartItems = async (token: string): Promise<CartItemPopulated[]> => {
   try {
@@ -17,8 +18,31 @@ const fetchCartItems = async (token: string): Promise<CartItemPopulated[]> => {
   }
 };
 
+const updateCartItem = async (
+  cartItemId: string,
+  cartItemProps: CartItemProps,
+  token: string,
+): Promise<CartItem> => {
+  try {
+    const { data } = await ApiService.patch<{ cartItem: CartItem }>(
+      `/api/cart/update-item/${cartItemId}`,
+      cartItemProps,
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+
+    return data.cartItem;
+  } catch (err) {
+    throw new Error(formatError(err));
+  }
+};
+
 const CartService = {
   fetchCartItems,
+  updateCartItem,
 };
 
 export default CartService;

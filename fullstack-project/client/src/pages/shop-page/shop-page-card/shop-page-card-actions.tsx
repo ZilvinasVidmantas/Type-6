@@ -17,14 +17,14 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
   const cartItemAmount = useRootSelector(selectCartItemAmountByProductId(id));
   const [amount, setAmount] = useState<number>(cartItemAmount);
 
-  const addToCart = (): void => {
-    const addToCartAction = createModifyCartItemActionThunk(id, amount);
-    dispatch(addToCartAction);
+  const modifyCartItem = (): void => {
+    const modifyCartItemAction = createModifyCartItemActionThunk(id, amount);
+    dispatch(modifyCartItemAction);
   };
 
   useEffect(() => {
     if (cartItemAmount !== amount) {
-      addToCart();
+      modifyCartItem();
     }
   }, [amount]);
 
@@ -40,7 +40,7 @@ const ShopPageCardActions: React.FC<ShopPageCardActionsProps> = ({
           sx={{ alignSelf: 'stretch' }}
           InputProps={{ sx: { height: '100%' } }}
           min={0}
-          value={amount}
+          value={cartItemAmount}
           onChange={(_, newValue) => setAmount(newValue)}
           onBlur={(_, newValue) => setAmount(newValue)}
           fullWidth

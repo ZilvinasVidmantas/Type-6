@@ -4,49 +4,25 @@ import CartService from '../../../services/cart-service';
 import { CartItemPopulated } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
 import {
-  CartFetchItemsLoadingAction,
-  CartFetchItemsSuccessAction,
-  CartFetchItemsFailureAction,
+  CartFetchLoadingAction,
+  CartFetchSuccessAction,
+  CartFetchFailureAction,
   CartActionType,
 } from './cart-types';
 
-const cartFetchItemsLoadingAction: CartFetchItemsLoadingAction = {
-  type: CartActionType.CART_FETCH_ITEMS_LOADING,
+const cartFetchItemsLoadingAction: CartFetchLoadingAction = {
+  type: CartActionType.CART_FETCH_LOADING,
 };
 
-const createCartFetchItemsSuccessAction = (cartItems: CartItemPopulated[]): CartFetchItemsSuccessAction => ({
-  type: CartActionType.CART_FETCH_ITEMS_SUCCESS,
+const createCartFetchSuccessAction = (cartItems: CartItemPopulated[]): CartFetchSuccessAction => ({
+  type: CartActionType.CART_FETCH_SUCCESS,
   payload: { items: cartItems },
 });
 
-const createCartFetchItemsFailureAction = (error: string): CartFetchItemsFailureAction => ({
-  type: CartActionType.CART_FETCH_ITEMS_FAILURE,
+const createCartFetchFailureAction = (error: string): CartFetchFailureAction => ({
+  type: CartActionType.CART_FETCH_FAILURE,
   payload: { error },
 });
-
-export const createModifyCartItemActionThunk = (productId: string, newAmount: number) => (
-  dispatch: Dispatch<AppAction>,
-  getState: () => RootState,
-): void => {
-  const { cart } = getState();
-  const existingCartItem = cart.items.find((x) => x.product.id === productId);
-
-  // if (existingCartItem) {
-  //   if (newAmount > 0) {
-  //     // Siunčiama užklausa į serverį, kad atnaujinti egzistuojantį CartItem
-  //     const cartUpdateItemAction = createCartUpdateItemAction(existingCartItem.id, newAmount);
-  //     dispatch(cartUpdateItemAction);
-  //   } else {
-  //     // Siunčiama užklausa į serverį, kad ištrinti egzistuojantį CartItem
-  //     const cartDeleteItemAction = createCartDeleteItemAction(existingCartItem.id);
-  //     dispatch(cartDeleteItemAction);
-  //   }
-  // } else {
-  //   // Siunčiama užklausa į serverį, kad sukurti CartItem
-  //   const cartAddItemAction = createCartAddItemAction(productId, newAmount);
-  //   dispatch(cartAddItemAction);
-  // }
-};
 
 export const cartFetchItemsActionThunk = async (
   dispatch: Dispatch<AppAction>,
@@ -61,11 +37,47 @@ export const cartFetchItemsActionThunk = async (
     // Siunčiama užklausa į serverį, kad parsiųsti visus CartItem'us
     const cartItems: CartItemPopulated[] = await CartService.fetchCartItems(token);
 
-    const cartFetchItemsSuccessAction = createCartFetchItemsSuccessAction(cartItems);
+    const cartFetchItemsSuccessAction = createCartFetchSuccessAction(cartItems);
     dispatch(cartFetchItemsSuccessAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    const authFailureAction = createCartFetchItemsFailureAction(errMsg);
+    const authFailureAction = createCartFetchFailureAction(errMsg);
+    dispatch(authFailureAction);
+  }
+};
+
+export const createModifyCartItemActionThunk = (productId: string, amount: number) => async (
+  dispatch: Dispatch<AppAction>,
+  getState: () => RootState,
+): Promise<void> => {
+  const { cart, auth: { token } } = getState();
+
+  try {
+    if (token === null) {
+      throw new Error('Reikalingas prisijungimas');
+    }
+
+    const existingCartItem = cart.items.find((x) => x.product.id === productId);
+    if (existingCartItem) {
+      if (amount > 0) {
+        // Siunčiama užklausa į serverį, kad atnaujinti egzistuojantį CartItem
+        await CartService.updateCartItem(
+          existingCartItem.id,
+          { amount },
+          token,
+        );
+        await cartFetchItemsActionThunk(dispatch, getState);
+      } else {
+        // trinimas
+      }
+    } else {
+      // Siunčiama užklausa į serverį, kad sukurti CartItem
+      // const cartAddItemAction = createCartAddItemAction(productId, newAmount);
+      // dispatch(cartAddItemAction);
+    }
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const authFailureAction = createCartFetchFailureAction(errMsg);
     dispatch(authFailureAction);
   }
 };
