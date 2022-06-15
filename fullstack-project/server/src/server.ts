@@ -11,7 +11,7 @@ import config from './config';
 const server = express();
 
 // Middlewares
-server.use(cors()); // Leidžiame bendrauti su visais.
+server.use(cors());
 server.use(morgan(':method :url :status'));
 server.use(express.static('public'));
 server.use(express.json());

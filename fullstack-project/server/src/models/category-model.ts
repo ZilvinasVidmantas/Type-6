@@ -8,8 +8,13 @@ import {
 
 type Category = {
   title: string,
+  imgSrc?: string,
   createdAt: string,
   updatedAt: string,
+};
+
+export type CategoryProps = Omit<Category, 'createdAt' | 'updatedAt' | 'imgSrc'> & {
+  imgSrc?: string
 };
 
 export type CategoryDocument = Document<Types.ObjectId, unknown, Category> & Category & {
@@ -21,6 +26,7 @@ const categorySchema = new Schema<Category, Model<Category>>({
     type: String,
     required: true,
   },
+  imgSrc: String,
 }, {
   timestamps: true,
 });

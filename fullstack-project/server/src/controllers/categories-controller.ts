@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import CategoryModel from '../models/category-model';
+import CategoryModel, { CategoryProps } from '../models/category-model';
 import createCategoryViewModel, { CategoryViewModel } from '../view-model-creators/create-category-view-model';
 
 type SingularCategoryResponse = { category: CategoryViewModel } | ErrorResponseBody;
@@ -39,7 +39,7 @@ export const getCategory: RequestHandler<
 export const createCategory: RequestHandler<
   unknown,
   SingularCategoryResponse,
-  { title: string }
+  CategoryProps
 > = async (req, res) => {
   const categoryProps = req.body;
 
@@ -56,7 +56,7 @@ export const createCategory: RequestHandler<
 export const updateCategory: RequestHandler<
   { id: string },
   SingularCategoryResponse,
-  { title: string }
+  Partial<CategoryProps>
 > = async (req, res) => {
   const { id } = req.params;
   const categoryProps = req.body;
