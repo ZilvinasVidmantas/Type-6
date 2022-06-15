@@ -12,9 +12,6 @@ const theme = createTheme({
   shape: {
     borderRadius: 0,
   },
-  typography: {
-    fontFamily: '\'-apple-system\',\'BlinkMacSystemFont\'',
-  },
 });
 
 export default theme;
