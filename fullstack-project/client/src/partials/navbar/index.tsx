@@ -23,8 +23,8 @@ const Navbar: React.FC = () => {
         }}
         >
           <Box>
-            <NavbarLink to="/">Home</NavbarLink>
-            <NavbarLink to="/shop">Shop</NavbarLink>
+            <NavbarLink to="/">Pagrindinis</NavbarLink>
+            <NavbarLink to="/shop">Ieškoti prekių</NavbarLink>
           </Box>
           <Box sx={{ display: 'flex' }}>
             {loggedIn ? <NavbarAuthMenu /> : <NavbarVisitorMenu />}

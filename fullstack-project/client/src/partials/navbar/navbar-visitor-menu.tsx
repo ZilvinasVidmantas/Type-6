@@ -3,8 +3,8 @@ import NavbarLink from './navbar-link';
 
 const NavbarVisitorMenu: React.FC = () => (
   <>
-    <NavbarLink to="/auth/login">Login</NavbarLink>
-    <NavbarLink to="/auth/register">Register</NavbarLink>
+    <NavbarLink to="/auth/login">Prisijungti</NavbarLink>
+    <NavbarLink to="/auth/register">Registruotis</NavbarLink>
   </>
 );
 

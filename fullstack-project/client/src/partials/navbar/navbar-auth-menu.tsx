@@ -11,6 +11,8 @@ import {
   Badge,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PersonIcon from '@mui/icons-material/Person';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { useNavigate } from 'react-router-dom';
 import { selectAuthUser, selectCartItemsCount } from '../../store/selectors';
 import { authLogoutAction } from '../../store/action-creators';
@@ -47,7 +49,7 @@ const NavbarAuthMenu: React.FC = () => {
       ref={popperAnchorRef}
       sx={{ display: 'inline-flex', alignItems: 'center', height: 64 }}
     >
-      <NavbarLink to="/cart" sx={{ display: 'inline-flex', gap: 1 }}>
+      <NavbarLink to="/cart" sx={{ display: 'inline-flex', gap: 1, mr: 2 }}>
         <Badge badgeContent={cartItemsCount} color="primary">
           <ShoppingCartIcon sx={{ fontSize: 28 }} />
         </Badge>
@@ -73,11 +75,13 @@ const NavbarAuthMenu: React.FC = () => {
         <Paper elevation={3}>
           <MenuList>
             <MenuItem onClick={() => handleNavigate('/profile')}>
-              ProfilePage
+              <PersonIcon sx={{ mr: 1 }} />
+              <Typography>Jūsų profilis</Typography>
             </MenuItem>
             <Divider />
             <MenuItem onClick={logout}>
-              Atsijungti
+              <PowerSettingsNewIcon sx={{ mr: 1 }} />
+              <Typography>Atsijungti</Typography>
             </MenuItem>
           </MenuList>
         </Paper>
