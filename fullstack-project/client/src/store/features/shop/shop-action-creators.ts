@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import ShopService from '../../../services/shop-service';
 import { Category, ProductPopulated } from '../../../types';
-import { AppAction } from '../../redux-types';
+import { AppAction, RootState } from '../../redux-types';
 import {
   ShopActionType,
   ShopFetchProductsLoadingAction,
@@ -69,4 +69,11 @@ export const shopFetchCategoriesActionThunk = async (dispatch: Dispatch<AppActio
     const shopFetchCategoriesFailureAction = createShopFetchCategoriesFailureAction(errMsg);
     dispatch(shopFetchCategoriesFailureAction);
   }
+};
+
+export const createShopChangeCategoryFilterActionThunk = (categoryId?: string) => async (
+  dispatch: Dispatch<AppAction>,
+  getState: () => RootState,
+): Promise<void> => {
+
 };
