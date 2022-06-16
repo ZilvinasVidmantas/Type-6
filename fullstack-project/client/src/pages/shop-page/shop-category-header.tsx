@@ -1,14 +1,15 @@
 import React from 'react';
 import { Box, Button } from '@mui/material';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { selectShopCategories } from '../../store/features/shop/shop-selectors';
+import { selectShopCategories, selectShopCategoryFilter } from '../../store/features/shop/shop-selectors';
 import { createShopChangeCategoryFilterActionThunk } from '../../store/action-creators';
 
 const ShopCategoryHeader = () => {
   const categories = useRootSelector(selectShopCategories);
+  const categoryFilter = useRootSelector(selectShopCategoryFilter);
   const dispatch = useRootDispatch();
 
-  const changeCategory = (id?: string) => {
+  const changeCategory = (id: string | null) => {
     const changeCategoryFilterActionThunk = createShopChangeCategoryFilterActionThunk(id);
     dispatch(changeCategoryFilterActionThunk);
   };
@@ -16,9 +17,9 @@ const ShopCategoryHeader = () => {
   return (
     <Box sx={{ display: 'flex', mb: 3, gap: 0.5 }}>
       <Button
-        onClick={() => changeCategory}
+        onClick={() => changeCategory(null)}
         sx={{ flexGrow: 1 }}
-        variant="contained"
+        variant={categoryFilter === null ? 'contained' : 'outlined'}
       >
         Visos kategorijos
       </Button>
@@ -28,7 +29,7 @@ const ShopCategoryHeader = () => {
             key={category.id}
             onClick={() => changeCategory(category.id)}
             sx={{ flexGrow: 1 }}
-            variant="outlined"
+            variant={categoryFilter === category.id ? 'contained' : 'outlined'}
           >
             {category.title}
           </Button>

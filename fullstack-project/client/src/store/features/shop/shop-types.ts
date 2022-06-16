@@ -5,6 +5,7 @@ export type ShopState = {
   categories: Category[],
   loading: boolean,
   error: string | null,
+  categoryFilter: string | null,
 };
 
 export enum ShopActionType {
@@ -14,6 +15,7 @@ export enum ShopActionType {
   SHOP_FETCH_CATEGORIES_LOADING = 'SHOP_FETCH_CATEGORIES_LOADING',
   SHOP_FETCH_CATEGORIES_SUCCESS = 'SHOP_FETCH_CATEGORIES_SUCCESS',
   SHOP_FETCH_CATEGORIES_FAILURE = 'SHOP_FETCH_CATEGORIES_FAILURE',
+  SHOP_CHANGE_CATEGORY_FILTER = 'SHOP_CHANGE_CATEGORY_FILTER',
   SHOP_CLEAR_ERROR = 'SHOP_CLEAR_ERROR',
 }
 
@@ -57,4 +59,11 @@ export type ShopClearErrorAction = {
   type: ShopActionType.SHOP_CLEAR_ERROR
 };
 
-export type ShopAction = ShopFetchProductsLoadingAction | ShopFetchProductsSuccessAction | ShopFetchProductsFailureAction | ShopFetchCategoriesLoadingAction | ShopFetchCategoriesSuccessAction | ShopFetchCategoriesFailureAction | ShopClearErrorAction;
+export type ShopChangeCategoryFilterAction = {
+  type: ShopActionType.SHOP_CHANGE_CATEGORY_FILTER,
+  payload: {
+    categoryFilter: string | null,
+  }
+};
+
+export type ShopAction = ShopFetchProductsLoadingAction | ShopFetchProductsSuccessAction | ShopFetchProductsFailureAction | ShopFetchCategoriesLoadingAction | ShopFetchCategoriesSuccessAction | ShopFetchCategoriesFailureAction | ShopChangeCategoryFilterAction | ShopClearErrorAction;

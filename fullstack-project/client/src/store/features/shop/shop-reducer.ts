@@ -7,6 +7,7 @@ const initialState: ShopState = {
   products: [],
   loading: false,
   error: null,
+  categoryFilter: null,
 };
 
 const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, action) => {
@@ -42,6 +43,13 @@ const shopReducer: Reducer<ShopState, ShopAction> = (state = initialState, actio
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    }
+
+    case ShopActionType.SHOP_CHANGE_CATEGORY_FILTER: {
+      return {
+        ...state,
+        categoryFilter: action.payload.categoryFilter,
       };
     }
 

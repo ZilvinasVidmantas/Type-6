@@ -3,6 +3,7 @@ import ShopService from '../../../services/shop-service';
 import { Category, ProductPopulated } from '../../../types';
 import { AppAction, RootState } from '../../redux-types';
 import {
+  ShopChangeCategoryFilterAction,
   ShopActionType,
   ShopFetchProductsLoadingAction,
   ShopFetchProductsSuccessAction,
@@ -45,10 +46,19 @@ const createShopFetchCategoriesFailureAction = (error: string): ShopFetchCategor
   payload: { error },
 });
 
-export const shopFetchProductsActionThunk = async (dispatch: Dispatch<AppAction>): Promise<void> => {
+const createShopChangeCategoryFilterAction = (categoryFilter: string | null): ShopChangeCategoryFilterAction => ({
+  type: ShopActionType.SHOP_CHANGE_CATEGORY_FILTER,
+  payload: { categoryFilter },
+});
+
+export const shopFetchProductsActionThunk = async (
+  dispatch: Dispatch<AppAction>,
+  getState: () => RootState,
+): Promise<void> => {
   dispatch(shopFetchProductsLoadingAction);
   try {
-    const products = await ShopService.fetchProducts();
+    const { categoryFilter } = getState().shop;
+    const products = await ShopService.fetchProducts(categoryFilter ?? undefined);
     const shopFecthProductsSuccessAction = createShopFecthProductsSuccessAction(products);
     dispatch(shopFecthProductsSuccessAction);
   } catch (error) {
@@ -71,9 +81,11 @@ export const shopFetchCategoriesActionThunk = async (dispatch: Dispatch<AppActio
   }
 };
 
-export const createShopChangeCategoryFilterActionThunk = (categoryId?: string) => async (
+export const createShopChangeCategoryFilterActionThunk = (categoryId: string | null) => async (
   dispatch: Dispatch<AppAction>,
   getState: () => RootState,
 ): Promise<void> => {
-
+  const shopChangeCategoryFilterAction = createShopChangeCategoryFilterAction(categoryId);
+  dispatch(shopChangeCategoryFilterAction);
+  await shopFetchProductsActionThunk(dispatch, getState);
 };

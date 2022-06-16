@@ -1,7 +1,7 @@
 import { Category, ProductPopulated } from '../types';
 import ApiService, { formatError } from './api-service';
 
-const fetchProducts = async (): Promise<ProductPopulated[]> => {
+const fetchProducts = async (categoryId?: string): Promise<ProductPopulated[]> => {
   try {
     const { data } = await ApiService.get<{ products: ProductPopulated[] }>('/api/products?populate=categories');
     return data.products;

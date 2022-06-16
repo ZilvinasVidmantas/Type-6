@@ -13,6 +13,7 @@ import { selectShopError, selectShopProducts, selectShopLoading } from '../../st
 import { shopClearErrorAction, shopFetchProductsActionThunk } from '../../store/action-creators';
 import ShopPageCard from './shop-page-card';
 import ShopCategoryHeader from './shop-category-header';
+import { shopFetchCategoriesActionThunk } from '../../store/features/shop/shop-action-creators';
 
 const ShopPage: React.FC = () => {
   const items = useRootSelector(selectShopProducts);
@@ -21,6 +22,7 @@ const ShopPage: React.FC = () => {
   const dispatch = useRootDispatch();
 
   useEffect(() => {
+    dispatch(shopFetchCategoriesActionThunk);
     dispatch(shopFetchProductsActionThunk);
   }, []);
 
