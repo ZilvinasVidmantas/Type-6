@@ -7,11 +7,11 @@ import { cartFetchItemsActionThunk, createAuthenticateActionThunk } from './stor
 
 // all
 import HomePage from './pages/home-page';
-import ShopPage from './pages/shop-page/index';
+import ShopPage from './pages/shop-page';
 import CartPage from './pages/cart-page';
 // visitor
 import LoginPage from './pages/login-page';
-import RegisterPage from './pages/register-page/index';
+import RegisterPage from './pages/register-page';
 // auth
 import ProfilePage from './pages/profile-page';
 

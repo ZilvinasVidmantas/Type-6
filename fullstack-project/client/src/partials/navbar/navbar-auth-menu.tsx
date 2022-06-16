@@ -47,7 +47,7 @@ const NavbarAuthMenu: React.FC = () => {
   return (
     <Box
       ref={popperAnchorRef}
-      sx={{ display: 'inline-flex', alignItems: 'center', height: 64 }}
+      sx={(theme) => ({ display: 'inline-flex', alignItems: 'center', height: theme.mixins.navbar.height })}
     >
       <NavbarLink to="/cart" sx={{ display: 'inline-flex', gap: 1, mr: 2 }}>
         <Badge badgeContent={cartItemsCount} color="primary">

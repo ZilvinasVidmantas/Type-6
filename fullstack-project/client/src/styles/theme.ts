@@ -12,6 +12,11 @@ const theme = createTheme({
   shape: {
     borderRadius: 0,
   },
+  mixins: {
+    navbar: {
+      height: 56,
+    },
+  },
 });
 
 export default theme;

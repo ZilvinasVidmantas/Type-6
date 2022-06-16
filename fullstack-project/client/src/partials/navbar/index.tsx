@@ -3,7 +3,6 @@ import {
   AppBar,
   Box,
   Container,
-  Toolbar,
 } from '@mui/material';
 import NavbarLink from './navbar-link';
 import NavbarAuthMenu from './navbar-auth-menu';
@@ -17,10 +16,12 @@ const Navbar: React.FC = () => {
   return (
     <AppBar position="sticky" sx={{ bgcolor: 'grey.900' }}>
       <Container>
-        <Toolbar sx={{
+        <Box sx={(theme) => ({
           px: { xs: 0, sm: 0 },
+          display: 'flex',
           justifyContent: 'space-between',
-        }}
+          height: theme.mixins.navbar.height,
+        })}
         >
           <Box>
             <NavbarLink to="/">Pagrindinis</NavbarLink>
@@ -29,7 +30,7 @@ const Navbar: React.FC = () => {
           <Box sx={{ display: 'flex' }}>
             {loggedIn ? <NavbarAuthMenu /> : <NavbarVisitorMenu />}
           </Box>
-        </Toolbar>
+        </Box>
       </Container>
     </AppBar>
   );
