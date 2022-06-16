@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import validator from 'validator';
 import * as Yup from 'yup';
@@ -9,17 +9,24 @@ import {
   TextField,
   Paper,
   Button,
-  TextFieldProps,
 } from '@mui/material';
 import Img from '../../components/img';
 import { useRootSelector } from '../../store/hooks';
 import { selectAuthUser } from '../../store/selectors';
 import AuthService from '../../services/auth-service';
 
-type UserUpdateValues = {
+type UserUpdateFormikValues = {
+  emailInit: string,
   email: string,
   name: string,
   surname: string,
+};
+
+type UserUpdate = {
+  email?: string,
+  name?: string,
+  surname?: string,
+  img?: File,
 };
 
 const validationSchema = Yup.object({
@@ -29,6 +36,7 @@ const validationSchema = Yup.object({
       'emailAvailabilityCheck',
       'Email is not valid',
       async (email, context) => {
+        if (email === context.parent.emailInit) return true;
         if (!email) return false;
         if (!validator.isEmail(email)) return false;
         try {
@@ -52,11 +60,28 @@ const validationSchema = Yup.object({
 const ProfilePage: React.FC = () => {
   const user = useRootSelector(selectAuthUser);
   const imageFieldRef = useRef<HTMLInputElement>(null);
+  const [uploadedImgSrc, setUploadedImgSrc] = useState<null | string>(null);
 
   if (user === null) throw new Error('Needed Authorization');
 
-  const updateUser = () => {
-    console.log('Atnaujinamas vartotojas');
+  const updateUser = (values: UserUpdateFormikValues) => {
+    const userUpdate: UserUpdate = {};
+
+    Object.entries(values).forEach(([key, value]) => {
+      const valueKey = key as keyof UserUpdateFormikValues;
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      const valueHasChanged = initialValues[valueKey] !== value;
+      if (valueHasChanged) {
+        userUpdate[valueKey as keyof Omit<UserUpdate, 'img'>] = value;
+      }
+    });
+
+    if (imageFieldRef?.current?.files && imageFieldRef.current.files[0]) {
+      userUpdate.img = imageFieldRef.current.files[0] as File;
+    }
+
+    console.log(userUpdate);
+    console.log('VA ČIA KREIPSIMĖS Į SERVISĄ');
   };
 
   const uploadImage = () => {
@@ -64,17 +89,29 @@ const ProfilePage: React.FC = () => {
     input.click();
   };
 
+  const imageHasUploaded = async () => {
+    if (imageFieldRef?.current?.files && imageFieldRef.current.files[0]) {
+      const imgFile = imageFieldRef.current?.files[0] as File;
+      const fileReader = new FileReader();
+      fileReader.onloadend = () => {
+        const imgDataUrl = fileReader.result as string;
+        setUploadedImgSrc(imgDataUrl);
+      };
+      fileReader.readAsDataURL(imgFile);
+    }
+  };
+
   const {
-    values,
     initialValues,
+    values,
     touched,
     errors,
     handleSubmit,
     handleChange,
     handleBlur,
-    setFieldError,
-  } = useFormik<UserUpdateValues>({
+  } = useFormik<UserUpdateFormikValues>({
     initialValues: {
+      emailInit: user.email,
       email: user.email,
       name: user.name ?? '',
       surname: user.surname ?? '',
@@ -82,14 +119,6 @@ const ProfilePage: React.FC = () => {
     onSubmit: updateUser,
     validationSchema,
   });
-
-  const needsProfileUpdate = user && (!user.name || !user.surname || !user.img);
-
-  useEffect(() => {
-    if (errors.email && values.email === initialValues.email) {
-      setFieldError('email', undefined);
-    }
-  }, [errors]);
 
   return (
     <Container>
@@ -150,7 +179,7 @@ const ProfilePage: React.FC = () => {
           </Button>
         </Box>
         <Box sx={{ textAlign: 'center' }}>
-          <Img src={user.img ?? '/no-image.jpg'} sx={{ display: 'block', width: 300, height: 300 }} />
+          <Img src={uploadedImgSrc ?? user.img ?? '/no-image.jpg'} sx={{ display: 'block', width: 300, height: 300 }} />
           <Button sx={{ mt: 2 }} variant="contained" onClick={uploadImage}>Įkelti nuotrauką</Button>
           <TextField
             type="file"
@@ -159,6 +188,7 @@ const ProfilePage: React.FC = () => {
             inputProps={{
               accept: 'image/png, image/jpeg',
             }}
+            onChange={imageHasUploaded}
           />
         </Box>
       </Paper>
