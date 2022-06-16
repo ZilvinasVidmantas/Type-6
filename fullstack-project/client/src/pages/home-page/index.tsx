@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Typography, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectShopCategories } from '../../store/features/shop/shop-selectors';
 import { shopFetchCategoriesActionThunk } from '../../store/features/shop/shop-action-creators';
+import CategoryCard from './category-card';
 
 const HomePage: React.FC = () => {
   const dispatch = useRootDispatch();
@@ -14,26 +15,16 @@ const HomePage: React.FC = () => {
 
   return (
     <Box>
-      <Box sx={({ mixins, palette }) => ({
+      <Box sx={({ palette }) => ({
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
-        minHeight: 400,
-        backgroundImage: `linear-gradient(to right, ${palette.primary.light} , ${palette.primary.dark})`,
+        minHeight: 600,
+        px: 20,
+        backgroundImage: `linear-gradient(to right, ${palette.primary.light}, ${palette.primary.dark})`,
       })}
       >
-        <Typography
-          component="h1"
-          variant="h2"
-          sx={{ textAlign: 'center', mb: 3, color: 'primary.main' }}
-        >
-          Verslo ideja
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        {categories.map((category) => (
-          <Box component="pre">{JSON.stringify(category, null, 4)}</Box>
-        ))}
+        {categories.map((cat) => <CategoryCard key={cat.id} {...cat} />)}
       </Box>
     </Box>
   );
