@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectShopCategories, selectShopCategoryFilter } from '../../store/features/shop/shop-selectors';
 import { createShopChangeCategoryFilterActionThunk } from '../../store/action-creators';
 
 const ShopCategoryHeader = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const categories = useRootSelector(selectShopCategories);
   const categoryFilter = useRootSelector(selectShopCategoryFilter);
   const dispatch = useRootDispatch();
@@ -13,6 +15,15 @@ const ShopCategoryHeader = () => {
     const changeCategoryFilterActionThunk = createShopChangeCategoryFilterActionThunk(id);
     dispatch(changeCategoryFilterActionThunk);
   };
+
+  useEffect(() => {
+    if (categoryFilter) {
+      searchParams.set('categoryId', categoryFilter);
+    } else {
+      searchParams.delete('categoryId');
+    }
+    setSearchParams(searchParams);
+  }, [categoryFilter]);
 
   return (
     <Box sx={{ display: 'flex', mb: 3, gap: 0.5 }}>

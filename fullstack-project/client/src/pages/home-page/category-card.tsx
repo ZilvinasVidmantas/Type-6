@@ -25,7 +25,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         placeItems: 'center',
         position: 'relative',
       }}
-      onClick={() => navigate(`/shop?category=${id}`)}
+      onClick={() => navigate(`/shop?categoryId=${id}`)}
     >
       <Img
         src={imgSrc ?? '/no-image.jpg'}

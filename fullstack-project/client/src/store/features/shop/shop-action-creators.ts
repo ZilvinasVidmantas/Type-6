@@ -81,11 +81,13 @@ export const shopFetchCategoriesActionThunk = async (dispatch: Dispatch<AppActio
   }
 };
 
-export const createShopChangeCategoryFilterActionThunk = (categoryId: string | null) => async (
+export const createShopChangeCategoryFilterActionThunk = (categoryId: string | null, preventLoading = false) => async (
   dispatch: Dispatch<AppAction>,
   getState: () => RootState,
 ): Promise<void> => {
   const shopChangeCategoryFilterAction = createShopChangeCategoryFilterAction(categoryId);
   dispatch(shopChangeCategoryFilterAction);
-  await shopFetchProductsActionThunk(dispatch, getState);
+  if (!preventLoading) {
+    await shopFetchProductsActionThunk(dispatch, getState);
+  }
 };

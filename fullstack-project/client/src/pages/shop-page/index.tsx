@@ -8,22 +8,34 @@ import {
   Alert,
 } from '@mui/material';
 
+import { useSearchParams } from 'react-router-dom';
 import { useRootSelector, useRootDispatch } from '../../store/hooks';
 import { selectShopError, selectShopProducts, selectShopLoading } from '../../store/selectors';
 import { shopClearErrorAction, shopFetchProductsActionThunk } from '../../store/action-creators';
 import ShopPageCard from './shop-page-card';
 import ShopCategoryHeader from './shop-category-header';
-import { shopFetchCategoriesActionThunk } from '../../store/features/shop/shop-action-creators';
+import { shopFetchCategoriesActionThunk, createShopChangeCategoryFilterActionThunk } from '../../store/features/shop/shop-action-creators';
 
 const ShopPage: React.FC = () => {
-  const items = useRootSelector(selectShopProducts);
-  const itemsLoading = useRootSelector(selectShopLoading);
+  const [searchParams] = useSearchParams();
+  const products = useRootSelector(selectShopProducts);
+  const loading = useRootSelector(selectShopLoading);
   const error = useRootSelector(selectShopError);
   const dispatch = useRootDispatch();
 
   useEffect(() => {
+    const categoryId = searchParams.get('categoryId');
+
+    const shopProductFetchAction = categoryId
+      ? createShopChangeCategoryFilterActionThunk(categoryId)
+      : shopFetchProductsActionThunk;
     dispatch(shopFetchCategoriesActionThunk);
-    dispatch(shopFetchProductsActionThunk);
+
+    dispatch(shopProductFetchAction);
+
+    return () => {
+      dispatch(createShopChangeCategoryFilterActionThunk(null, true));
+    };
   }, []);
 
   let pageContent = (
@@ -32,10 +44,10 @@ const ShopPage: React.FC = () => {
     </Box>
   );
 
-  if (!itemsLoading) {
-    pageContent = items.length > 0 ? (
+  if (!loading) {
+    pageContent = products.length > 0 ? (
       <Grid container spacing={4}>
-        {items.map((item) => (
+        {products.map((item) => (
           <Grid item key={item.id} xs={4}>
             <ShopPageCard {...item} />
           </Grid>
