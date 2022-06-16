@@ -7,7 +7,7 @@ import {
 } from 'mongoose';
 import { CategoryDocument } from './category-model';
 
-type Product = {
+export type Product = {
   title: string,
   price: number,
   categories: Types.ObjectId[],

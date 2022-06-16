@@ -3,7 +3,10 @@ import ApiService, { formatError } from './api-service';
 
 const fetchProducts = async (categoryId?: string): Promise<ProductPopulated[]> => {
   try {
-    const { data } = await ApiService.get<{ products: ProductPopulated[] }>('/api/products?populate=categories');
+    const { data } = await ApiService.get<{ products: ProductPopulated[] }>(
+      '/api/products?populate=categories',
+      { params: { categoryId } },
+    );
     return data.products;
   } catch (err) {
     throw new Error(formatError(err));

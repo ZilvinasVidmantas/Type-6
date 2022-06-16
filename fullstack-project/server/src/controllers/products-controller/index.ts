@@ -1,8 +1,13 @@
 import { RequestHandler } from 'express';
-import { Error } from 'mongoose';
+import { Error, FilterQuery } from 'mongoose';
 import { formatProductValidationError } from './products-error-formatters';
 import CategoryModel, { CategoryDocument } from '../../models/category-model';
-import ProductModel, { ProductPopulatedDocument, ProductDocument, ProductProps } from '../../models/product-model';
+import ProductModel, {
+  ProductPopulatedDocument,
+  ProductDocument,
+  ProductProps,
+  Product,
+} from '../../models/product-model';
 import createProductViewModel, { ProductViewModel } from '../../view-model-creators/create-product-view-model';
 import createProductPopulatedViewModel, { ProductPopulatedViewModel } from '../../view-model-creators/create-product-populated-view-model';
 
@@ -28,19 +33,24 @@ export const getProducts: RequestHandler<
   unknown,
   { products: ProductViewModel[] | ProductPopulatedViewModel[] },
   unknown,
-  { populate?: string }
+  { populate?: string, categoryId?: string }
 > = async (req, res) => {
-  const { populate } = req.query;
+  const { populate, categoryId } = req.query;
+
   const shouldPopulateCategories = populate === 'categories';
+  const filterQuery: FilterQuery<Product> = {};
+  if (categoryId) {
+    filterQuery.categories = { $in: [categoryId] };
+  }
 
   let products: ProductViewModel[] | ProductPopulatedViewModel[];
   if (shouldPopulateCategories) {
     const productPopulatedDocs = await ProductModel
-      .find()
+      .find(filterQuery)
       .populate<{ categories: CategoryDocument[] }>('categories');
     products = productPopulatedDocs.map(createProductPopulatedViewModel);
   } else {
-    const productDocs = await ProductModel.find();
+    const productDocs = await ProductModel.find(filterQuery);
     products = productDocs.map(createProductViewModel);
   }
 
