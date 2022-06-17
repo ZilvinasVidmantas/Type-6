@@ -11,9 +11,10 @@ import {
   Button,
 } from '@mui/material';
 import Img from '../../components/img';
-import { useRootSelector } from '../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectAuthUser } from '../../store/selectors';
 import AuthService from '../../services/auth-service';
+import { createAuthUserUpdateActionThunk } from '../../store/action-creators';
 
 type UserUpdateFormikValues = {
   emailInit: string,
@@ -59,6 +60,7 @@ const validationSchema = Yup.object({
 
 const ProfilePage: React.FC = () => {
   const user = useRootSelector(selectAuthUser);
+  const dispatch = useRootDispatch();
   const imageFieldRef = useRef<HTMLInputElement>(null);
   const [uploadedImgSrc, setUploadedImgSrc] = useState<null | string>(null);
 
@@ -84,6 +86,7 @@ const ProfilePage: React.FC = () => {
       Object.entries(userUpdate).forEach(([key, value]) => {
         formData.set(key, value);
       });
+      dispatch(createAuthUserUpdateActionThunk(formData));
     }
   };
 

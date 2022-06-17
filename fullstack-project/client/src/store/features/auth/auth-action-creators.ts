@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { Crudentials } from '../../../types';
-import { AppAction } from '../../redux-types';
+import { AppAction, RootState } from '../../redux-types';
 import {
   AuthSuccessAction,
   AuthFailureAction,
@@ -8,6 +8,7 @@ import {
   AuthLogoutAction,
   AuthClearErrorAction,
   AuthActionType,
+  AuthUserUpdateAction,
 } from './auth-types';
 import AuthService, { AuthResponseBody } from '../../../services/auth-service';
 import {
@@ -40,16 +41,20 @@ const createAuthFailureAction = (error: string): AuthFailureAction => ({
 const authenticate = async (
   dispatch: Dispatch<AppAction>,
   authCallback: () => Promise<AuthResponseBody>,
-  redirect: string,
+  redirect?: string,
 ) => {
   dispatch(authLoadingAction);
   try {
     const authResponseBody = await authCallback();
     const authSuccessAction = createAuthSuccessAction(authResponseBody);
-    const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
-    dispatch(navigationSetRedirectAction);
+    if (redirect) {
+      const navigationSetRedirectAction = createNavigationSetRedirectAction(redirect);
+      dispatch(navigationSetRedirectAction);
+    }
     dispatch(authSuccessAction);
-    dispatch(navigationClearRedirectAction);
+    if (redirect) {
+      dispatch(navigationClearRedirectAction);
+    }
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const authFailureAction = createAuthFailureAction(errMsg);
@@ -75,4 +80,14 @@ export const createRegisterActionThunk = (
   redirect: string,
 ) => async (dispatch: Dispatch<AppAction>): Promise<void> => {
   await authenticate(dispatch, async () => AuthService.register(crudentials), redirect);
+};
+
+export const createAuthUserUpdateActionThunk = (formData: FormData) => async (
+  dispatch: Dispatch<AppAction>,
+  getState: () => RootState,
+): Promise<void> => {
+  const { token } = getState().auth;
+  if (token !== null) {
+    await authenticate(dispatch, async () => AuthService.updateUser(formData, token));
+  }
 };

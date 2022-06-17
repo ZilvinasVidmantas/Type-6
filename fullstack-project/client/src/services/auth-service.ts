@@ -50,10 +50,28 @@ export const checkEmailAvailability = async (email: string): Promise<boolean> =>
   }
 };
 
+export const updateUser = async (formData: FormData, token: string): Promise<AuthResponseBody> => {
+  try {
+    const response = await ApiService.patch<AuthResponseBody>('/api/auth/update-user', formData, {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    console.log(response.data);
+
+    return response.data;
+  } catch (err) {
+    throw new Error(formatError(err));
+  }
+};
+
 const AuthService = {
   login,
   register,
   authenticate,
+  updateUser,
   checkEmailAvailability,
 };
 

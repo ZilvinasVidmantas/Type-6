@@ -14,7 +14,6 @@ export const authMiddleware: RequestHandler = (req, res, next) => {
     if (token === undefined) throw new Error('Klaidingi vartotojo atpažinimo duomenys');
 
     const decodedInfo = jwt.verify(token, config.token.secret) as DecodedInfo;
-
     req.tokenData = {
       email: decodedInfo.email,
       role: decodedInfo.role,

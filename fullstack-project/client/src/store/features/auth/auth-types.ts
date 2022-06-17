@@ -13,6 +13,7 @@ export enum AuthActionType {
   AUTH_CLEAR_ERROR = 'AUTH_CLEAR_ERROR',
   AUTH_SUCCESS = 'AUTH_SUCCESS',
   AUTH_FAILURE = 'AUTH_FAILURE',
+  AUTH_USER_UPDATE = 'AUTH_USER_UPDATE',
 }
 
 export type AuthLoadingAction = {
@@ -42,4 +43,12 @@ export type AuthFailureAction = {
   }
 };
 
-export type AuthAction = AuthSuccessAction | AuthFailureAction | AuthLoadingAction | AuthLogoutAction | AuthClearErrorAction;
+export type AuthUserUpdateAction = {
+  type: AuthActionType.AUTH_USER_UPDATE,
+  payload: {
+    user: User,
+    token: string,
+  }
+};
+
+export type AuthAction = AuthSuccessAction | AuthFailureAction | AuthLoadingAction | AuthLogoutAction | AuthClearErrorAction | AuthUserUpdateAction;

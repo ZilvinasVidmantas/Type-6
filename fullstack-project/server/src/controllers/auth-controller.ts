@@ -108,6 +108,9 @@ export const authenticate: RequestHandler<
   unknown,
   AuthResponseBody
 > = async (req, res) => {
+  console.log('-------------------');
+  console.log('AUTHENTICATE');
+  console.log('-------------------');
   try {
     if (req.tokenData === undefined) {
       throw new Error('Užšifruotuose duomenyse nėra vartotojo duomenų');
@@ -125,6 +128,39 @@ export const authenticate: RequestHandler<
 
     res.status(200).json({
       user,
+      token,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error instanceof Error ? error.message : 'Serverio klaida atpažįstant vartotoją',
+    });
+  }
+};
+
+export const updateUser: RequestHandler = async (req, res) => {
+  // Dabar reikia įgalinti po pertraukos:
+  /*
+    9:30
+    0. multer bibliotekos įrašymas
+    1. Nuotraukos išsaugojimas į serverio failų sistemą
+    2. Nuotraukos kelio iki išsaugotos nuotraukos formavimas
+    3. Duomenų atnaujinimas vartotojo modelį
+    4. Pagal pakitusius vartotojo duomenis, naujo token'o formavimas
+  */
+  try {
+    if (req.tokenData === undefined) {
+      throw new Error('Neteisingi autentifikacijos duomenys');
+    }
+    const { email, token } = req.tokenData;
+
+    const userDoc = await UserModel.findOne({ email });
+
+    if (userDoc === null) {
+      throw new Error(`Vartotojas nerastas su tokiu paštu '${email}'`);
+    }
+
+    res.status(200).json({
+      user: createUserViewModel(userDoc),
       token,
     });
   } catch (error) {
