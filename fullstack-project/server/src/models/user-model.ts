@@ -52,9 +52,7 @@ export type User = {
   updatedAt: string,
 };
 
-export type UserProps = Omit<User, 'createdAt' | 'updatedAt' | 'role' | 'cartItems'> & {
-  cartItems?: CartItem[]
-};
+export type UserProps = Omit<User, 'createdAt' | 'updatedAt' | 'role' | 'cartItems'>;
 
 type UserDocumentProps = {
   cartItems: Types.DocumentArray<CartItem>;

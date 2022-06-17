@@ -108,9 +108,6 @@ export const authenticate: RequestHandler<
   unknown,
   AuthResponseBody
 > = async (req, res) => {
-  console.log('-------------------');
-  console.log('AUTHENTICATE');
-  console.log('-------------------');
   try {
     if (req.tokenData === undefined) {
       throw new Error('Užšifruotuose duomenyse nėra vartotojo duomenų');
@@ -137,29 +134,21 @@ export const authenticate: RequestHandler<
   }
 };
 
-export const updateUser: RequestHandler = async (req, res) => {
-  // Dabar reikia įgalinti po pertraukos:
-  /*
-    9:30
-    0. multer bibliotekos įrašymas
-    1. Nuotraukos išsaugojimas į serverio failų sistemą
-    2. Nuotraukos kelio iki išsaugotos nuotraukos formavimas
-    3. Duomenų atnaujinimas vartotojo modelį
-    4. Pagal pakitusius vartotojo duomenis, naujo token'o formavimas
-  */
+export const updateUser: RequestHandler<
+  unknown,
+  AuthResponseBody,
+  Partial<UserProps>
+> = async (req, res) => {
+  const userUpdate: Partial<UserProps> = {
+    ...req.body,
+    img: req.file && `images/${req.file.filename}`,
+  };
 
-  console.log('----------------------');
-  console.log('Body');
-  console.log(req.body);
-  console.log('----------------------');
-  console.log('File');
-  console.log(req.file);
-  console.log('----------------------');
   try {
     if (req.tokenData === undefined) {
       throw new Error('Neteisingi autentifikacijos duomenys');
     }
-    const { email, token } = req.tokenData;
+    const { email } = req.tokenData;
 
     const userDoc = await UserModel.findOne({ email });
 
@@ -167,9 +156,18 @@ export const updateUser: RequestHandler = async (req, res) => {
       throw new Error(`Vartotojas nerastas su tokiu paštu '${email}'`);
     }
 
+    if (userUpdate.name) userDoc.name = userUpdate.name;
+    if (userUpdate.surname) userDoc.surname = userUpdate.surname;
+    if (userUpdate.email) userDoc.email = userUpdate.email;
+    if (userUpdate.img) userDoc.img = userUpdate.img;
+
+    await userDoc.save();
+
+    const token = jwt.sign({ email: userDoc.email, role: userDoc.role }, config.token.secret);
+
     res.status(200).json({
       user: createUserViewModel(userDoc),
-      token,
+      token: `Bearer ${token}`,
     });
   } catch (error) {
     res.status(400).json({
