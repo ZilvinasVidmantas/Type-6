@@ -79,9 +79,12 @@ const ProfilePage: React.FC = () => {
     if (imageFieldRef?.current?.files && imageFieldRef.current.files[0]) {
       userUpdate.img = imageFieldRef.current.files[0] as File;
     }
-
-    console.log(userUpdate);
-    console.log('VA ČIA KREIPSIMĖS Į SERVISĄ');
+    if (Object.keys(userUpdate).length > 0) {
+      const formData = new FormData();
+      Object.entries(userUpdate).forEach(([key, value]) => {
+        formData.set(key, value);
+      });
+    }
   };
 
   const uploadImage = () => {
