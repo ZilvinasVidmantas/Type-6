@@ -147,6 +147,14 @@ export const updateUser: RequestHandler = async (req, res) => {
     3. Duomenų atnaujinimas vartotojo modelį
     4. Pagal pakitusius vartotojo duomenis, naujo token'o formavimas
   */
+
+  console.log('----------------------');
+  console.log('Body');
+  console.log(req.body);
+  console.log('----------------------');
+  console.log('File');
+  console.log(req.file);
+  console.log('----------------------');
   try {
     if (req.tokenData === undefined) {
       throw new Error('Neteisingi autentifikacijos duomenys');
