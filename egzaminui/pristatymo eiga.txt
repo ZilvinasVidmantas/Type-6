@@ -1,0 +1,22 @@
+1. Labai trumpai prisistatot [iki 30s]
+  - Kiek mokėjot programuot atėję į kursus
+  - ...
+
+2. Projekto idėja/ Pristatymas [1-3 min]
+  - Papasakojate idėją
+  - Parodote funkcionalumą
+  - Pasakote, ką darysite toliau (savo projekte) 
+
+3. Klausimai dėl idėjos [0 min]
+
+4. Techniniai klausimai, pagal kriterijus [2-4 min] 
+
+5. Techniniai klausimai, jeigu projektas panašus į manajį, tam kad įsitikit jog suprantat ką darot [0 - 6 min]
+  - šie klausimai gali turėti neigiamą įtaką jūsų galutiniam įvertinimui
+
+6. Jūsų atsiliepimas apie kursus [2-4 min] 
+  - Kas jums patiko, nepatiko
+  - Kaip pakeitėt požiūrį į programavimą
+  - Ar planuojate darbintis programuotoju?
+    - Jei taip, kokie įsidarbinimo veiksmai?
+
